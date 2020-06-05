@@ -34,7 +34,18 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  fonts:
+    - family: DroidSans
+      fonts:
+        - asset: fonts/DroidSans.ttf
 
+  assets:
+    - Images/DataBase.png
+    - Images/Files.png
+    - Images/Dashboards.png
+    - Images/Filter.png
+    - Images/Visualizers.png
+    - Images/Logo.png
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
