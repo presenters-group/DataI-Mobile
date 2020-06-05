@@ -61,7 +61,7 @@ class _VisualizersState extends State<Visualizers> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new VisualizerOpened()));
+                          builder: (context) => new VisualizerOpened("Visualizer 1")));
                 },
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,

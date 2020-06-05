@@ -60,7 +60,7 @@ class _DashboardsState extends State<Dashboards> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new DashboardOpened()));
+                          builder: (context) => new DashboardOpened("First Dashboard")));
                 },
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
