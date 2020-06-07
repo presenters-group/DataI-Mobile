@@ -45,6 +45,7 @@ class _VisualizersState extends State<Visualizers> {
           elevation: 0.0,
         ),
       ),
+
       backgroundColor: ColorClass.scaffoldBackgroundColor,
       body: ListView.builder(itemBuilder: (BuildContext context, int index) {
         return Padding(

@@ -6,6 +6,7 @@ class FiltersOnVisualizer extends StatefulWidget {
 }
 
 class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

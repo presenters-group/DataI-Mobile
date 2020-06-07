@@ -99,6 +99,7 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
               ]),
         ),
       ),
+
       body: TabBarView(
         controller: tabController,
         children: <Widget>[Container(), Container(), Container()],
