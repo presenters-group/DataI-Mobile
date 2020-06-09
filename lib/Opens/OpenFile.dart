@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
@@ -9,9 +10,13 @@ class OpenFile extends StatefulWidget {
 }
 
 class _OpenFileState extends State<OpenFile> {
+  bool isClickedOnFile = false;
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75.0),
         child: AppBar(
@@ -29,7 +34,13 @@ class _OpenFileState extends State<OpenFile> {
             padding: const EdgeInsets.only(left: 15.0, top: 25),
             child: IconButton(
               onPressed: () {
-                Navigator.pop(context);
+                var snackBar = new SnackBar(
+                  content: Text("Please Select File"),
+                  duration: Duration(seconds: 1),
+                );
+                isClickedOnFile
+                    ? Navigator.pop(context)
+                    : _scaffoldKey.currentState.showSnackBar(snackBar);
               },
               icon: Icon(
                 Icons.arrow_back_ios,
@@ -55,7 +66,13 @@ class _OpenFileState extends State<OpenFile> {
             child: Padding(
               padding: const EdgeInsets.only(left: 30.0),
               child: InkWell(
-                onTap: () {
+                onTap: () async {
+                  setState(() {
+                    isClickedOnFile = true;
+                  });
+                  String data = await DefaultAssetBundle.of(context).loadString("files/test.json");
+                  final jsonResult = json.decode(data);
+                  print(jsonResult["dataSources"]);
                   Navigator.pop(context);
                 },
                 child: SingleChildScrollView(

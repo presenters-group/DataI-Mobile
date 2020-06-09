@@ -14,6 +14,7 @@ class DataI extends StatefulWidget {
 
 class _DataIState extends State<DataI> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  bool isSelectedFile = false;
 
   Widget oldThingsDrawer() {
     return Container(
@@ -220,10 +221,17 @@ class _DataIState extends State<DataI> {
                             left: 8.0, right: 25.0, bottom: 8.0, top: 8.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new Dashboards()));
+                            var snackBar = new SnackBar(
+                              content: Text("Please Open File"),
+                              duration: Duration(seconds: 1),
+                            );
+                            isSelectedFile
+                                ? Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) => new Dashboards()))
+                                : _scaffoldKey.currentState
+                                    .showSnackBar(snackBar);
                           },
                           child: new Container(
                             height: 128.00,
@@ -246,10 +254,12 @@ class _DataIState extends State<DataI> {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new OpenFile()));
+                            Navigator.of(context)
+                                .push(new MaterialPageRoute(builder: (_) {
+                              return new OpenFile();
+                            })).then((val) {
+                              isSelectedFile = true;
+                            });
                           },
                           child: new Container(
                             height: 128.00,
@@ -283,10 +293,18 @@ class _DataIState extends State<DataI> {
                             left: 8.0, right: 25.0, bottom: 8.0, top: 8.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new DataSources()));
+                            var snackBar = new SnackBar(
+                              content: Text("Please Open File"),
+                              duration: Duration(seconds: 1),
+                            );
+                            isSelectedFile
+                                ? Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new DataSources()))
+                                : _scaffoldKey.currentState
+                                    .showSnackBar(snackBar);
                           },
                           child: new Container(
                             height: 128.00,
@@ -309,10 +327,18 @@ class _DataIState extends State<DataI> {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new Visualizers()));
+                            var snackBar = new SnackBar(
+                              content: Text("Please Open File"),
+                              duration: Duration(seconds: 1),
+                            );
+                            isSelectedFile
+                                ? Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) =>
+                                            new Visualizers()))
+                                : _scaffoldKey.currentState
+                                    .showSnackBar(snackBar);
                           },
                           child: new Container(
                             height: 128.00,
@@ -346,10 +372,17 @@ class _DataIState extends State<DataI> {
                         padding: const EdgeInsets.all(8.0),
                         child: InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                new MaterialPageRoute(
-                                    builder: (context) => new Filters()));
+                            var snackBar = new SnackBar(
+                              content: Text("Please Open File"),
+                              duration: Duration(seconds: 1),
+                            );
+                            isSelectedFile
+                                ? Navigator.push(
+                                    context,
+                                    new MaterialPageRoute(
+                                        builder: (context) => new Filters()))
+                                : _scaffoldKey.currentState
+                                    .showSnackBar(snackBar);
                           },
                           child: new Container(
                             height: 128.00,
