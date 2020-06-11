@@ -2,9 +2,10 @@ import 'package:flutter/cupertino.dart';
 
 class Visualizer {
   int visualizerID;
+  int dataID;
   var visualizerName;
-  List<int> usedColumns = new List();
-  List<int> filters = new List();
+  List<dynamic> usedColumns = new List();
+  List<dynamic> filters = new List();
   bool isDeleted;
   bool isBar;
   bool isLine;
@@ -12,6 +13,7 @@ class Visualizer {
 
   Visualizer(
       {@required this.visualizerID,
+        @required this.dataID,
         @required this.visualizerName,
         @required this.usedColumns,
         @required this.filters,
@@ -23,6 +25,7 @@ class Visualizer {
   factory Visualizer.fromJson(Map<String, dynamic> json) {
     return Visualizer(
         visualizerID: json["id"],
+        dataID: json["data"],
         visualizerName: json["name"],
         usedColumns: json["usedColumns"],
         filters: json["filters"],

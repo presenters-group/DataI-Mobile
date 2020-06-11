@@ -5,8 +5,8 @@ class DataSource {
   var name;
   int id;
   List<Column> listColumns = new List();
-  List<bool> columnsVisibility = new List();
-  List<bool> rowsVisibility = new List();
+  List<dynamic> columnsVisibility = new List();
+  List<dynamic> rowsVisibility = new List();
   Properties property;
   bool rightToLeft;
   bool isDeleted;
@@ -25,7 +25,7 @@ class DataSource {
     return DataSource(
         name: json["name"],
         id: json["id"],
-        listColumns: convertToColumnsList(json["columns"]),
+        listColumns: convertToColumnsList(json),
         columnsVisibility: json["columnsVisibility"],
         rowsVisibility: json["rowsVisibility"],
         property: Properties.fromJSON(json["properties"]),

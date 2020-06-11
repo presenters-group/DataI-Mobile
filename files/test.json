@@ -13,7 +13,7 @@
                             "type": "string"
                         },
                         {
-                            "value": 10,
+                            "value": 15,
                             "type": "numeric"
                         },
                         {
@@ -326,6 +326,22 @@
             "filters": [
                 0,
                 1
+            ],
+            "isDeleted": false
+        },
+
+        {
+            "name": "visualization2",
+            "id": 2,
+            "data": 1,
+            "usedColumns": [
+                3,
+                4
+            ],
+            "chart": "BarChart",
+            "filters": [
+                2,
+                4
             ],
             "isDeleted": false
         }
