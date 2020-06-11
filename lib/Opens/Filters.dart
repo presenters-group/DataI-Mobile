@@ -1,3 +1,4 @@
+import 'package:eyedatai/Classes/Filter.dart';
 import 'package:eyedatai/Opened/FilterOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -5,11 +6,19 @@ import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class Filters extends StatefulWidget {
+  List<Filter> filters = new List();
+
+  Filters({@required this.filters});
+
   @override
-  _FiltersState createState() => _FiltersState();
+  _FiltersState createState() => _FiltersState(filters);
 }
 
 class _FiltersState extends State<Filters> {
+  List<Filter> filters = new List();
+
+  _FiltersState(this.filters);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,80 +54,85 @@ class _FiltersState extends State<Filters> {
         ),
       ),
       backgroundColor: ColorClass.scaffoldBackgroundColor,
-      body: ListView.builder(itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.only(
-              top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
-          child: new Container(
-            height: 175.00,
-            width: MediaQuery.of(context).size.width,
-            color: ColorClass.containerColor,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) => new FilterOpened()));
-                },
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 12.0),
-                          child: Text("Name : Filter 1",
-                              style: TextStyle(
-                                  color: ColorClass.fontColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 17)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text("Data sources : table 1",
-                              style: TextStyle(
-                                  color: ColorClass.subTitleColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text("Filtering Type : Dimintion",
-                              style: TextStyle(
-                                  color: ColorClass.subTitleColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text("Column : column 1",
-                              style: TextStyle(
-                                  color: ColorClass.subTitleColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15)),
-                        ),
-                        Padding(
+      body: ListView.builder(
+          itemCount: filters.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                  top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
+              child: new Container(
+                height: 160.00, //175
+                width: MediaQuery.of(context).size.width,
+                color: ColorClass.containerColor,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new FilterOpened()));
+                    },
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: Text("Name : ${filters[index].name}",
+                                  style: TextStyle(
+                                      color: ColorClass.fontColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 17)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                  "Data sources : ${filters[index].dataSource}",
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                  "Filtering Type : ${filters[index].type}",
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                  "Column : ${filters[index].filteredColumn}",
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15)),
+                            ),
+                            /*Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text("Type : categorized ",
                               style: TextStyle(
                                   color: ColorClass.subTitleColor,
                                   fontFamily: FontClass.appFont,
                                   fontSize: 15)),
+                        ),*/
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-        );
-      }),
+            );
+          }),
     );
   }
 }

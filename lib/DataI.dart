@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:eyedatai/Opens/Dashboards.dart';
 import 'package:eyedatai/Opens/DataSources.dart';
 import 'package:eyedatai/Opens/Filters.dart';
@@ -6,8 +8,16 @@ import 'package:eyedatai/Opens/Visualizers.dart';
 import 'package:flutter/material.dart';
 import 'ColorClass.dart';
 import 'FontClass.dart';
+import 'package:eyedatai/Classes/DataSources/Table.dart' as prefix0;
+
+String filePath;
+prefix0.Table table;
 
 class DataI extends StatefulWidget {
+  static void setFilePath(String filePathP) {
+    filePath = filePathP;
+  }
+
   @override
   _DataIState createState() => _DataIState();
 }
@@ -225,13 +235,16 @@ class _DataIState extends State<DataI> {
                               content: Text("Please Open File"),
                               duration: Duration(seconds: 1),
                             );
-                            isSelectedFile
-                                ? Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) => new Dashboards()))
-                                : _scaffoldKey.currentState
-                                    .showSnackBar(snackBar);
+                            if (isSelectedFile) {
+                              print(table.dashboards.length);
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => new Dashboards(
+                                          dashboards: table.dashboards)));
+                            } else {
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            }
                           },
                           child: new Container(
                             height: 128.00,
@@ -257,8 +270,21 @@ class _DataIState extends State<DataI> {
                             Navigator.of(context)
                                 .push(new MaterialPageRoute(builder: (_) {
                               return new OpenFile();
-                            })).then((val) {
-                              isSelectedFile = true;
+                            })).then((val) async {
+                              setState(() {
+                                isSelectedFile = true;
+                              });
+                              String data = await DefaultAssetBundle.of(context)
+                                  .loadString("files/test.json");
+                              final jsonResult = json.decode(data);
+                              setState(() {
+                                table = prefix0.Table.fromJSON(jsonResult);
+                              });
+                              print(table.dataSources[0].listColumns[0].cells[1]
+                                  .value);
+                              print(table.dashboards.length);
+                              print("**************");
+                              print(jsonResult);
                             });
                           },
                           child: new Container(
@@ -297,14 +323,16 @@ class _DataIState extends State<DataI> {
                               content: Text("Please Open File"),
                               duration: Duration(seconds: 1),
                             );
-                            isSelectedFile
-                                ? Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                            new DataSources()))
-                                : _scaffoldKey.currentState
-                                    .showSnackBar(snackBar);
+                            if (isSelectedFile) {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => new DataSources(
+                                            dataSources: table.dataSources,
+                                          )));
+                            } else {
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            }
                           },
                           child: new Container(
                             height: 128.00,
@@ -331,14 +359,16 @@ class _DataIState extends State<DataI> {
                               content: Text("Please Open File"),
                               duration: Duration(seconds: 1),
                             );
-                            isSelectedFile
-                                ? Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) =>
-                                            new Visualizers()))
-                                : _scaffoldKey.currentState
-                                    .showSnackBar(snackBar);
+                            if (isSelectedFile) {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => new Visualizers(
+                                            visualizers: table.visualizers,
+                                          )));
+                            } else {
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            }
                           },
                           child: new Container(
                             height: 128.00,
@@ -376,13 +406,16 @@ class _DataIState extends State<DataI> {
                               content: Text("Please Open File"),
                               duration: Duration(seconds: 1),
                             );
-                            isSelectedFile
-                                ? Navigator.push(
-                                    context,
-                                    new MaterialPageRoute(
-                                        builder: (context) => new Filters()))
-                                : _scaffoldKey.currentState
-                                    .showSnackBar(snackBar);
+                            if (isSelectedFile) {
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                      builder: (context) => new Filters(
+                                            filters: table.filters,
+                                          )));
+                            } else {
+                              _scaffoldKey.currentState.showSnackBar(snackBar);
+                            }
                           },
                           child: new Container(
                             height: 128.00,

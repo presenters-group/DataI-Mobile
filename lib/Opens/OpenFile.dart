@@ -1,8 +1,6 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:eyedatai/Classes/DataSources/Table.dart' as prefix0;
-
 import '../ColorClass.dart';
+import '../DataI.dart';
 import '../FontClass.dart';
 
 class OpenFile extends StatefulWidget {
@@ -71,20 +69,7 @@ class _OpenFileState extends State<OpenFile> {
                   setState(() {
                     isClickedOnFile = true;
                   });
-                  String data = await DefaultAssetBundle.of(context).loadString("files/test.json");
-                  final jsonResult = json.decode(data);
-                  prefix0.Table table =
-                  prefix0.Table.fromJSONDataSource(jsonResult);
-                  //print(table.dataSources[0].listColumns[0].cells[1].value);
-                  prefix0.Table table2 =
-                  prefix0.Table.fromJSONDashboard(jsonResult);
-
-                  print(table2.dashboards[0].visualizersList.length);
-
-                  print("**************");
-
-
-                  print(jsonResult);
+                  DataI.setFilePath("files/test.json");
                   Navigator.pop(context);
                 },
                 child: SingleChildScrollView(

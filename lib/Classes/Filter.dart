@@ -3,18 +3,18 @@ class Filter {
   int id;
   int dataSource;
   int filteredColumn;
-  int initValue;
+  var initValue;
   String type;
   bool isDeleted;
 
   Filter(
       {this.name,
-        this.id,
-        this.dataSource,
-        this.filteredColumn,
-        this.initValue,
-        this.type,
-        this.isDeleted});
+      this.id,
+      this.dataSource,
+      this.filteredColumn,
+      this.initValue,
+      this.type,
+      this.isDeleted});
 
   factory Filter.fromJSON(Map<String, dynamic> json) {
     return Filter(
@@ -22,7 +22,7 @@ class Filter {
         id: json["id"],
         dataSource: json["dataSource"],
         filteredColumn: json["filteredColumn"],
-        initValue: json["initValue"],
+        initValue: json["initValue"].toString(),
         type: json["type"],
         isDeleted: json["isDeleted"]);
   }

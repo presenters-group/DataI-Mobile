@@ -1,3 +1,4 @@
+import 'package:eyedatai/Classes/Visualizer.dart';
 import 'package:eyedatai/Opened/VisualizerOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -5,12 +6,19 @@ import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class Visualizers extends StatefulWidget {
+  List<Visualizer> visualizers = new List();
+
+  Visualizers({@required this.visualizers});
+
   @override
-  _VisualizersState createState() => _VisualizersState();
+  _VisualizersState createState() => _VisualizersState(visualizers);
 }
 
-
 class _VisualizersState extends State<Visualizers> {
+  List<Visualizer> visualizers = new List();
+
+  _VisualizersState(this.visualizers);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +53,6 @@ class _VisualizersState extends State<Visualizers> {
           elevation: 0.0,
         ),
       ),
-
       backgroundColor: ColorClass.scaffoldBackgroundColor,
       body: ListView.builder(itemBuilder: (BuildContext context, int index) {
         return Padding(
@@ -62,7 +69,8 @@ class _VisualizersState extends State<Visualizers> {
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new VisualizerOpened("Visualizer 1")));
+                          builder: (context) =>
+                              new VisualizerOpened("Visualizer 1")));
                 },
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,
