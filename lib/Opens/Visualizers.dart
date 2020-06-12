@@ -54,73 +54,78 @@ class _VisualizersState extends State<Visualizers> {
         ),
       ),
       backgroundColor: ColorClass.scaffoldBackgroundColor,
-      body: ListView.builder(itemBuilder: (BuildContext context, int index) {
-        return Padding(
-          padding: const EdgeInsets.only(
-              top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
-          child: new Container(
-            height: 165.00,
-            width: MediaQuery.of(context).size.width,
-            color: ColorClass.containerColor,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 30.0),
-              child: InkWell(
-                onTap: () {
-                  Navigator.push(
-                      context,
-                      new MaterialPageRoute(
-                          builder: (context) =>
-                              new VisualizerOpened("Visualizer 1")));
-                },
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.vertical,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 30.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 12.0),
-                          child: Text("Name : Visualizer 1",
-                              style: TextStyle(
-                                  color: ColorClass.fontColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 17)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text("Used Columns : Col1 , Col2 , Col3",
-                              style: TextStyle(
-                                  color: ColorClass.subTitleColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15)),
-                        ),
-                        Padding(
+      body: ListView.builder(
+          itemCount: visualizers.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+              padding: const EdgeInsets.only(
+                  top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
+              child: new Container(
+                height: 140.00, //165
+                width: MediaQuery.of(context).size.width,
+                color: ColorClass.containerColor,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 30.0),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new VisualizerOpened(
+                                  visualizers[index].visualizerName)));
+                    },
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 30.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0),
+                              child: Text(
+                                  "Name : ${visualizers[index].visualizerName}",
+                                  style: TextStyle(
+                                      color: ColorClass.fontColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 17)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                  "Used Columns : ${visualizers[index].usedColumns}",
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15)),
+                            ),
+                            /*Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
                           child: Text("Used Rows : Row1 , Row2 ",
                               style: TextStyle(
                                   color: ColorClass.subTitleColor,
                                   fontFamily: FontClass.appFont,
                                   fontSize: 15)),
+                        ),*/
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                  "Used Filters : ${visualizers[index].filters}",
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15)),
+                            ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 8.0),
-                          child: Text("Used Filters : Filter1 , Filter2 ",
-                              style: TextStyle(
-                                  color: ColorClass.subTitleColor,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15)),
-                        ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ),
-        );
-      }),
+            );
+          }),
     );
   }
 }
