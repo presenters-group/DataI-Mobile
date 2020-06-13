@@ -26,7 +26,10 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
   @override
   void initState() {
     tabController = new TabController(length: 3, vsync: this);
-
+    print(visualizer.dataSource);
+    print("/*/*/*///*/*/*/*/*/**/*/*/*");
+    print(visualizer.usedColumns);
+    print(visualizer.columnsModel.length);
     super.initState();
   }
 
@@ -67,7 +70,7 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                        DecorationImage(image: AssetImage('Images/Logo.png'))),
+                    DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],

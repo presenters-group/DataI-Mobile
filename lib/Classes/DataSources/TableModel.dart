@@ -13,13 +13,13 @@ class TableModel {
 
   TableModel(
       {this.name,
-      this.id,
-      this.listColumns,
-      this.columnsVisibility,
-      this.rowsVisibility,
-      this.property,
-      this.rightToLeft,
-      this.isDeleted});
+        this.id,
+        this.listColumns,
+        this.columnsVisibility,
+        this.rowsVisibility,
+        this.property,
+        this.rightToLeft,
+        this.isDeleted});
 
   factory TableModel.fromJSON(Map<String, dynamic> json) {
     return TableModel(
@@ -44,6 +44,6 @@ class TableModel {
 
   @override
   String toString() {
-    return 'DataSource{name: $name, id: $id, listColumns: $listColumns, columnsVisibility: $columnsVisibility, rowsVisibility: $rowsVisibility, property: $property, rightToLeft: $rightToLeft, isDeleted: $isDeleted}';
+    return 'TableModel{name: $name, id: $id, listColumns: $listColumns, columnsVisibility: $columnsVisibility, rowsVisibility: $rowsVisibility, property: $property, rightToLeft: $rightToLeft, isDeleted: $isDeleted}';
   }
 }

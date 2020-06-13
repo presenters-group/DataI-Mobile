@@ -13,12 +13,12 @@ class ColumnModel {
 
   ColumnModel(
       {this.name,
-      this.id,
-      this.cells,
-      this.valueCategories,
-      this.columnType,
-      this.isDeleted,
-      this.columnStyleMode});
+        this.id,
+        this.cells,
+        this.valueCategories,
+        this.columnType,
+        this.isDeleted,
+        this.columnStyleMode});
 
   factory ColumnModel.fromJSON(Map<String, dynamic> json) {
     return ColumnModel(
@@ -48,4 +48,11 @@ class ColumnModel {
     }
     return valueCategoryList;
   }
+
+  @override
+  String toString() {
+    return 'ColumnModel{name: $name, id: $id, cells: $cells, valueCategories: $valueCategories, columnStyleMode: $columnStyleMode, columnType: $columnType, isDeleted: $isDeleted}';
+  }
+
+
 }

@@ -7,4 +7,9 @@ class ValueCategory {
   factory ValueCategory.fromJSON(Map<String, dynamic> json) {
     return ValueCategory(value: json["value"], type: json["type"]);
   }
+
+  @override
+  String toString() {
+    return 'ValueCategory{value: $value, type: $type}';
+  }
 }

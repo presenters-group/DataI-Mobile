@@ -7,4 +7,11 @@ class CellModel {
   factory CellModel.fromJSON(Map<String, dynamic> json) {
     return CellModel(value: json["value"], type: json["type"]);
   }
+
+  @override
+  String toString() {
+    return 'CellModel{value: $value, type: $type}';
+  }
+
+
 }
