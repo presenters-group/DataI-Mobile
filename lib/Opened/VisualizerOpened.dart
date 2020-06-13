@@ -1,29 +1,32 @@
+import 'package:eyedatai/Classes/DataSources/TableModel.dart';
+import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class VisualizerOpened extends StatefulWidget {
-  var titleVisualizer;
+  VisualizerModel visualizer;
 
-  VisualizerOpened(this.titleVisualizer);
+  VisualizerOpened(this.visualizer);
 
   @override
-  _VisualizerOpenedState createState() =>
-      _VisualizerOpenedState(titleVisualizer);
+  _VisualizerOpenedState createState() => _VisualizerOpenedState(visualizer);
 }
 
 class _VisualizerOpenedState extends State<VisualizerOpened>
     with SingleTickerProviderStateMixin {
   TabController tabController;
+  TableModel dataSource;
 
-  var titleVisualizer;
+  VisualizerModel visualizer;
 
-  _VisualizerOpenedState(this.titleVisualizer);
+  _VisualizerOpenedState(this.visualizer);
 
   @override
   void initState() {
     tabController = new TabController(length: 3, vsync: this);
+
     super.initState();
   }
 
@@ -36,7 +39,7 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
           title: Padding(
             padding: const EdgeInsets.only(top: 25.0),
             child: Text(
-              titleVisualizer,
+              visualizer.visualizerName,
               style: TextStyle(
                   color: ColorClass.fontColor,
                   fontFamily: FontClass.appFont,
@@ -64,7 +67,7 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                    DecorationImage(image: AssetImage('Images/Logo.png'))),
+                        DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -99,7 +102,6 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
               ]),
         ),
       ),
-
       body: TabBarView(
         controller: tabController,
         children: <Widget>[Container(), Container(), Container()],

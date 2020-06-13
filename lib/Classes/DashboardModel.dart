@@ -1,23 +1,23 @@
-import 'package:eyedatai/Classes/Visualizer.dart';
+import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:flutter/cupertino.dart';
 
-class Dashboard {
+class DashboardModel {
   var name;
   int dashboardID;
   int numberOfVisualizer;
   List<int> visualizerIndex = new List();
-  List<Visualizer> visualizersList = new List();
+  List<VisualizerModel> visualizersList = new List();
 
-  Dashboard(
+  DashboardModel(
       {@required this.name,
-        this.numberOfVisualizer,
-        @required this.visualizersList,
-        @required this.dashboardID,
-        @required this.visualizerIndex});
+      this.numberOfVisualizer,
+      @required this.visualizersList,
+      @required this.dashboardID,
+      @required this.visualizerIndex});
 
-  factory Dashboard.fromJson(
+  factory DashboardModel.fromJson(
       Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
-    return Dashboard(
+    return DashboardModel(
       name: json["name"],
       visualizerIndex: fetchVisualizersIndex(json),
       visualizersList: convertToVisualizersList(json, totalJSON),
@@ -34,7 +34,7 @@ class Dashboard {
     return visualizersIndexs;
   }
 
-  static List<Visualizer> convertToVisualizersList(json, totalJSON) {
+  static List<VisualizerModel> convertToVisualizersList(json, totalJSON) {
     /*List<Visualizer> allVisualizers = new List();
     List<dynamic> allVisualizersJSON = json["visualizations"];
     for (var newVisualizer in allVisualizersJSON) {
@@ -63,15 +63,15 @@ class Dashboard {
     }
 
     return allVisualizers;*/
-
-    List<Visualizer> visualizersList = new List();
+    List<VisualizerModel> visualizersList = new List();
     List<dynamic> visualizersJSON = totalJSON["visualizations"];
     for (var newVisualizer in visualizersJSON) {
-      visualizersList.add(new Visualizer.fromJson(newVisualizer));
+      visualizersList
+          .add(new VisualizerModel.fromJSON(newVisualizer, totalJSON));
     }
     List<int> visualizersIndexs = new List();
     List<dynamic> visualizersJSONForIndex = json["visualizers"];
-    List<Visualizer> visualizersForDashboard = new List();
+    List<VisualizerModel> visualizersForDashboard = new List();
     for (var newVisualizerIndex in visualizersJSONForIndex) {
       visualizersIndexs.add(newVisualizerIndex["visualizationIndex"]);
     }

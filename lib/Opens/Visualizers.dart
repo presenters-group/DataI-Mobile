@@ -1,4 +1,4 @@
-import 'package:eyedatai/Classes/Visualizer.dart';
+import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:eyedatai/Opened/VisualizerOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +6,7 @@ import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class Visualizers extends StatefulWidget {
-  List<Visualizer> visualizers = new List();
+  List<VisualizerModel> visualizers = new List();
 
   Visualizers({@required this.visualizers});
 
@@ -15,7 +15,7 @@ class Visualizers extends StatefulWidget {
 }
 
 class _VisualizersState extends State<Visualizers> {
-  List<Visualizer> visualizers = new List();
+  List<VisualizerModel> visualizers = new List();
 
   _VisualizersState(this.visualizers);
 
@@ -71,8 +71,8 @@ class _VisualizersState extends State<Visualizers> {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => new VisualizerOpened(
-                                  visualizers[index].visualizerName)));
+                              builder: (context) =>
+                                  new VisualizerOpened(visualizers[index])));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,

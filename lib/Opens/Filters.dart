@@ -92,7 +92,7 @@ class _FiltersState extends State<Filters> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Data sources : ${filters[index].dataSource}",
+                                  "Data sources : ${filters[index].dataSourceID}",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,

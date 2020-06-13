@@ -1,37 +1,41 @@
-import 'Cell.dart';
+import 'CellModel.dart';
+import 'ColumnStyleMode.dart';
 import 'ValueCategory.dart';
 
-class Column {
+class ColumnModel {
   var name;
   int id;
-  List<Cell> cells = new List();
+  List<CellModel> cells = new List();
   List<ValueCategory> valueCategories = new List();
+  ColumnStyleMode columnStyleMode;
   var columnType;
   bool isDeleted;
 
-  Column(
+  ColumnModel(
       {this.name,
-        this.id,
-        this.cells,
-        this.valueCategories,
-        this.columnType,
-        this.isDeleted});
+      this.id,
+      this.cells,
+      this.valueCategories,
+      this.columnType,
+      this.isDeleted,
+      this.columnStyleMode});
 
-  factory Column.fromJSON(Map<String, dynamic> json) {
-    return Column(
+  factory ColumnModel.fromJSON(Map<String, dynamic> json) {
+    return ColumnModel(
         name: json["name"],
         id: json["id"],
         cells: convertToCellsList(json),
         valueCategories: convertToValueCategories(json),
+        columnStyleMode: ColumnStyleMode.fromJSON(json["style"]),
         columnType: json["columnType"],
         isDeleted: json["isDeleted"]);
   }
 
-  static List<Cell> convertToCellsList(json) {
-    List<Cell> cellsList = new List();
+  static List<CellModel> convertToCellsList(json) {
+    List<CellModel> cellsList = new List();
     List<dynamic> cellsListJSON = json["cells"];
     for (var newCell in cellsListJSON) {
-      cellsList.add(new Cell.fromJSON(newCell));
+      cellsList.add(new CellModel.fromJSON(newCell));
     }
     return cellsList;
   }

@@ -6,12 +6,12 @@ import 'package:eyedatai/Opens/Filters.dart';
 import 'package:eyedatai/Opens/OpenFile.dart';
 import 'package:eyedatai/Opens/Visualizers.dart';
 import 'package:flutter/material.dart';
+import 'Classes/DataModel.dart';
 import 'ColorClass.dart';
 import 'FontClass.dart';
-import 'package:eyedatai/Classes/DataSources/Table.dart' as prefix0;
 
 String filePath;
-prefix0.Table table;
+DataModel table;
 
 class DataI extends StatefulWidget {
   static void setFilePath(String filePathP) {
@@ -25,6 +25,7 @@ class DataI extends StatefulWidget {
 class _DataIState extends State<DataI> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isSelectedFile = false;
+  var jsonResult;
 
   Widget oldThingsDrawer() {
     return Container(
@@ -276,9 +277,9 @@ class _DataIState extends State<DataI> {
                               });
                               String data = await DefaultAssetBundle.of(context)
                                   .loadString("files/test.json");
-                              final jsonResult = json.decode(data);
+                              jsonResult = json.decode(data);
                               setState(() {
-                                table = prefix0.Table.fromJSON(jsonResult);
+                                table = DataModel.fromJSON(jsonResult);
                               });
                               print(table.dataSources[0].listColumns[0].cells[1]
                                   .value);

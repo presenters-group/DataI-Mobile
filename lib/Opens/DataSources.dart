@@ -1,4 +1,4 @@
-import 'package:eyedatai/Classes/DataSources/DataSource.dart';
+import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Opened/DataSourceOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +6,7 @@ import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class DataSources extends StatefulWidget {
-  List<DataSource> dataSources = new List();
+  List<TableModel> dataSources = new List();
 
   DataSources({@required this.dataSources});
 
@@ -15,7 +15,7 @@ class DataSources extends StatefulWidget {
 }
 
 class _DataSourcesState extends State<DataSources> {
-  List<DataSource> dataSources = new List();
+  List<TableModel> dataSources = new List();
 
   _DataSourcesState(this.dataSources);
 

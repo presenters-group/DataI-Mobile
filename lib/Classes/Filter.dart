@@ -1,29 +1,52 @@
+import 'DataSources/TableModel.dart';
+
 class Filter {
+  TableModel dataSource;
   var name;
   int id;
-  int dataSource;
+  int dataSourceID;
   int filteredColumn;
   var initValue;
   String type;
   bool isDeleted;
 
   Filter(
-      {this.name,
+      {this.dataSource,
+      this.name,
       this.id,
-      this.dataSource,
+      this.dataSourceID,
       this.filteredColumn,
       this.initValue,
       this.type,
       this.isDeleted});
 
-  factory Filter.fromJSON(Map<String, dynamic> json) {
+  factory Filter.fromJSON(
+      Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
     return Filter(
+        dataSource: checkFilter(totalJSON, json["dataSource"]),
         name: json["name"],
         id: json["id"],
-        dataSource: json["dataSource"],
+        dataSourceID: json["dataSource"],
         filteredColumn: json["filteredColumn"],
         initValue: json["initValue"].toString(),
         type: json["type"],
         isDeleted: json["isDeleted"]);
+  }
+
+  static TableModel checkFilter(json, id) {
+    TableModel trueDataSource;
+    List<TableModel> allDataSources = new List();
+    List<dynamic> allDataSourcesJSON = json["dataSources"];
+
+    for (var newDataSource in allDataSourcesJSON) {
+      allDataSources.add(new TableModel.fromJSON(newDataSource));
+    }
+
+    for (int i = 0; i < allDataSources.length; i++) {
+      if (allDataSources[i].id == id) {
+        trueDataSource = allDataSources[i];
+      }
+    }
+    return trueDataSource;
   }
 }

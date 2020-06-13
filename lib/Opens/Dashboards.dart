@@ -1,4 +1,4 @@
-import 'package:eyedatai/Classes/Dashboard.dart';
+import 'package:eyedatai/Classes/DashboardModel.dart';
 import 'package:eyedatai/Opened/DashboardOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +6,7 @@ import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class Dashboards extends StatefulWidget {
-  List<Dashboard> dashboards = new List();
+  List<DashboardModel> dashboards = new List();
 
   Dashboards({@required this.dashboards});
 
@@ -15,7 +15,7 @@ class Dashboards extends StatefulWidget {
 }
 
 class _DashboardsState extends State<Dashboards> {
-  List<Dashboard> dashboards = new List();
+  List<DashboardModel> dashboards = new List();
 
   _DashboardsState(this.dashboards);
 
