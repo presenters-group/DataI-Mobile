@@ -41,7 +41,7 @@
               "type": "numeric"
             },
             {
-              "value": 10,
+              "value": 14,
               "type": "numeric"
             }
           ],
@@ -630,6 +630,7 @@
       "name": "visualization1",
       "id": 0,
       "data": 0,
+      "xColumn" : 2,
       "usedColumns": [
         0,
         2
@@ -645,8 +646,9 @@
       "name": "visualization2",
       "id": 1,
       "data": 1,
+      "xColumn" : 2,
       "usedColumns": [
-        3,
+        2,
         4
       ],
       "chart": "BarChart",

@@ -1,5 +1,10 @@
+import 'package:eyedatai/Classes/AggregateData.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
+import 'package:eyedatai/Classes/SeriesData.dart';
 import 'package:eyedatai/Classes/VisualizerModel.dart';
+import 'package:eyedatai/Opened/Charts/BarChart.dart';
+import 'package:eyedatai/Opened/Charts/LineChart.dart';
+import 'package:eyedatai/Opened/Charts/PieChart.dart';
 import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
@@ -18,8 +23,8 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
     with SingleTickerProviderStateMixin {
   TabController tabController;
   TableModel dataSource;
-
   VisualizerModel visualizer;
+  AggregateData aggregateDataBar, aggregateDataLine, aggregateDataPie;
 
   _VisualizerOpenedState(this.visualizer);
 
@@ -30,6 +35,13 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
     print("/*/*/*///*/*/*/*/*/**/*/*/*");
     print(visualizer.usedColumns);
     print(visualizer.columnsModel.length);
+    aggregateDataBar =
+        AggregateData.fromVisualizer(visualizer.columnsModel, "BarChart");
+    aggregateDataLine =
+        AggregateData.fromVisualizer(visualizer.columnsModel, "LineChart");
+    aggregateDataPie =
+        AggregateData.fromVisualizer(visualizer.columnsModel, "PieChart");
+
     super.initState();
   }
 
@@ -107,7 +119,12 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
       ),
       body: TabBarView(
         controller: tabController,
-        children: <Widget>[Container(), Container(), Container()],
+        children: <Widget>[
+          Container(),Container(),Container(),
+//          BarChart(aggregateDataBar.seriesData),
+//          LineChart(aggregateDataLine.seriesData),
+//          PieChart(aggregateDataBar.seriesData[0])
+        ],
       ),
     );
   }

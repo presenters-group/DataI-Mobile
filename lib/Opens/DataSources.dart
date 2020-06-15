@@ -71,7 +71,7 @@ class _DataSourcesState extends State<DataSources> {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => new DataSourceOpened()));
+                              builder: (context) => new DataSourceOpened(dataSources[index])));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
