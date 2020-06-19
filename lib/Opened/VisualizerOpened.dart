@@ -22,26 +22,22 @@ class VisualizerOpened extends StatefulWidget {
 class _VisualizerOpenedState extends State<VisualizerOpened>
     with SingleTickerProviderStateMixin {
   TabController tabController;
-  TableModel dataSource;
   VisualizerModel visualizer;
-  AggregateData aggregateDataBar, aggregateDataLine, aggregateDataPie;
+  AggregateData aggregateData;
 
   _VisualizerOpenedState(this.visualizer);
 
   @override
   void initState() {
     tabController = new TabController(length: 3, vsync: this);
-    print(visualizer.dataSource);
-    print("/*/*/*///*/*/*/*/*/**/*/*/*");
-    print(visualizer.usedColumns);
-    print(visualizer.columnsModel.length);
-    aggregateDataBar =
-        AggregateData.fromVisualizer(visualizer.columnsModel, "BarChart");
-    aggregateDataLine =
-        AggregateData.fromVisualizer(visualizer.columnsModel, "LineChart");
-    aggregateDataPie =
-        AggregateData.fromVisualizer(visualizer.columnsModel, "PieChart");
+    aggregateData = AggregateData.fromVisualizer(
+        visualizer.columnsModel, visualizer.xColumn);
 
+    /*aggregateDataLine = AggregateData.fromVisualizer(
+        visualizer.columnsModel, "LineChart", visualizer.xColumn);
+    aggregateDataPie = AggregateData.fromVisualizer(
+        visualizer.columnsModel, "PieChart", visualizer.xColumn);
+*/
     super.initState();
   }
 
@@ -76,13 +72,13 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
           ),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 15.0, top: 20),
+              padding: const EdgeInsets.only(right: 15.0, top: 27),
               child: Container(
                 height: 30,
                 width: 30,
                 decoration: BoxDecoration(
-                    image:
-                    DecorationImage(image: AssetImage('Images/Logo.png'))),
+                    image: DecorationImage(
+                        image: AssetImage('Images/Filter.png'))),
               ),
             ),
           ],
@@ -120,10 +116,60 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
       body: TabBarView(
         controller: tabController,
         children: <Widget>[
-          Container(),Container(),Container(),
-//          BarChart(aggregateDataBar.seriesData),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children:
+                  List.generate(visualizer.columnsModel.length, (index) {
+                    return visualizer.columnsModel[index].id ==
+                        visualizer.xColumn
+                        ? Container(
+                      width: 0.0,
+                      height: 0.0,
+                    )
+                        : Row(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Container(
+                            width: 20,
+                            height: 15,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: visualizer.columnsModel[index]
+                                    .columnStyleMode.color),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            visualizer.columnsModel[index].name
+                                .toString(),
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: ColorClass.fontColor,
+                                fontFamily: FontClass.appFont),
+                          ),
+                        )
+                      ],
+                    );
+                  }),
+                ),
+              ),
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: BarChart(visualizer.aggregateData.seriesDataBar),
+                  )),
+            ],
+          ),
+          PieChart(visualizer.aggregateData.seriesDataPie),
+          Container(),
+
 //          LineChart(aggregateDataLine.seriesData),
-//          PieChart(aggregateDataBar.seriesData[0])
         ],
       ),
     );

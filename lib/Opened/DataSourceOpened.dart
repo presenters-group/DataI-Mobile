@@ -91,12 +91,10 @@ class _DataSourceOpenedState extends State<DataSourceOpened> {
             print(item);
             return TableRow(
               /* decoration: BoxDecoration(
-                    color: item.length == 4
-                        ? tableModel.listColumns[3].columnStyleMode.color
-                        : null),*/
+                        color: item.length == 4
+                            ? tableModel.listColumns[3].columnStyleMode.color
+                            : null),*/
                 children: item.map((row) {
-                  print(".");
-                  print(row);
                   return Container(
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

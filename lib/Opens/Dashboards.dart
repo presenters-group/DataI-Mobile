@@ -72,7 +72,7 @@ class _DashboardsState extends State<Dashboards> {
                           context,
                           new MaterialPageRoute(
                               builder: (context) =>
-                                  new DashboardOpened(dashboards[index].name)));
+                              new DashboardOpened(dashboards[index])));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,

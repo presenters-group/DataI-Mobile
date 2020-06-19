@@ -1,3 +1,4 @@
+import 'package:eyedatai/Classes/AggregateData.dart';
 import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Classes/Filter.dart';
@@ -10,27 +11,32 @@ class VisualizerModel {
   int dataID;
   var visualizerName;
   List<dynamic> usedColumns = new List();
+  int xColumn;
   List<dynamic> filters = new List();
   List<ColumnModel> columnsModel = new List();
   List<Filter> filtersModel = new List();
+  AggregateData aggregateData;
   bool isDeleted;
-  bool isBar;
-  bool isLine;
-  bool isPie;
+  bool isBar = true;
+  bool isLine = false;
+  bool isPie = false;
 
-  VisualizerModel(
-      {@required this.visualizerID,
-        @required this.dataID,
-        @required this.visualizerName,
-        @required this.usedColumns,
-        @required this.filters,
-        @required this.columnsModel,
-        @required this.filtersModel,
-        @required this.isDeleted,
-        @required this.isBar,
-        @required this.isLine,
-        @required this.isPie,
-        @required this.dataSource});
+  VisualizerModel({
+    @required this.visualizerID,
+    @required this.dataID,
+    @required this.visualizerName,
+    @required this.usedColumns,
+    @required this.xColumn,
+    @required this.filters,
+    @required this.columnsModel,
+    @required this.filtersModel,
+    @required this.aggregateData,
+    @required this.isDeleted,
+    @required this.isBar,
+    @required this.isLine,
+    @required this.isPie,
+    @required this.dataSource,
+  });
 
   factory VisualizerModel.fromJSON(
       Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
@@ -40,10 +46,13 @@ class VisualizerModel {
       dataID: json["data"],
       visualizerName: json["name"],
       usedColumns: json["usedColumns"],
+      xColumn: json["xColumn"],
       filters: json["filters"],
-      columnsModel:
-      checkUsedColumns(totalJSON, json["usedColumns"], json["data"]),
+      columnsModel: checkUsedColumns(
+          totalJSON, json["usedColumns"], json["data"], json["xColumn"]),
       filtersModel: checkUsedFilters(totalJSON, json["filters"]),
+      aggregateData: convertToAggregateData(
+          totalJSON, json["usedColumns"], json["data"], json["xColumn"]),
       isDeleted: json["isDeleted"],
       isBar: true,
       isLine: false,
@@ -67,7 +76,7 @@ class VisualizerModel {
     return trueDataSource;
   }
 
-  static List<ColumnModel> checkUsedColumns(json, usedCol, dataID) {
+  static List<ColumnModel> checkUsedColumns(json, usedCol, dataID, xColumn) {
     /* List<ColumnModel> trueColumnModel = new List();
     List<dynamic> allDSJSON = json["dataSources"];
     List<TableModel>tablesModels =new List();
@@ -106,6 +115,14 @@ class VisualizerModel {
         trueColumns.add(trueTableModel.listColumns[i]);
       }
     }
+    /*    ColumnModel tempColumnModel;
+    for(int i = 0 ; i < trueColumns.length ; i++){
+      if(trueColumns[i].id == xColumn){
+        tempColumnModel = trueColumns[i];
+        trueColumns.remove(trueColumns[i]);
+      }
+    }
+    trueColumns.insert(0, tempColumnModel);*/
     return trueColumns;
   }
 
@@ -122,5 +139,19 @@ class VisualizerModel {
       }
     }
     return trueFilters;
+  }
+
+  static convertToAggregateData(json, usedCol, dataID, xColumn) {
+    List<ColumnModel> trueColumns =
+    checkUsedColumns(json, usedCol, dataID, xColumn);
+    /*    ColumnModel tempColumnModel;
+    for(int i = 0 ; i < trueColumns.length ; i++){
+      if(trueColumns[i].id == xColumn){
+        tempColumnModel = trueColumns[i];
+        trueColumns.remove(trueColumns[i]);
+      }
+    }
+    trueColumns.insert(0, tempColumnModel);*/
+    return AggregateData.fromVisualizer(trueColumns, xColumn);
   }
 }

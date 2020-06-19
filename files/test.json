@@ -5,11 +5,11 @@
       "id": 0,
       "columns": [
         {
-          "name": "السعر",
+          "name": "Price",
           "id": 0,
           "cells": [
             {
-              "value": "السعر",
+              "value": "Price",
               "type": "string"
             },
             {
@@ -54,7 +54,7 @@
           "columnType": "Measures",
           "valueCategories": [
             {
-              "value": "السعر",
+              "value": "Price",
               "type": "string"
             },
             {
@@ -73,11 +73,11 @@
           "isDeleted": false
         },
         {
-          "name": "الكمية",
+          "name": "Qu",
           "id": 1,
           "cells": [
             {
-              "value": "الكمية",
+              "value": "Qu",
               "type": "string"
             },
             {
@@ -122,7 +122,7 @@
           "columnType": "Measures",
           "valueCategories": [
             {
-              "value": "الكمية",
+              "value": "Qu",
               "type": "string"
             },
             {
@@ -141,11 +141,11 @@
           "isDeleted": false
         },
         {
-          "name": "النوع",
+          "name": "Kind",
           "id": 2,
           "cells": [
             {
-              "value": "النوع",
+              "value": "Kind",
               "type": "string"
             },
             {
@@ -190,7 +190,7 @@
           "columnType": "Dimensions",
           "valueCategories": [
             {
-              "value": "النوع",
+              "value": "Kind",
               "type": "string"
             },
             {
@@ -209,11 +209,11 @@
           "isDeleted": false
         },
         {
-          "name": "الوزن",
+          "name": "Weight",
           "id": 4,
           "cells": [
             {
-              "value": "الوزن",
+              "value": "Weight",
               "type": "string"
             },
             {
@@ -258,7 +258,7 @@
           "columnType": "Measures",
           "valueCategories": [
             {
-              "value": "الوزن",
+              "value": "Weight",
               "type": "string"
             },
             {
@@ -317,79 +317,11 @@
       "id": 1,
       "columns": [
         {
-          "name": "السعر",
-          "id": 0,
-          "cells": [
-            {
-              "value": "السعر",
-              "type": "string"
-            },
-            {
-              "value": 15,
-              "type": "numeric"
-            },
-            {
-              "value": 20,
-              "type": "numeric"
-            },
-            {
-              "value": 20,
-              "type": "numeric"
-            },
-            {
-              "value": 20,
-              "type": "numeric"
-            },
-            {
-              "value": 15,
-              "type": "numeric"
-            },
-            {
-              "value": 15,
-              "type": "numeric"
-            },
-            {
-              "value": 10,
-              "type": "numeric"
-            },
-            {
-              "value": 10,
-              "type": "numeric"
-            }
-          ],
-          "style": {
-            "color": "#26C485",
-            "lineWeight": 1.0,
-            "pointWeight": 1.0,
-            "font": "Calibri"
-          },
-          "columnType": "Measures",
-          "valueCategories": [
-            {
-              "value": "السعر",
-              "type": "string"
-            },
-            {
-              "value": 10,
-              "type": "numeric"
-            },
-            {
-              "value": 20,
-              "type": "numeric"
-            },
-            {
-              "value": 15,
-              "type": "numeric"
-            }
-          ],
-          "isDeleted": false
-        },
-        {
-          "name": "الكمية",
+          "name": "Quantity",
           "id": 1,
           "cells": [
             {
-              "value": "الكمية",
+              "value": "Quantity",
               "type": "string"
             },
             {
@@ -434,7 +366,7 @@
           "columnType": "Measures",
           "valueCategories": [
             {
-              "value": "الكمية",
+              "value": "Quantity",
               "type": "string"
             },
             {
@@ -453,11 +385,11 @@
           "isDeleted": false
         },
         {
-          "name": "النوع",
+          "name": "Kind",
           "id": 2,
           "cells": [
             {
-              "value": "النوع",
+              "value": "Kind",
               "type": "string"
             },
             {
@@ -502,7 +434,7 @@
           "columnType": "Dimensions",
           "valueCategories": [
             {
-              "value": "النوع",
+              "value": "Kind",
               "type": "string"
             },
             {
@@ -521,11 +453,11 @@
           "isDeleted": false
         },
         {
-          "name": "الوزن",
+          "name": "Weight",
           "id": 4,
           "cells": [
             {
-              "value": "الوزن",
+              "value": "Weight",
               "type": "string"
             },
             {
@@ -570,7 +502,7 @@
           "columnType": "Measures",
           "valueCategories": [
             {
-              "value": "الوزن",
+              "value": "Weight",
               "type": "string"
             },
             {
@@ -630,7 +562,25 @@
       "name": "visualization1",
       "id": 0,
       "data": 0,
-      "xColumn" : 2,
+      "xColumn": 2,
+      "usedColumns": [
+        0,
+        1,
+        2,
+        4
+      ],
+      "chart": "BoundaryLineChart",
+      "filters": [
+        0,
+        1
+      ],
+      "isDeleted": false
+    },
+    {
+      "name": "visualization1",
+      "id": 1,
+      "data": 0,
+      "xColumn": 2,
       "usedColumns": [
         0,
         2
@@ -646,14 +596,16 @@
       "name": "visualization2",
       "id": 1,
       "data": 1,
-      "xColumn" : 2,
+      "xColumn": 2,
       "usedColumns": [
         2,
+        1,
         4
       ],
       "chart": "BarChart",
       "filters": [
         2,
+        1,
         4
       ],
       "isDeleted": false
@@ -692,9 +644,40 @@
               }
             }
           ]
+        },
+        {
+          "visualizationIndex": 1,
+          "measurements": {
+            "width": 1.0,
+            "height": 1.0,
+            "x": 1.0,
+            "y": 1.0
+          },
+          "displayedFilters": [
+            {
+              "filterIndex": 0,
+              "measurements": {
+                "width": 0.0,
+                "height": 0.0,
+                "x": 0.0,
+                "y": 0.0
+              }
+            },
+            {
+              "filterIndex": 1,
+              "measurements": {
+                "width": 1.0,
+                "height": 1.0,
+                "x": 1.0,
+                "y": 1.0
+              }
+            }
+          ]
         }
       ]
     }
+
+
   ],
   "filters": [
     {

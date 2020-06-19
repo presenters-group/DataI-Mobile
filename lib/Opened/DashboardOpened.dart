@@ -1,25 +1,27 @@
+import 'package:eyedatai/Classes/DashboardModel.dart';
 import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
 import '../FontClass.dart';
+import 'Charts/BarChart.dart';
 import 'FiltersOnVisualizer.dart';
 
 // ignore: must_be_immutable
 class DashboardOpened extends StatefulWidget {
-  var titleDashboard;
+  DashboardModel dashboard;
 
-  DashboardOpened(this.titleDashboard);
+  DashboardOpened(this.dashboard);
 
   @override
-  _DashboardOpenedState createState() => _DashboardOpenedState(titleDashboard);
+  _DashboardOpenedState createState() => _DashboardOpenedState(dashboard);
 }
 
 class _DashboardOpenedState extends State<DashboardOpened> {
-  var titleDashboard;
+  DashboardModel dashboard;
   int indexClicked = -1;
   bool isLine = false, isBar = false, isPie = false;
 
-  _DashboardOpenedState(this.titleDashboard);
+  _DashboardOpenedState(this.dashboard);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
           title: Padding(
             padding: const EdgeInsets.only(top: 25.0),
             child: Text(
-              titleDashboard,
+              dashboard.name,
               style: TextStyle(
                   color: ColorClass.fontColor,
                   fontFamily: FontClass.appFont,
@@ -69,7 +71,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
       ),
       backgroundColor: ColorClass.scaffoldBackgroundColor,
       body: ListView.builder(
-          itemCount: 10,
+          itemCount: dashboard.visualizersList.length,
           itemBuilder: (BuildContext context, int index) {
             return Stack(
               children: <Widget>[
@@ -77,7 +79,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                   padding: const EdgeInsets.only(
                       top: 15.0, bottom: 25.0, left: 15.0, right: 16.0),
                   child: Container(
-                    height: 295.0,
+                    height: 350.0,
                     width: MediaQuery.of(context).size.width,
                     color: null,
                     child: Align(
@@ -161,7 +163,9 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
-                                              new FiltersOnVisualizer()));
+                                              new FiltersOnVisualizer(
+                                                  dashboard.visualizersList[
+                                                  index])));
                                     },
                                     child: Container(
                                       height: 25,
@@ -176,7 +180,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                   padding: const EdgeInsets.only(
                                       left: 0.0, right: 8.0),
                                   child: Text(
-                                    "(Visualizer 1)",
+                                    "(${dashboard.visualizersList[index].visualizerName})",
                                     style: TextStyle(
                                         color: ColorClass.fontColor,
                                         fontFamily: FontClass.appFont,
@@ -191,9 +195,11 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                   padding: const EdgeInsets.only(
                       top: 53.0, bottom: 25.0, left: 15.0, right: 15.0),
                   child: Container(
-                    height: 258.00,
+                    height: 313.00,
                     width: MediaQuery.of(context).size.width,
                     color: ColorClass.containerColor,
+                    child: BarChart(dashboard
+                        .visualizersList[index].aggregateData.seriesDataBar),
                   ),
                 ),
               ],
@@ -202,4 +208,3 @@ class _DashboardOpenedState extends State<DashboardOpened> {
     );
   }
 }
-

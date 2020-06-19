@@ -29,7 +29,7 @@ class LineChart extends StatelessWidget {
         defaultRenderer: new charts.LineRendererConfig(
             includeArea: true, stacked: true),
         animate: true,
-        animationDuration: Duration(seconds: 2),
+        animationDuration: Duration(seconds: 1),
         behaviors: [
           new charts.PanAndZoomBehavior(),
         ],

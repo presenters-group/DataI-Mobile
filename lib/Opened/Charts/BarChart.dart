@@ -25,7 +25,7 @@ class BarChart extends StatelessWidget {
       child: charts.BarChart(
         series,
         animate: true,
-        animationDuration: Duration(seconds: 2),
+        animationDuration: Duration(seconds: 1),
         domainAxis: new charts.OrdinalAxisSpec(
             renderSpec: new charts.SmallTickRendererSpec(
                 minimumPaddingBetweenLabelsPx: 0,
