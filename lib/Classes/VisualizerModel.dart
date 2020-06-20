@@ -1,8 +1,7 @@
 import 'package:eyedatai/Classes/AggregateData.dart';
 import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
-import 'package:eyedatai/Classes/Filter.dart';
-import 'package:eyedatai/DataI.dart';
+import 'package:eyedatai/Classes/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
 
 class VisualizerModel {
@@ -14,7 +13,7 @@ class VisualizerModel {
   int xColumn;
   List<dynamic> filters = new List();
   List<ColumnModel> columnsModel = new List();
-  List<Filter> filtersModel = new List();
+  List<FilterModel> filtersModel = new List();
   AggregateData aggregateData;
   bool isDeleted;
   bool isBar = true;
@@ -126,12 +125,12 @@ class VisualizerModel {
     return trueColumns;
   }
 
-  static List<Filter> checkUsedFilters(json, usedFilter) {
-    List<Filter> trueFilters = new List();
-    List<Filter> allFilters = new List();
+  static List<FilterModel> checkUsedFilters(json, usedFilter) {
+    List<FilterModel> trueFilters = new List();
+    List<FilterModel> allFilters = new List();
     List<dynamic> allFiltersJSON = json["filters"];
     for (var newFilter in allFiltersJSON) {
-      allFilters.add(new Filter.fromJSON(newFilter, json));
+      allFilters.add(new FilterModel.fromJSON(newFilter, json));
     }
     for (int i = 0; i < allFilters.length; i++) {
       if (usedFilter.contains(allFilters[i].id)) {
@@ -143,7 +142,7 @@ class VisualizerModel {
 
   static convertToAggregateData(json, usedCol, dataID, xColumn) {
     List<ColumnModel> trueColumns =
-    checkUsedColumns(json, usedCol, dataID, xColumn);
+        checkUsedColumns(json, usedCol, dataID, xColumn);
     /*    ColumnModel tempColumnModel;
     for(int i = 0 ; i < trueColumns.length ; i++){
       if(trueColumns[i].id == xColumn){

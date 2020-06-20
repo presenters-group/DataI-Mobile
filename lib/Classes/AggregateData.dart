@@ -1,6 +1,8 @@
+import 'dart:ui';
+
 import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/SeriesData.dart';
-
+import 'package:eyedatai/ColorClass.dart';
 
 class AggregateData {
   List<List<SeriesData>> seriesDataBar = new List();
@@ -33,9 +35,9 @@ class AggregateData {
     colM.insert(0, tempColumnModel);
 
     //cells
-    for (int j = 0; j < colM[0].valueCategories.length; j++) {
+    for (int j = 0; j < colM[0].cells.length; j++) {
       for (int i = 0; i < colM.length; i++) {
-        row.add(colM[i].valueCategories[j].value);
+        row.add(colM[i].cells[j].value);
       }
       dataUsed.add(row);
       print(row);
@@ -122,15 +124,18 @@ class AggregateData {
       sumRows.add(listRows[i].reduce((a, b) => a + b));
     }
     print(sumRows);
-    print("*********************************");
-    print(dataUsed.length);
-    print(colM.length);
-    print("*********************************");
+
+    ColorClass colorClass = new ColorClass();
+    List<Color> colors = colorClass.generateColors();
+    for (int i = 0; i < colM.length; i++) {
+      colors.insert(i, colM[i].columnStyleMode.color);
+    }
     for (int i = 1; i < dataUsed.length; i++) {
       dataPieChart.add(new SeriesData(
           task: dataUsed[i][0],
           taskValue: sumRows[i - 1],
-          taskColor: colM[0].columnStyleMode.color));
+          taskColor: colors[i]));
+      //colM[0].columnStyleMode.color
     }
     return dataPieChart;
   }

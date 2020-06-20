@@ -1,4 +1,4 @@
-import 'package:eyedatai/Classes/Filter.dart';
+import 'package:eyedatai/Classes/FilterModel.dart';
 import 'package:eyedatai/Opened/FilterOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -6,7 +6,7 @@ import '../ColorClass.dart';
 import '../FontClass.dart';
 
 class Filters extends StatefulWidget {
-  List<Filter> filters = new List();
+  List<FilterModel> filters = new List();
 
   Filters({@required this.filters});
 
@@ -15,7 +15,7 @@ class Filters extends StatefulWidget {
 }
 
 class _FiltersState extends State<Filters> {
-  List<Filter> filters = new List();
+  List<FilterModel> filters = new List();
 
   _FiltersState(this.filters);
 
@@ -71,7 +71,8 @@ class _FiltersState extends State<Filters> {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) => new FilterOpened()));
+                              builder: (context) =>
+                                  new FilterOpened(filters[index])));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,

@@ -1,4 +1,6 @@
 import 'package:eyedatai/Classes/DashboardModel.dart';
+import 'package:eyedatai/Opened/Charts/LineChart.dart';
+import 'package:eyedatai/Opened/Charts/PieChart.dart';
 import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
@@ -18,8 +20,6 @@ class DashboardOpened extends StatefulWidget {
 
 class _DashboardOpenedState extends State<DashboardOpened> {
   DashboardModel dashboard;
-  int indexClicked = -1;
-  bool isLine = false, isBar = false, isPie = false;
 
   _DashboardOpenedState(this.dashboard);
 
@@ -60,7 +60,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                    DecorationImage(image: AssetImage('Images/Logo.png'))),
+                        DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -94,17 +94,20 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      indexClicked = index;
-                                      isBar = true;
-                                      isLine = isPie = false;
+                                      dashboard.visualizersList[index].isBar =
+                                          true;
+                                      dashboard.visualizersList[index].isLine =
+                                          dashboard.visualizersList[index]
+                                              .isPie = false;
                                     });
                                   },
                                   child: Container(
                                     width: 40,
                                     height: 40,
-                                    decoration: (isBar && indexClicked == index)
-                                        ? BoxDecoration(color: Colors.white)
-                                        : null,
+                                    decoration:
+                                        dashboard.visualizersList[index].isBar
+                                            ? BoxDecoration(color: Colors.white)
+                                            : null,
                                     child: Icon(
                                       Icons.insert_chart,
                                       size: 27,
@@ -118,16 +121,18 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      indexClicked = index;
-                                      isLine = true;
-                                      isBar = isPie = false;
+                                      dashboard.visualizersList[index].isLine =
+                                          true;
+                                      dashboard.visualizersList[index].isBar =
+                                          dashboard.visualizersList[index]
+                                              .isPie = false;
                                     });
                                   },
                                   child: Container(
                                       width: 40,
                                       height: 40,
-                                      decoration: (isLine &&
-                                          indexClicked == index)
+                                      decoration: dashboard
+                                              .visualizersList[index].isLine
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.show_chart, size: 27)),
@@ -139,16 +144,18 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      indexClicked = index;
-                                      isPie = true;
-                                      isLine = isBar = false;
+                                      dashboard.visualizersList[index].isPie =
+                                          true;
+                                      dashboard.visualizersList[index].isLine =
+                                          dashboard.visualizersList[index]
+                                              .isBar = false;
                                     });
                                   },
                                   child: Container(
                                       width: 40,
                                       height: 40,
-                                      decoration: (isPie &&
-                                          indexClicked == index)
+                                      decoration: dashboard
+                                              .visualizersList[index].isPie
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.pie_chart, size: 25)),
@@ -163,9 +170,9 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
-                                              new FiltersOnVisualizer(
-                                                  dashboard.visualizersList[
-                                                  index])));
+                                                  new FiltersOnVisualizer(
+                                                      dashboard.visualizersList[
+                                                          index])));
                                     },
                                     child: Container(
                                       height: 25,
@@ -198,8 +205,16 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                     height: 313.00,
                     width: MediaQuery.of(context).size.width,
                     color: ColorClass.containerColor,
-                    child: BarChart(dashboard
-                        .visualizersList[index].aggregateData.seriesDataBar),
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 4.0),
+                      child: dashboard.visualizersList[index].isBar
+                          ? BarChart(dashboard.visualizersList[index]
+                              .aggregateData.seriesDataBar)
+                          : dashboard.visualizersList[index].isPie
+                              ? PieChart(dashboard.visualizersList[index]
+                                  .aggregateData.seriesDataPie)
+                              : Container(),
+                    ),
                   ),
                 ),
               ],

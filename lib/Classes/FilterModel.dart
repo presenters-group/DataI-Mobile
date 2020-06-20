@@ -1,6 +1,6 @@
 import 'DataSources/TableModel.dart';
 
-class Filter {
+class FilterModel {
   TableModel dataSource;
   var name;
   int id;
@@ -10,7 +10,7 @@ class Filter {
   String type;
   bool isDeleted;
 
-  Filter(
+  FilterModel(
       {this.dataSource,
       this.name,
       this.id,
@@ -20,9 +20,9 @@ class Filter {
       this.type,
       this.isDeleted});
 
-  factory Filter.fromJSON(
+  factory FilterModel.fromJSON(
       Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
-    return Filter(
+    return FilterModel(
         dataSource: checkFilter(totalJSON, json["dataSource"]),
         name: json["name"],
         id: json["id"],

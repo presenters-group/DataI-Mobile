@@ -2,13 +2,13 @@ import 'dart:core';
 import 'package:eyedatai/Classes/VisualizerModel.dart';
 
 import 'DashboardModel.dart';
-import 'Filter.dart';
+import 'FilterModel.dart';
 import 'DataSources/TableModel.dart';
 
 class DataModel {
   List<TableModel> dataSources = new List();
   List<DashboardModel> dashboards = new List();
-  List<Filter> filters = new List();
+  List<FilterModel> filters = new List();
   List<VisualizerModel> visualizers = new List();
 
   DataModel(
@@ -50,11 +50,11 @@ class DataModel {
     return listDashboard;
   }
 
-  static List<Filter> convertToFilters(json) {
-    List<Filter> listFilters = new List();
+  static List<FilterModel> convertToFilters(json) {
+    List<FilterModel> listFilters = new List();
     List<dynamic> filtersJSON = json["filters"];
     for (var newFilter in filtersJSON) {
-      listFilters.add(new Filter.fromJSON(newFilter, json));
+      listFilters.add(new FilterModel.fromJSON(newFilter, json));
     }
     return listFilters;
   }

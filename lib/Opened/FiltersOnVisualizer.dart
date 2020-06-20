@@ -10,7 +10,8 @@ class FiltersOnVisualizer extends StatefulWidget {
   FiltersOnVisualizer(this.visualizerModel);
 
   @override
-  _FiltersOnVisualizerState createState() => _FiltersOnVisualizerState(visualizerModel);
+  _FiltersOnVisualizerState createState() =>
+      _FiltersOnVisualizerState(visualizerModel);
 }
 
 class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
@@ -55,7 +56,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                    DecorationImage(image: AssetImage('Images/Logo.png'))),
+                        DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -65,8 +66,37 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
         ),
       ),
       backgroundColor: ColorClass.scaffoldBackgroundColor,
-
-
+      body: GridView.count(
+        crossAxisCount: 2,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 100,
+              height: 200,
+              color: Colors.black,
+            ),
+          ),
+          Container(
+            width: 100,
+            height: 50,
+            color: Colors.black,
+          ),
+          Container(
+            width: 100,
+            height: 50,
+            color: Colors.black,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              width: 100,
+              height: 200,
+              color: Colors.black,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

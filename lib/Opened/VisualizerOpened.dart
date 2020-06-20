@@ -5,6 +5,7 @@ import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:eyedatai/Opened/Charts/BarChart.dart';
 import 'package:eyedatai/Opened/Charts/LineChart.dart';
 import 'package:eyedatai/Opened/Charts/PieChart.dart';
+import 'package:eyedatai/Opened/FiltersOnVisualizer.dart';
 import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
@@ -73,12 +74,21 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
           actions: <Widget>[
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 27),
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('Images/Filter.png'))),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                              FiltersOnVisualizer(visualizer)));
+                },
+                child: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('Images/Filter.png'))),
+                ),
               ),
             ),
           ],
@@ -123,52 +133,51 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children:
-                  List.generate(visualizer.columnsModel.length, (index) {
+                      List.generate(visualizer.columnsModel.length, (index) {
                     return visualizer.columnsModel[index].id ==
-                        visualizer.xColumn
+                            visualizer.xColumn
                         ? Container(
-                      width: 0.0,
-                      height: 0.0,
-                    )
+                            width: 0.0,
+                            height: 0.0,
+                          )
                         : Row(
-                      children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Container(
-                            width: 20,
-                            height: 15,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.rectangle,
-                                color: visualizer.columnsModel[index]
-                                    .columnStyleMode.color),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            visualizer.columnsModel[index].name
-                                .toString(),
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: ColorClass.fontColor,
-                                fontFamily: FontClass.appFont),
-                          ),
-                        )
-                      ],
-                    );
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Container(
+                                  width: 20,
+                                  height: 15,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.rectangle,
+                                      color: visualizer.columnsModel[index]
+                                          .columnStyleMode.color),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  visualizer.columnsModel[index].name
+                                      .toString(),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: ColorClass.fontColor,
+                                      fontFamily: FontClass.appFont),
+                                ),
+                              )
+                            ],
+                          );
                   }),
                 ),
               ),
               Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: BarChart(visualizer.aggregateData.seriesDataBar),
-                  )),
+                padding: const EdgeInsets.all(8.0),
+                child: BarChart(visualizer.aggregateData.seriesDataBar),
+              )),
             ],
           ),
-          PieChart(visualizer.aggregateData.seriesDataPie),
           Container(),
-
+          PieChart(visualizer.aggregateData.seriesDataPie),
 //          LineChart(aggregateDataLine.seriesData),
         ],
       ),
