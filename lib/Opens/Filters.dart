@@ -61,7 +61,7 @@ class _FiltersState extends State<Filters> {
               padding: const EdgeInsets.only(
                   top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
               child: new Container(
-                height: 160.00, //175
+                height: 180.00,
                 width: MediaQuery.of(context).size.width,
                 color: ColorClass.containerColor,
                 child: Padding(
@@ -72,7 +72,7 @@ class _FiltersState extends State<Filters> {
                           context,
                           new MaterialPageRoute(
                               builder: (context) =>
-                                  new FilterOpened(filters[index])));
+                              new FilterOpened(filters[index])));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
@@ -93,7 +93,7 @@ class _FiltersState extends State<Filters> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Data sources : ${filters[index].dataSourceID}",
+                                  "Data sources : ${filters[index].dataSource.name}",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,
@@ -111,7 +111,17 @@ class _FiltersState extends State<Filters> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Column : ${filters[index].filteredColumn}",
+                                  "Column : ${filters[index].dataSource.listColumns[filters[index].filteredColumn].name}",
+                                  //(${filters[index].filteredColumn})
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15)),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 8.0),
+                              child: Text(
+                                  "Column Type : ${filters[index].dataSource.listColumns[filters[index].filteredColumn].columnType}",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,

@@ -6,19 +6,25 @@ import 'package:eyedatai/ColorClass.dart';
 
 class AggregateData {
   List<List<SeriesData>> seriesDataBar = new List();
+  List<List<SeriesData>> seriesDataLine = new List();
   List<SeriesData> seriesDataPie = new List();
   int xColumn;
 
-  AggregateData({this.seriesDataBar, this.seriesDataPie, this.xColumn});
+  AggregateData(
+      {this.seriesDataBar,
+        this.seriesDataPie,
+        this.seriesDataLine,
+        this.xColumn});
 
   factory AggregateData.fromVisualizer(List<ColumnModel> colM, int xColumn) {
     return AggregateData(
-        seriesDataBar: convertToSeriesData(colM, xColumn),
+        seriesDataBar: convertToSeriesDataBar(colM, xColumn),
+        seriesDataLine: convertToSeriesDataLine(colM, xColumn),
         seriesDataPie: convertToSeriesDataPie(colM, xColumn),
         xColumn: xColumn);
   }
 
-  static List<List<SeriesData>> convertToSeriesData(
+  static List<List<SeriesData>> convertToSeriesDataBar(
       List<ColumnModel> colM, int xColumn) {
     List<List<SeriesData>> seriesData = new List();
     List<SeriesData> dataSingle = new List();
@@ -79,6 +85,66 @@ class AggregateData {
       seriesData.add(dataSingle);
       dataSingle = [];
     }
+
+    return seriesData;
+  }
+
+  static isNumeric(string) => num.tryParse(string) != null;
+
+  static List<List<SeriesData>> convertToSeriesDataLine(colM, xColumn) {
+    List<List<SeriesData>> seriesData = new List();
+    List<SeriesData> dataSingle = new List();
+    List<List<dynamic>> dataUsed = new List();
+    List<dynamic> row = new List();
+    ColumnModel tempColumnModel;
+
+    for (int i = 0; i < colM.length; i++) {
+      if (colM[i].id == xColumn) {
+        tempColumnModel = colM[i];
+        colM.remove(colM[i]);
+      }
+    }
+    colM.insert(0, tempColumnModel);
+
+    //cells
+    for (int j = 0; j < colM[0].valueCategories.length; j++) {
+      for (int i = 0; i < colM.length; i++) {
+        row.add(colM[i].valueCategories[j].value);
+      }
+      dataUsed.add(row);
+      print(row);
+      row = [];
+    }
+
+    print("***********////////**********");
+    print(dataUsed[1][0].toString());
+    if (isNumeric(dataUsed[1][0])) {
+      print("yes");
+      for (int j = 1; j <= colM.length - 1; j++) {
+        for (int i = 1; i < dataUsed.length; i++) {
+          dataSingle.add(
+            new SeriesData(
+                task: int.parse(dataUsed[i][0].trim()),
+                taskValue: int.parse(dataUsed[i][j].trim())),
+          );
+        }
+        seriesData.add(dataSingle);
+        dataSingle = [];
+      }
+    }
+
+    /*  var lists1 = [
+      SeriesData(task: 170, taskValue: 50),
+      SeriesData(task: 150 , taskValue: 60),
+      SeriesData(task: 120 , taskValue: 16)
+    ];
+    var lists = [
+      SeriesData(task: 280, taskValue: 100),
+      SeriesData(task: 250 , taskValue: 115),
+      SeriesData(task: 230 , taskValue: 130)
+    ];
+    seriesData.add(lists1);
+    seriesData.add(lists);*/
 
     return seriesData;
   }

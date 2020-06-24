@@ -4,7 +4,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 
 class LineChart extends StatelessWidget {
   final List<List<SeriesData>> data;
-  List<charts.Series<SeriesData, String>> series = [];
+  List<charts.Series<SeriesData, num>> series = [];
 
 
   LineChart(this.data);

@@ -34,6 +34,7 @@ class _DataSourceOpenedState extends State<DataSourceOpened> {
 
   @override
   Widget build(BuildContext context) {
+    int i = 0;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75.0),
@@ -86,14 +87,18 @@ class _DataSourceOpenedState extends State<DataSourceOpened> {
           columnWidths: {
             2: FixedColumnWidth(100.0),
           },
-          border: TableBorder.all(width: 1.0),
+          border: TableBorder.all(width: 0.5),
           children: data.map((item) {
-            print(item);
+            print(item.indexOf(item[0]));
+            //print('i : ${item.indexOf(item[(tableModel.listColumns.length - 1) - item.indexOf(item)])}');
             return TableRow(
-              /* decoration: BoxDecoration(
-                        color: item.length == 4
-                            ? tableModel.listColumns[3].columnStyleMode.color
-                            : null),*/
+
+//                decoration: BoxDecoration(
+//                    color: int.parse(item.indexOf(item[i]).toString()) == 0
+//                        ? tableModel.listColumns[0].columnStyleMode.color
+//                        : tableModel.listColumns[1].columnStyleMode.color),
+
+                decoration: BoxDecoration(color: Colors.white),
                 children: item.map((row) {
                   return Container(
                     child: Padding(
@@ -113,4 +118,6 @@ class _DataSourceOpenedState extends State<DataSourceOpened> {
       ),
     );
   }
+
+  Color gerColor(data) {}
 }

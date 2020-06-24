@@ -113,11 +113,11 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                   size: 27,
                 ),
                 Icon(
-                  Icons.show_chart,
+                  Icons.pie_chart,
                   size: 27,
                 ),
                 Icon(
-                  Icons.pie_chart,
+                  Icons.show_chart,
                   size: 27,
                 ),
               ]),
@@ -133,51 +133,76 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children:
-                      List.generate(visualizer.columnsModel.length, (index) {
+                  List.generate(visualizer.columnsModel.length, (index) {
                     return visualizer.columnsModel[index].id ==
-                            visualizer.xColumn
+                        visualizer.xColumn
                         ? Container(
-                            width: 0.0,
-                            height: 0.0,
-                          )
+                      width: 0.0,
+                      height: 0.0,
+                    )
                         : Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Container(
-                                  width: 20,
-                                  height: 15,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      color: visualizer.columnsModel[index]
-                                          .columnStyleMode.color),
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  visualizer.columnsModel[index].name
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: ColorClass.fontColor,
-                                      fontFamily: FontClass.appFont),
-                                ),
-                              )
-                            ],
-                          );
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Container(
+                            width: 20,
+                            height: 15,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: visualizer.columnsModel[index]
+                                    .columnStyleMode.color),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            visualizer.columnsModel[index].name
+                                .toString(),
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: ColorClass.fontColor,
+                                fontFamily: FontClass.appFont),
+                          ),
+                        )
+                      ],
+                    );
                   }),
                 ),
               ),
               Expanded(
                   child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BarChart(visualizer.aggregateData.seriesDataBar),
-              )),
+                    padding: const EdgeInsets.all(8.0),
+                    child: BarChart(visualizer.aggregateData.seriesDataBar),
+                  )),
             ],
           ),
-          Container(),
           PieChart(visualizer.aggregateData.seriesDataPie),
+          visualizer.aggregateData.seriesDataLine.isEmpty
+              ? Center(
+            child: Container(
+              decoration: BoxDecoration(boxShadow: [
+                new BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 0.0,
+                ),
+              ], color: ColorClass.fontColor),
+              width: MediaQuery.of(context).size.width / 1.2,
+              height: 150,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    "We Have A String Here :)",
+                    style: TextStyle(
+                        fontFamily: FontClass.appFont,
+                        fontSize: 15,
+                        color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          )
+              : LineChart(visualizer.aggregateData.seriesDataLine),
 //          LineChart(aggregateDataLine.seriesData),
         ],
       ),

@@ -60,7 +60,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                        DecorationImage(image: AssetImage('Images/Logo.png'))),
+                    DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -95,7 +95,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                   onTap: () {
                                     setState(() {
                                       dashboard.visualizersList[index].isBar =
-                                          true;
+                                      true;
                                       dashboard.visualizersList[index].isLine =
                                           dashboard.visualizersList[index]
                                               .isPie = false;
@@ -105,9 +105,9 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                     width: 40,
                                     height: 40,
                                     decoration:
-                                        dashboard.visualizersList[index].isBar
-                                            ? BoxDecoration(color: Colors.white)
-                                            : null,
+                                    dashboard.visualizersList[index].isBar
+                                        ? BoxDecoration(color: Colors.white)
+                                        : null,
                                     child: Icon(
                                       Icons.insert_chart,
                                       size: 27,
@@ -115,29 +115,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                   ),
                                 ),
                               ),
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 0.0, right: 8.0),
-                                child: InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      dashboard.visualizersList[index].isLine =
-                                          true;
-                                      dashboard.visualizersList[index].isBar =
-                                          dashboard.visualizersList[index]
-                                              .isPie = false;
-                                    });
-                                  },
-                                  child: Container(
-                                      width: 40,
-                                      height: 40,
-                                      decoration: dashboard
-                                              .visualizersList[index].isLine
-                                          ? BoxDecoration(color: Colors.white)
-                                          : null,
-                                      child: Icon(Icons.show_chart, size: 27)),
-                                ),
-                              ),
+
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 0.0, right: 8.0),
@@ -145,7 +123,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                   onTap: () {
                                     setState(() {
                                       dashboard.visualizersList[index].isPie =
-                                          true;
+                                      true;
                                       dashboard.visualizersList[index].isLine =
                                           dashboard.visualizersList[index]
                                               .isBar = false;
@@ -155,10 +133,33 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       width: 40,
                                       height: 40,
                                       decoration: dashboard
-                                              .visualizersList[index].isPie
+                                          .visualizersList[index].isPie
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.pie_chart, size: 25)),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                    left: 0.0, right: 8.0),
+                                child: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      dashboard.visualizersList[index].isLine =
+                                      true;
+                                      dashboard.visualizersList[index].isBar =
+                                          dashboard.visualizersList[index]
+                                              .isPie = false;
+                                    });
+                                  },
+                                  child: Container(
+                                      width: 40,
+                                      height: 40,
+                                      decoration: dashboard
+                                          .visualizersList[index].isLine
+                                          ? BoxDecoration(color: Colors.white)
+                                          : null,
+                                      child: Icon(Icons.show_chart, size: 27)),
                                 ),
                               ),
                               Padding(
@@ -170,9 +171,9 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
-                                                  new FiltersOnVisualizer(
-                                                      dashboard.visualizersList[
-                                                          index])));
+                                              new FiltersOnVisualizer(
+                                                  dashboard.visualizersList[
+                                                  index])));
                                     },
                                     child: Container(
                                       height: 25,
@@ -209,11 +210,25 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                       padding: const EdgeInsets.only(top: 4.0),
                       child: dashboard.visualizersList[index].isBar
                           ? BarChart(dashboard.visualizersList[index]
-                              .aggregateData.seriesDataBar)
+                          .aggregateData.seriesDataBar)
                           : dashboard.visualizersList[index].isPie
-                              ? PieChart(dashboard.visualizersList[index]
-                                  .aggregateData.seriesDataPie)
-                              : Container(),
+                          ? PieChart(dashboard.visualizersList[index]
+                          .aggregateData.seriesDataPie)
+                          : dashboard.visualizersList[index].aggregateData
+                          .seriesDataLine.isEmpty
+                          ? Container(
+                        width: 100,
+                        height: 50,
+                        child: Center(
+                          child: Text("We Have A String Here !",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: FontClass.appFont)),
+                        ),
+                        color: ColorClass.fontColor,
+                      )
+                          : LineChart(dashboard.visualizersList[index]
+                          .aggregateData.seriesDataLine),
                     ),
                   ),
                 ),

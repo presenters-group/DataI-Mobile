@@ -6,9 +6,9 @@ import 'package:eyedatai/Opens/Filters.dart';
 import 'package:eyedatai/Opens/OpenFile.dart';
 import 'package:eyedatai/Opens/Visualizers.dart';
 import 'package:flutter/material.dart';
-import 'Classes/DataModel.dart';
 import 'ColorClass.dart';
 import 'FontClass.dart';
+import 'package:eyedatai/Classes/DataModel.dart';
 
 String filePath;
 DataModel table;
@@ -26,6 +26,8 @@ class _DataIState extends State<DataI> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   bool isSelectedFile = false;
   var jsonResult;
+  String data = "";
+  bool isActiveBottomSheet = false;
 
   Widget oldThingsDrawer() {
     return Container(
@@ -167,6 +169,85 @@ class _DataIState extends State<DataI> {
     );
   }
 
+  void showBottomSheet({data}) {
+    setState(() {
+      isActiveBottomSheet = true;
+    });
+    _scaffoldKey.currentState
+        .showBottomSheet(
+          (context) => Scaffold(
+            appBar: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  setState(() {
+                    isActiveBottomSheet = false;
+                  });
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.keyboard_arrow_down,
+                  color: ColorClass.fontColor,
+                ),
+              ),
+              backgroundColor: ColorClass.scaffoldBackgroundColor,
+              elevation: 0.0,
+            ),
+            backgroundColor: ColorClass.scaffoldBackgroundColor,
+            body: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0, bottom: 12.0),
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: <Widget>[
+                          Text(
+                            "Press On  ' ",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: FontClass.appFont,
+                                fontSize: 15),
+                          ),
+                          Container(
+                            height: 25,
+                            width: 25,
+                            decoration: BoxDecoration(
+                                image: DecorationImage(
+                                    image: AssetImage('Images/Logo.png'))),
+                          ),
+                          Text(
+                            " '  To Show Data Again :)",
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontFamily: FontClass.appFont,
+                                fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Text(
+                    data,
+                    style: TextStyle(
+                        color: ColorClass.fontColor,
+                        fontFamily: FontClass.appFont,
+                        fontSize: 17),
+                  )
+                ],
+              ),
+            ),
+          ),
+          backgroundColor: ColorClass.scaffoldBackgroundColor,
+        )
+        .closed
+        .then((val) {
+      setState(() {
+        isActiveBottomSheet = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -198,13 +279,33 @@ class _DataIState extends State<DataI> {
           ),
           actions: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(right: 15.0, top: 20),
-              child: Container(
-                height: 30,
-                width: 30,
-                decoration: BoxDecoration(
-                    image:
-                        DecorationImage(image: AssetImage('Images/Logo.png'))),
+              padding: const EdgeInsets.only(right: 8.0, top: 20),
+              child: IconButton(
+                onPressed: () {
+                  if (data.isEmpty) {
+                    var snackBar = new SnackBar(
+                      content: Text("Please Open File"),
+                      duration: Duration(seconds: 1),
+                    );
+                    _scaffoldKey.currentState.showSnackBar(snackBar);
+                  } else {
+                    if (isActiveBottomSheet) {
+                      setState(() {
+                        isActiveBottomSheet = false;
+                      });
+                      Navigator.pop(context);
+                    } else {
+                      showBottomSheet(data: data);
+                    }
+                  }
+                },
+                icon: Container(
+                  height: 30,
+                  width: 30,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('Images/Logo.png'))),
+                ),
               ),
             ),
           ],
@@ -275,7 +376,7 @@ class _DataIState extends State<DataI> {
                               setState(() {
                                 isSelectedFile = true;
                               });
-                              String data = await DefaultAssetBundle.of(context)
+                              data = await DefaultAssetBundle.of(context)
                                   .loadString("files/test.json");
                               jsonResult = json.decode(data);
                               setState(() {
@@ -286,6 +387,7 @@ class _DataIState extends State<DataI> {
                               print(table.dashboards.length);
                               print("**************");
                               print(jsonResult);
+                              showBottomSheet(data: data);
                             });
                           },
                           child: new Container(
