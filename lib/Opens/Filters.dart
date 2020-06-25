@@ -111,7 +111,7 @@ class _FiltersState extends State<Filters> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Column : ${filters[index].dataSource.listColumns[filters[index].filteredColumn].name}",
+                                  "Column : ${filters[index].dataSource.columnsList[filters[index].filteredColumn].name}",
                                   //(${filters[index].filteredColumn})
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
@@ -121,7 +121,7 @@ class _FiltersState extends State<Filters> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Column Type : ${filters[index].dataSource.listColumns[filters[index].filteredColumn].columnType}",
+                                  "Column Type : ${filters[index].dataSource.columnsList[filters[index].filteredColumn].columnType}",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,

@@ -4,20 +4,20 @@ import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/SeriesData.dart';
 import 'package:eyedatai/ColorClass.dart';
 
-class AggregateData {
+class ChartData {
   List<List<SeriesData>> seriesDataBar = new List();
   List<List<SeriesData>> seriesDataLine = new List();
   List<SeriesData> seriesDataPie = new List();
   int xColumn;
 
-  AggregateData(
+  ChartData(
       {this.seriesDataBar,
         this.seriesDataPie,
         this.seriesDataLine,
         this.xColumn});
 
-  factory AggregateData.fromVisualizer(List<ColumnModel> colM, int xColumn) {
-    return AggregateData(
+  factory ChartData.fromVisualizer(List<ColumnModel> colM, int xColumn) {
+    return ChartData(
         seriesDataBar: convertToSeriesDataBar(colM, xColumn),
         seriesDataLine: convertToSeriesDataLine(colM, xColumn),
         seriesDataPie: convertToSeriesDataPie(colM, xColumn),

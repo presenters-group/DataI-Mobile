@@ -92,7 +92,7 @@ class _DataSourcesState extends State<DataSources> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Columns : ${dataSources[index].listColumns.length} , Rows : ${dataSources[index].listColumns[0].cells.length}",
+                                  "Columns : ${dataSources[index].columnsList.length} , Rows : ${dataSources[index].columnsList[0].cells.length}",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,

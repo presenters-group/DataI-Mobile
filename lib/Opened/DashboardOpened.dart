@@ -60,7 +60,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                    DecorationImage(image: AssetImage('Images/Logo.png'))),
+                        DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -72,14 +72,14 @@ class _DashboardOpenedState extends State<DashboardOpened> {
       backgroundColor: ColorClass.scaffoldBackgroundColor,
       body: ListView.builder(
           itemCount: dashboard.visualizersList.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (BuildContext context, int indexList) {
             return Stack(
               children: <Widget>[
                 Padding(
                   padding: const EdgeInsets.only(
                       top: 15.0, bottom: 25.0, left: 15.0, right: 16.0),
                   child: Container(
-                    height: 350.0,
+                    height: 362.0,
                     width: MediaQuery.of(context).size.width,
                     color: null,
                     child: Align(
@@ -94,18 +94,19 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      dashboard.visualizersList[index].isBar =
-                                      true;
-                                      dashboard.visualizersList[index].isLine =
-                                          dashboard.visualizersList[index]
+                                      dashboard.visualizersList[indexList]
+                                          .isBar = true;
+                                      dashboard.visualizersList[indexList]
+                                              .isLine =
+                                          dashboard.visualizersList[indexList]
                                               .isPie = false;
                                     });
                                   },
                                   child: Container(
                                     width: 40,
                                     height: 40,
-                                    decoration:
-                                    dashboard.visualizersList[index].isBar
+                                    decoration: dashboard
+                                            .visualizersList[indexList].isBar
                                         ? BoxDecoration(color: Colors.white)
                                         : null,
                                     child: Icon(
@@ -115,17 +116,17 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                   ),
                                 ),
                               ),
-
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 0.0, right: 8.0),
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      dashboard.visualizersList[index].isPie =
-                                      true;
-                                      dashboard.visualizersList[index].isLine =
-                                          dashboard.visualizersList[index]
+                                      dashboard.visualizersList[indexList]
+                                          .isPie = true;
+                                      dashboard.visualizersList[indexList]
+                                              .isLine =
+                                          dashboard.visualizersList[indexList]
                                               .isBar = false;
                                     });
                                   },
@@ -133,7 +134,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       width: 40,
                                       height: 40,
                                       decoration: dashboard
-                                          .visualizersList[index].isPie
+                                              .visualizersList[indexList].isPie
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.pie_chart, size: 25)),
@@ -145,10 +146,11 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                 child: InkWell(
                                   onTap: () {
                                     setState(() {
-                                      dashboard.visualizersList[index].isLine =
-                                      true;
-                                      dashboard.visualizersList[index].isBar =
-                                          dashboard.visualizersList[index]
+                                      dashboard.visualizersList[indexList]
+                                          .isLine = true;
+                                      dashboard.visualizersList[indexList]
+                                              .isBar =
+                                          dashboard.visualizersList[indexList]
                                               .isPie = false;
                                     });
                                   },
@@ -156,7 +158,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       width: 40,
                                       height: 40,
                                       decoration: dashboard
-                                          .visualizersList[index].isLine
+                                              .visualizersList[indexList].isLine
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.show_chart, size: 27)),
@@ -171,9 +173,9 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
-                                              new FiltersOnVisualizer(
-                                                  dashboard.visualizersList[
-                                                  index])));
+                                                  new FiltersOnVisualizer(
+                                                      dashboard.visualizersList[
+                                                          indexList])));
                                     },
                                     child: Container(
                                       height: 25,
@@ -188,7 +190,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                   padding: const EdgeInsets.only(
                                       left: 0.0, right: 8.0),
                                   child: Text(
-                                    "(${dashboard.visualizersList[index].visualizerName})",
+                                    "(${dashboard.visualizersList[indexList].visualizerName})",
                                     style: TextStyle(
                                         color: ColorClass.fontColor,
                                         fontFamily: FontClass.appFont,
@@ -203,32 +205,104 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                   padding: const EdgeInsets.only(
                       top: 53.0, bottom: 25.0, left: 15.0, right: 15.0),
                   child: Container(
-                    height: 313.00,
+                    height: 325.00,
                     width: MediaQuery.of(context).size.width,
                     color: ColorClass.containerColor,
                     child: Padding(
                       padding: const EdgeInsets.only(top: 4.0),
-                      child: dashboard.visualizersList[index].isBar
-                          ? BarChart(dashboard.visualizersList[index]
-                          .aggregateData.seriesDataBar)
-                          : dashboard.visualizersList[index].isPie
-                          ? PieChart(dashboard.visualizersList[index]
-                          .aggregateData.seriesDataPie)
-                          : dashboard.visualizersList[index].aggregateData
-                          .seriesDataLine.isEmpty
-                          ? Container(
-                        width: 100,
-                        height: 50,
-                        child: Center(
-                          child: Text("We Have A String Here !",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: FontClass.appFont)),
-                        ),
-                        color: ColorClass.fontColor,
-                      )
-                          : LineChart(dashboard.visualizersList[index]
-                          .aggregateData.seriesDataLine),
+                      child: dashboard.visualizersList[indexList].isBar
+                          ? Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    children: List.generate(
+                                        dashboard.visualizersList[indexList]
+                                            .columnsModel.length, (index) {
+                                      return dashboard
+                                                  .visualizersList[indexList]
+                                                  .columnsModel[index]
+                                                  .id ==
+                                              dashboard
+                                                  .visualizersList[indexList]
+                                                  .xColumn
+                                          ? Container(
+                                              width: 0.0,
+                                              height: 0.0,
+                                            )
+                                          : Row(
+                                              children: <Widget>[
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Container(
+                                                    width: 20,
+                                                    height: 15,
+                                                    decoration: BoxDecoration(
+                                                        shape:
+                                                            BoxShape.rectangle,
+                                                        color: dashboard
+                                                            .visualizersList[
+                                                                indexList]
+                                                            .columnsModel[index]
+                                                            .columnStyleMode
+                                                            .color),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.only(
+                                                          left: 8.0),
+                                                  child: Text(
+                                                    dashboard
+                                                        .visualizersList[
+                                                            indexList]
+                                                        .columnsModel[index]
+                                                        .name
+                                                        .toString(),
+                                                    style: TextStyle(
+                                                        fontSize: 12,
+                                                        color: ColorClass
+                                                            .fontColor,
+                                                        fontFamily:
+                                                            FontClass.appFont),
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                    }),
+                                  ),
+                                ),
+                                Expanded(
+                                  child: BarChart(dashboard
+                                      .visualizersList[indexList]
+                                      .chartData
+                                      .seriesDataBar),
+                                )
+                              ],
+                            )
+                          : dashboard.visualizersList[indexList].isPie
+                              ? PieChart(dashboard.visualizersList[indexList]
+                                  .chartData.seriesDataPie)
+                              : dashboard.visualizersList[indexList].chartData
+                                      .seriesDataLine.isEmpty
+                                  ? Container(
+                                      width: 100,
+                                      height: 50,
+                                      child: Center(
+                                        child: Text("We Have A String Here !",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontFamily: FontClass.appFont)),
+                                      ),
+                                      color: ColorClass.fontColor,
+                                    )
+                                  : LineChart(dashboard
+                                      .visualizersList[indexList]
+                                      .chartData
+                                      .seriesDataLine),
                     ),
                   ),
                 ),

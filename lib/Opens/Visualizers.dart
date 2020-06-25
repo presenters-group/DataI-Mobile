@@ -56,13 +56,16 @@ class _VisualizersState extends State<Visualizers> {
       backgroundColor: ColorClass.scaffoldBackgroundColor,
       body: ListView.builder(
           itemCount: visualizers.length,
-          itemBuilder: (BuildContext context, int index) {
+          itemBuilder: (BuildContext context, int indexList) {
             return Padding(
               padding: const EdgeInsets.only(
                   top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
               child: new Container(
                 height: 140.00, //165
-                width: MediaQuery.of(context).size.width,
+                width: MediaQuery
+                    .of(context)
+                    .size
+                    .width,
                 color: ColorClass.containerColor,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0),
@@ -72,7 +75,8 @@ class _VisualizersState extends State<Visualizers> {
                           context,
                           new MaterialPageRoute(
                               builder: (context) =>
-                                  new VisualizerOpened(visualizers[index])));
+                              new VisualizerOpened(
+                                  visualizers[indexList])));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
@@ -85,7 +89,8 @@ class _VisualizersState extends State<Visualizers> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: Text(
-                                  "Name : ${visualizers[index].visualizerName}",
+                                  "Name : ${visualizers[indexList]
+                                      .visualizerName}",
                                   style: TextStyle(
                                       color: ColorClass.fontColor,
                                       fontFamily: FontClass.appFont,
@@ -93,12 +98,54 @@ class _VisualizersState extends State<Visualizers> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                  "Used Columns : ${visualizers[index].usedColumns}",
-                                  style: TextStyle(
-                                      color: ColorClass.subTitleColor,
-                                      fontFamily: FontClass.appFont,
-                                      fontSize: 15)),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: <Widget>[
+                                    Text("Used Columns : ",
+                                        style: TextStyle(
+                                            color: ColorClass.subTitleColor,
+                                            fontFamily: FontClass.appFont,
+                                            fontSize: 12)),
+                                    Row(
+                                        children: List.generate(
+                                            visualizers[indexList]
+                                                .usedColumns
+                                                .length, (index) {
+                                          return Row(
+                                            children: <Widget>[
+                                              Text(
+                                                  "${visualizers[indexList]
+                                                      .columnsModel[index]
+                                                      .name}",
+                                                  style: TextStyle(
+                                                      color:
+                                                      ColorClass.subTitleColor,
+                                                      fontFamily: FontClass
+                                                          .appFont,
+                                                      fontSize: 12)),
+                                              index ==
+                                                  visualizers[indexList]
+                                                      .usedColumns
+                                                      .length -
+                                                      1
+                                                  ? Container(
+                                                width: 0.0,
+                                                height: 0.0,
+                                              )
+                                                  : Text(" , ",
+                                                  style: TextStyle(
+                                                      color: ColorClass
+                                                          .subTitleColor,
+                                                      fontFamily:
+                                                      FontClass.appFont,
+                                                      fontSize: 12))
+                                            ],
+                                          );
+                                        })),
+                                  ],
+                                ),
+                              ),
                             ),
                             /*Padding(
                           padding: const EdgeInsets.only(bottom: 8.0),
@@ -110,12 +157,51 @@ class _VisualizersState extends State<Visualizers> {
                         ),*/
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                  "Used Filters : ${visualizers[index].filters}",
-                                  style: TextStyle(
-                                      color: ColorClass.subTitleColor,
-                                      fontFamily: FontClass.appFont,
-                                      fontSize: 15)),
+                              child: SingleChildScrollView(
+                                scrollDirection: Axis.horizontal,
+                                child: Row(
+                                  children: <Widget>[
+                                    Text("Used Filters : ",
+                                        style: TextStyle(
+                                            color: ColorClass.subTitleColor,
+                                            fontFamily: FontClass.appFont,
+                                            fontSize: 12)),
+                                    Row(
+                                        children: List.generate(
+                                            visualizers[indexList].filtersModel
+                                                .length, (index) {
+                                          return Row(children: <Widget>[
+                                            Text("${visualizers[indexList]
+                                                .filtersModel[index]
+                                                .name}",
+                                                style: TextStyle(
+                                                    color: ColorClass
+                                                        .subTitleColor,
+                                                    fontFamily: FontClass
+                                                        .appFont,
+                                                    fontSize: 12)),
+                                            index ==
+                                                visualizers[indexList]
+                                                    .filtersModel
+                                                    .length -
+                                                    1
+                                                ? Container(
+                                              width: 0.0,
+                                              height: 0.0,
+                                            )
+                                                : Text(" , ",
+                                                style: TextStyle(
+                                                    color: ColorClass
+                                                        .subTitleColor,
+                                                    fontFamily: FontClass
+                                                        .appFont,
+                                                    fontSize: 12))
+                                          ],);
+                                        })
+                                    ),
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),

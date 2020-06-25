@@ -23,9 +23,9 @@ class _DataSourceOpenedState extends State<DataSourceOpened> {
   void initState() {
     super.initState();
     List<dynamic> row = new List();
-    for (int j = 0; j < tableModel.listColumns[0].cells.length; j++) {
-      for (int i = 0; i < tableModel.listColumns.length; i++) {
-        row.add(tableModel.listColumns[i].cells[j].value);
+    for (int j = 0; j < tableModel.columnsList[0].cells.length; j++) {
+      for (int i = 0; i < tableModel.columnsList.length; i++) {
+        row.add(tableModel.columnsList[i].cells[j].value);
       }
       data.add(row);
       row = [];

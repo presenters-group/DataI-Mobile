@@ -24,21 +24,12 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
     with SingleTickerProviderStateMixin {
   TabController tabController;
   VisualizerModel visualizer;
-  AggregateData aggregateData;
 
   _VisualizerOpenedState(this.visualizer);
 
   @override
   void initState() {
     tabController = new TabController(length: 3, vsync: this);
-    aggregateData = AggregateData.fromVisualizer(
-        visualizer.columnsModel, visualizer.xColumn);
-
-    /*aggregateDataLine = AggregateData.fromVisualizer(
-        visualizer.columnsModel, "LineChart", visualizer.xColumn);
-    aggregateDataPie = AggregateData.fromVisualizer(
-        visualizer.columnsModel, "PieChart", visualizer.xColumn);
-*/
     super.initState();
   }
 
@@ -172,12 +163,12 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
               Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: BarChart(visualizer.aggregateData.seriesDataBar),
+                    child: BarChart(visualizer.chartData.seriesDataBar),
                   )),
             ],
           ),
-          PieChart(visualizer.aggregateData.seriesDataPie),
-          visualizer.aggregateData.seriesDataLine.isEmpty
+          PieChart(visualizer.chartData.seriesDataPie),
+          visualizer.chartData.seriesDataLine.isEmpty
               ? Center(
             child: Container(
               decoration: BoxDecoration(boxShadow: [
@@ -202,7 +193,7 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
               ),
             ),
           )
-              : LineChart(visualizer.aggregateData.seriesDataLine),
+              : LineChart(visualizer.chartData.seriesDataLine),
 //          LineChart(aggregateDataLine.seriesData),
         ],
       ),

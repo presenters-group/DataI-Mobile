@@ -39,14 +39,14 @@ class _FilterOpenedState extends State<FilterOpened> {
     super.initState();
     dataSourceValue = filterModel.dataSource.name;
     currColumnType = filterModel
-        .dataSource.listColumns[filterModel.filteredColumn].columnType;
+        .dataSource.columnsList[filterModel.filteredColumn].columnType;
     currType = filterModel.type;
     currColumn =
-        filterModel.dataSource.listColumns[filterModel.filteredColumn].name;
+        filterModel.dataSource.columnsList[filterModel.filteredColumn].name;
     nameController.text = filterModel.name;
 
-    for (int i = 0; i < filterModel.dataSource.listColumns.length; i++) {
-      columns.add(filterModel.dataSource.listColumns[i].name);
+    for (int i = 0; i < filterModel.dataSource.columnsList.length; i++) {
+      columns.add(filterModel.dataSource.columnsList[i].name);
     }
   }
 

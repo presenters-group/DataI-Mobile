@@ -14,7 +14,7 @@ class VisualizerModel {
   List<dynamic> filters = new List();
   List<ColumnModel> columnsModel = new List();
   List<FilterModel> filtersModel = new List();
-  AggregateData aggregateData;
+  ChartData chartData;
   bool isDeleted;
   bool isBar = true;
   bool isLine = false;
@@ -29,7 +29,7 @@ class VisualizerModel {
     @required this.filters,
     @required this.columnsModel,
     @required this.filtersModel,
-    @required this.aggregateData,
+    @required this.chartData,
     @required this.isDeleted,
     @required this.isBar,
     @required this.isLine,
@@ -38,21 +38,21 @@ class VisualizerModel {
   });
 
   factory VisualizerModel.fromJSON(
-      Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
+      Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
     return VisualizerModel(
-      dataSource: checkDataSource(totalJSON, json["data"]),
-      visualizerID: json["id"],
-      dataID: json["data"],
-      visualizerName: json["name"],
-      usedColumns: json["usedColumns"],
-      xColumn: json["xColumn"],
-      filters: json["filters"],
+      dataSource: checkDataSource(totalJSON, subJSON["data"]),
+      visualizerID: subJSON["id"],
+      dataID: subJSON["data"],
+      visualizerName: subJSON["name"],
+      usedColumns: subJSON["usedColumns"],
+      xColumn: subJSON["xColumn"],
+      filters: subJSON["filters"],
       columnsModel: checkUsedColumns(
-          totalJSON, json["usedColumns"], json["data"], json["xColumn"]),
-      filtersModel: checkUsedFilters(totalJSON, json["filters"]),
-      aggregateData: convertToAggregateData(
-          totalJSON, json["usedColumns"], json["data"], json["xColumn"]),
-      isDeleted: json["isDeleted"],
+          totalJSON, subJSON["usedColumns"], subJSON["data"], subJSON["xColumn"]),
+      filtersModel: checkUsedFilters(totalJSON, subJSON["filters"]),
+      chartData: convertToAggregateData(
+          totalJSON, subJSON["usedColumns"], subJSON["data"], subJSON["xColumn"]),
+      isDeleted: subJSON["isDeleted"],
       isBar: true,
       isLine: false,
       isPie: false,
@@ -109,9 +109,9 @@ class VisualizerModel {
         trueTableModel = allTablesModel[i];
       }
     }
-    for (int i = 0; i < trueTableModel.listColumns.length; i++) {
-      if (usedCol.contains(trueTableModel.listColumns[i].id)) {
-        trueColumns.add(trueTableModel.listColumns[i]);
+    for (int i = 0; i < trueTableModel.columnsList.length; i++) {
+      if (usedCol.contains(trueTableModel.columnsList[i].id)) {
+        trueColumns.add(trueTableModel.columnsList[i]);
       }
     }
     /*    ColumnModel tempColumnModel;
@@ -151,6 +151,6 @@ class VisualizerModel {
       }
     }
     trueColumns.insert(0, tempColumnModel);*/
-    return AggregateData.fromVisualizer(trueColumns, xColumn);
+    return ChartData.fromVisualizer(trueColumns, xColumn);
   }
 }

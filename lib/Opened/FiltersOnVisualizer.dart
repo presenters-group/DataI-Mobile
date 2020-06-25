@@ -75,7 +75,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                 child: visualizerModel
                     .filtersModel[indexGrid]
                     .dataSource
-                    .listColumns[visualizerModel
+                    .columnsList[visualizerModel
                     .filtersModel[indexGrid].filteredColumn]
                     .columnType !=
                     "Measures"
@@ -108,7 +108,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                     visualizerModel
                                         .filtersModel[indexGrid]
                                         .dataSource
-                                        .listColumns[visualizerModel
+                                        .columnsList[visualizerModel
                                         .filtersModel[indexGrid]
                                         .filteredColumn]
                                         .name,
@@ -141,7 +141,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                 visualizerModel
                                     .filtersModel[indexGrid]
                                     .dataSource
-                                    .listColumns[visualizerModel
+                                    .columnsList[visualizerModel
                                     .filtersModel[indexGrid]
                                     .filteredColumn]
                                     .cells
@@ -165,7 +165,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                         visualizerModel
                                             .filtersModel[indexGrid]
                                             .dataSource
-                                            .listColumns[
+                                            .columnsList[
                                         visualizerModel
                                             .filtersModel[
                                         indexGrid]
@@ -216,7 +216,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                   visualizerModel
                                       .filtersModel[indexGrid]
                                       .dataSource
-                                      .listColumns[visualizerModel
+                                      .columnsList[visualizerModel
                                       .filtersModel[indexGrid]
                                       .filteredColumn]
                                       .name,

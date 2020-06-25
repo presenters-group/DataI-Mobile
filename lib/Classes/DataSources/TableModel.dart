@@ -4,7 +4,7 @@ import 'package:eyedatai/Classes/DataSources/PropertiesModel.dart';
 class TableModel {
   var name;
   int id;
-  List<ColumnModel> listColumns = new List();
+  List<ColumnModel> columnsList = new List();
   List<dynamic> columnsVisibility = new List();
   List<dynamic> rowsVisibility = new List();
   PropertiesModel property;
@@ -14,7 +14,7 @@ class TableModel {
   TableModel(
       {this.name,
         this.id,
-        this.listColumns,
+        this.columnsList,
         this.columnsVisibility,
         this.rowsVisibility,
         this.property,
@@ -25,7 +25,7 @@ class TableModel {
     return TableModel(
         name: json["name"],
         id: json["id"],
-        listColumns: convertToColumnsList(json),
+        columnsList: convertToColumnsList(json),
         columnsVisibility: json["columnsVisibility"],
         rowsVisibility: json["rowsVisibility"],
         property: PropertiesModel.fromJSON(json["properties"]),
@@ -44,6 +44,6 @@ class TableModel {
 
   @override
   String toString() {
-    return 'TableModel{name: $name, id: $id, listColumns: $listColumns, columnsVisibility: $columnsVisibility, rowsVisibility: $rowsVisibility, property: $property, rightToLeft: $rightToLeft, isDeleted: $isDeleted}';
+    return 'TableModel{name: $name, id: $id, listColumns: $columnsList, columnsVisibility: $columnsVisibility, rowsVisibility: $rowsVisibility, property: $property, rightToLeft: $rightToLeft, isDeleted: $isDeleted}';
   }
 }

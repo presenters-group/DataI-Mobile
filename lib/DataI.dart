@@ -382,7 +382,7 @@ class _DataIState extends State<DataI> {
                               setState(() {
                                 table = DataModel.fromJSON(jsonResult);
                               });
-                              print(table.dataSources[0].listColumns[0].cells[1]
+                              print(table.dataSources[0].columnsList[0].cells[1]
                                   .value);
                               print(table.dashboards.length);
                               print("**************");
