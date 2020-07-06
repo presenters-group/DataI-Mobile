@@ -1,4 +1,4 @@
-import 'package:eyedatai/Classes/AggregateData.dart';
+import 'package:eyedatai/Classes/ChartData.dart';
 import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Classes/FilterModel.dart';
@@ -71,6 +71,7 @@ class VisualizerModel {
         trueDataSource = allDataSources[i];
       }
     }
+
     print(trueDataSource);
     return trueDataSource;
   }

@@ -51,30 +51,6 @@ class ChartData {
     }
     print(dataUsed[0][0]);
 
-    /*
-    print(dataUsed);
-    for (int j = 1; j <= dataUsed[0].length - 1; j++) {
-      for (int i = 1; i < dataUsed.length; i++) {
-        if (dataUsed[0].length == 2) {
-          dataSingle.add(
-            new SeriesData(
-                task: dataUsed[i][0],
-                taskValue: int.parse(dataUsed[i][j].toString().trim()),
-                taskColor: colM[0].columnStyleMode.color),
-          );
-        } else {
-          dataSingle.add(
-            new SeriesData(
-                task: dataUsed[i][0],
-                taskValue: dataUsed[i][j],
-                taskColor: colM[0].columnStyleMode.color),
-          );
-        }
-      }
-      seriesData.add(dataSingle);
-      dataSingle = [];
-    }*/
-
     for (int j = 1; j <= colM.length - 1; j++) {
       for (int i = 1; i < dataUsed.length; i++) {
         dataSingle.add(new SeriesData(
@@ -132,19 +108,6 @@ class ChartData {
         dataSingle = [];
       }
     }
-
-    /*  var lists1 = [
-      SeriesData(task: 170, taskValue: 50),
-      SeriesData(task: 150 , taskValue: 60),
-      SeriesData(task: 120 , taskValue: 16)
-    ];
-    var lists = [
-      SeriesData(task: 280, taskValue: 100),
-      SeriesData(task: 250 , taskValue: 115),
-      SeriesData(task: 230 , taskValue: 130)
-    ];
-    seriesData.add(lists1);
-    seriesData.add(lists);*/
 
     return seriesData;
   }

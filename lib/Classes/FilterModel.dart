@@ -21,16 +21,16 @@ class FilterModel {
       this.isDeleted});
 
   factory FilterModel.fromJSON(
-      Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
+      Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
     return FilterModel(
-        dataSource: checkFilter(totalJSON, json["dataSource"]),
-        name: json["name"],
-        id: json["id"],
-        dataSourceID: json["dataSource"],
-        filteredColumn: json["filteredColumn"],
-        initValue: json["initValue"].toString(),
-        type: json["type"],
-        isDeleted: json["isDeleted"]);
+        dataSource: checkFilter(totalJSON, subJSON["dataSource"]),
+        name: subJSON["name"],
+        id: subJSON["id"],
+        dataSourceID: subJSON["dataSource"],
+        filteredColumn: subJSON["filteredColumn"],
+        initValue: subJSON["initValue"].toString(),
+        type: subJSON["type"],
+        isDeleted: subJSON["isDeleted"]);
   }
 
   static TableModel checkFilter(json, id) {
