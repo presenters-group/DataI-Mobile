@@ -12,6 +12,4 @@ class CellModel {
   String toString() {
     return 'CellModel{value: $value, type: $type}';
   }
-
-
 }

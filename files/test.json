@@ -572,7 +572,8 @@
       "chart": "BoundaryLineChart",
       "filters": [
         0,
-        1
+        1,
+        2
       ],
       "isDeleted": false
     },
@@ -702,9 +703,9 @@
       "name": "filter3",
       "id": 2,
       "dataSource": 0,
-      "filteredColumn": 0,
+      "filteredColumn": 3,
       "initValue": "Laptop",
-      "type": "Equality",
+      "type": "GreaterThan",
       "isDeleted": false
     }
   ]

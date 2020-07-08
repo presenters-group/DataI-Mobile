@@ -39,6 +39,7 @@ class TableModel {
     for (var newColumn in columnsJSON) {
       columnsList.add(new ColumnModel.fromJSON(newColumn));
     }
+    //columnsList.sort((a, b) => b.columnType.compareTo(a.columnType));
     return columnsList;
   }
 

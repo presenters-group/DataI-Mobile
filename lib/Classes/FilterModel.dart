@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 import 'DataSources/TableModel.dart';
 
 class FilterModel {
@@ -9,6 +11,8 @@ class FilterModel {
   var initValue;
   String type;
   bool isDeleted;
+  bool isActive = false;
+  TextEditingController textEditingController;
 
   FilterModel(
       {this.dataSource,
@@ -18,7 +22,9 @@ class FilterModel {
       this.filteredColumn,
       this.initValue,
       this.type,
-      this.isDeleted});
+      this.isDeleted,
+      this.isActive,
+      this.textEditingController});
 
   factory FilterModel.fromJSON(
       Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
@@ -30,7 +36,9 @@ class FilterModel {
         filteredColumn: subJSON["filteredColumn"],
         initValue: subJSON["initValue"].toString(),
         type: subJSON["type"],
-        isDeleted: subJSON["isDeleted"]);
+        isDeleted: subJSON["isDeleted"],
+        isActive: false,
+        textEditingController: new TextEditingController());
   }
 
   static TableModel checkFilter(json, id) {
