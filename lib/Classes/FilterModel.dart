@@ -13,18 +13,20 @@ class FilterModel {
   bool isDeleted;
   bool isActive = false;
   TextEditingController textEditingController;
+  List<bool> isActivatedCells = new List();
 
   FilterModel(
       {this.dataSource,
-      this.name,
-      this.id,
-      this.dataSourceID,
-      this.filteredColumn,
-      this.initValue,
-      this.type,
-      this.isDeleted,
-      this.isActive,
-      this.textEditingController});
+        this.name,
+        this.id,
+        this.dataSourceID,
+        this.filteredColumn,
+        this.initValue,
+        this.type,
+        this.isDeleted,
+        this.isActive,
+        this.textEditingController,
+        this.isActivatedCells});
 
   factory FilterModel.fromJSON(
       Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
@@ -38,7 +40,9 @@ class FilterModel {
         type: subJSON["type"],
         isDeleted: subJSON["isDeleted"],
         isActive: false,
-        textEditingController: new TextEditingController());
+        textEditingController: new TextEditingController(),
+        isActivatedCells: countNumberCellsAndCheckingFalse(
+            totalJSON, subJSON["dataSource"], subJSON["filteredColumn"]));
   }
 
   static TableModel checkFilter(json, id) {
@@ -56,5 +60,18 @@ class FilterModel {
       }
     }
     return trueDataSource;
+  }
+
+  static List<bool> countNumberCellsAndCheckingFalse(json, id, filteredColumn) {
+    List<bool> zeroActivation = new List();
+    TableModel trueTableModel = checkFilter(json, id);
+    for (int i = 0;
+    i < trueTableModel.columnsList[filteredColumn].cells.length;
+    i++) {
+      zeroActivation.add(false);
+      print("$i : false");
+    }
+    print("Length : ${zeroActivation.length}");
+    return zeroActivation;
   }
 }

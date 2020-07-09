@@ -1,4 +1,3 @@
-import 'package:eyedatai/Classes/ChartData.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Classes/SeriesData.dart';
 import 'package:eyedatai/Classes/VisualizerModel.dart';

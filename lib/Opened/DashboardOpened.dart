@@ -1,4 +1,5 @@
 import 'package:eyedatai/Classes/DashboardModel.dart';
+import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:eyedatai/Opened/Charts/LineChart.dart';
 import 'package:eyedatai/Opened/Charts/PieChart.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +14,10 @@ class DashboardOpened extends StatefulWidget {
   DashboardModel dashboard;
 
   DashboardOpened(this.dashboard);
+
+  /* setNewVisualizer(int index , VisualizerModel visualizerModel){
+    dashboard.visualizersList[index] = visualizerModel;
+  }*/
 
   @override
   _DashboardOpenedState createState() => _DashboardOpenedState(dashboard);
@@ -60,7 +65,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                        DecorationImage(image: AssetImage('Images/Logo.png'))),
+                    DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -97,7 +102,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       dashboard.visualizersList[indexList]
                                           .isBar = true;
                                       dashboard.visualizersList[indexList]
-                                              .isLine =
+                                          .isLine =
                                           dashboard.visualizersList[indexList]
                                               .isPie = false;
                                     });
@@ -106,7 +111,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                     width: 40,
                                     height: 40,
                                     decoration: dashboard
-                                            .visualizersList[indexList].isBar
+                                        .visualizersList[indexList].isBar
                                         ? BoxDecoration(color: Colors.white)
                                         : null,
                                     child: Icon(
@@ -125,7 +130,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       dashboard.visualizersList[indexList]
                                           .isPie = true;
                                       dashboard.visualizersList[indexList]
-                                              .isLine =
+                                          .isLine =
                                           dashboard.visualizersList[indexList]
                                               .isBar = false;
                                     });
@@ -134,7 +139,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       width: 40,
                                       height: 40,
                                       decoration: dashboard
-                                              .visualizersList[indexList].isPie
+                                          .visualizersList[indexList].isPie
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.pie_chart, size: 25)),
@@ -149,7 +154,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       dashboard.visualizersList[indexList]
                                           .isLine = true;
                                       dashboard.visualizersList[indexList]
-                                              .isBar =
+                                          .isBar =
                                           dashboard.visualizersList[indexList]
                                               .isPie = false;
                                     });
@@ -158,7 +163,7 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                       width: 40,
                                       height: 40,
                                       decoration: dashboard
-                                              .visualizersList[indexList].isLine
+                                          .visualizersList[indexList].isLine
                                           ? BoxDecoration(color: Colors.white)
                                           : null,
                                       child: Icon(Icons.show_chart, size: 27)),
@@ -173,9 +178,9 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                           context,
                                           new MaterialPageRoute(
                                               builder: (context) =>
-                                                  new FiltersOnVisualizer(
-                                                      dashboard.visualizersList[
-                                                          indexList])));
+                                              new FiltersOnVisualizer(
+                                                  dashboard.visualizersList[
+                                                  indexList])));
                                     },
                                     child: Container(
                                       height: 25,
@@ -212,97 +217,97 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                       padding: const EdgeInsets.only(top: 4.0),
                       child: dashboard.visualizersList[indexList].isBar
                           ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.horizontal,
-                                  child: Row(
-                                    children: List.generate(
-                                        dashboard.visualizersList[indexList]
-                                            .columnsModel.length, (index) {
-                                      return dashboard
-                                                  .visualizersList[indexList]
-                                                  .columnsModel[index]
-                                                  .id ==
-                                              dashboard
-                                                  .visualizersList[indexList]
-                                                  .xColumn
-                                          ? Container(
-                                              width: 0.0,
-                                              height: 0.0,
-                                            )
-                                          : Row(
-                                              children: <Widget>[
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Container(
-                                                    width: 20,
-                                                    height: 15,
-                                                    decoration: BoxDecoration(
-                                                        shape:
-                                                            BoxShape.rectangle,
-                                                        color: dashboard
-                                                            .visualizersList[
-                                                                indexList]
-                                                            .columnsModel[index]
-                                                            .columnStyleMode
-                                                            .color),
-                                                  ),
-                                                ),
-                                                Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          left: 8.0),
-                                                  child: Text(
-                                                    dashboard
-                                                        .visualizersList[
-                                                            indexList]
-                                                        .columnsModel[index]
-                                                        .name
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        fontSize: 12,
-                                                        color: ColorClass
-                                                            .fontColor,
-                                                        fontFamily:
-                                                            FontClass.appFont),
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                    }),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: BarChart(dashboard
-                                      .visualizersList[indexList]
-                                      .chartData
-                                      .seriesDataBar),
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              children: List.generate(
+                                  dashboard.visualizersList[indexList]
+                                      .columnsModel.length, (index) {
+                                return dashboard
+                                    .visualizersList[indexList]
+                                    .columnsModel[index]
+                                    .id ==
+                                    dashboard
+                                        .visualizersList[indexList]
+                                        .xColumn
+                                    ? Container(
+                                  width: 0.0,
+                                  height: 0.0,
                                 )
-                              ],
-                            )
-                          : dashboard.visualizersList[indexList].isPie
-                              ? PieChart(dashboard.visualizersList[indexList]
-                                  .chartData.seriesDataPie)
-                              : dashboard.visualizersList[indexList].chartData
-                                      .seriesDataLine.isEmpty
-                                  ? Container(
-                                      width: 100,
-                                      height: 50,
-                                      child: Center(
-                                        child: Text("We Have A String Here !",
-                                            style: TextStyle(
-                                                color: Colors.white,
-                                                fontFamily: FontClass.appFont)),
+                                    : Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(
+                                          left: 8.0),
+                                      child: Container(
+                                        width: 20,
+                                        height: 15,
+                                        decoration: BoxDecoration(
+                                            shape:
+                                            BoxShape.rectangle,
+                                            color: dashboard
+                                                .visualizersList[
+                                            indexList]
+                                                .columnsModel[index]
+                                                .columnStyleMode
+                                                .color),
                                       ),
-                                      color: ColorClass.fontColor,
+                                    ),
+                                    Padding(
+                                      padding:
+                                      const EdgeInsets.only(
+                                          left: 8.0),
+                                      child: Text(
+                                        dashboard
+                                            .visualizersList[
+                                        indexList]
+                                            .columnsModel[index]
+                                            .name
+                                            .toString(),
+                                        style: TextStyle(
+                                            fontSize: 12,
+                                            color: ColorClass
+                                                .fontColor,
+                                            fontFamily:
+                                            FontClass.appFont),
+                                      ),
                                     )
-                                  : LineChart(dashboard
-                                      .visualizersList[indexList]
-                                      .chartData
-                                      .seriesDataLine),
+                                  ],
+                                );
+                              }),
+                            ),
+                          ),
+                          Expanded(
+                            child: BarChart(dashboard
+                                .visualizersList[indexList]
+                                .chartData
+                                .seriesDataBar),
+                          )
+                        ],
+                      )
+                          : dashboard.visualizersList[indexList].isPie
+                          ? PieChart(dashboard.visualizersList[indexList]
+                          .chartData.seriesDataPie)
+                          : dashboard.visualizersList[indexList].chartData
+                          .seriesDataLine.isEmpty
+                          ? Container(
+                        width: 100,
+                        height: 50,
+                        child: Center(
+                          child: Text("We Have A String Here !",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontFamily: FontClass.appFont)),
+                        ),
+                        color: ColorClass.fontColor,
+                      )
+                          : LineChart(dashboard
+                          .visualizersList[indexList]
+                          .chartData
+                          .seriesDataLine),
                     ),
                   ),
                 ),

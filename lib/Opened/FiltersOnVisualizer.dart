@@ -1,7 +1,9 @@
+import 'package:eyedatai/Classes/DataSources/CellModel.dart';
 import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Classes/FilterModel.dart';
 import 'package:eyedatai/Classes/VisualizerModel.dart';
+import 'package:eyedatai/Opened/DashboardOpened.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -40,21 +42,21 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
         txtControllers.add(new TextEditingController());
       }
     }*/
-    measures = [];
+    /*   measures = [];
     dimensions = [];
     for (int i = 0; i < visualizerModel.filtersModel.length; i++) {
       if (visualizerModel
-              .filtersModel[i]
-              .dataSource
-              .columnsList[visualizerModel.filtersModel[i].filteredColumn]
-              .columnType ==
+          .filtersModel[i]
+          .dataSource
+          .columnsList[visualizerModel.filtersModel[i].filteredColumn]
+          .columnType ==
           "Measures") {
         measures.add(visualizerModel.filtersModel[i]);
       } else {
         dimensions.add(visualizerModel.filtersModel[i]);
       }
     }
-
+*/
     /*  List<ColumnModel> measuresColumns = new List();
     for (int i = 0; i < visualizerModel.filtersModel.length; i++) {
       if (visualizerModel
@@ -84,6 +86,10 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
     }
 
 */
+
+    for (int i = 0; i < visualizerModel.filtersModel.length; i++) {
+      print(visualizerModel.filtersModel[i].dataSource.columnsList);
+    }
 
     super.initState();
   }
@@ -120,42 +126,43 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
             actions: <Widget>[
               isChangedAnyThing
                   ? Padding(
-                      padding: const EdgeInsets.only(right: 8.0, top: 20),
-                      child: IconButton(
-                        onPressed: () {
-                          for (int i = 0;
-                              i < visualizerModel.filtersModel.length;
-                              i++) {
-                            print(
-                                " ${visualizerModel.filtersModel[i].name}  --->  ${visualizerModel.filtersModel[i].textEditingController.text}");
-                          }
-                        },
-                        icon: Icon(
-                          Icons.done,
-                          color: ColorClass.fontColor,
-                        ),
-                      ),
-                    )
+                padding: const EdgeInsets.only(right: 8.0, top: 20),
+                child: IconButton(
+                  onPressed: () {
+                    for (int i = 0;
+                    i < visualizerModel.filtersModel.length;
+                    i++) {
+                      print(
+                          " ${visualizerModel.filtersModel[i].name}  --->  ${visualizerModel.filtersModel[i].textEditingController.text}");
+                    }
+                    doSubmitted();
+                  },
+                  icon: Icon(
+                    Icons.done,
+                    color: ColorClass.fontColor,
+                  ),
+                ),
+              )
                   : Padding(
-                      padding: const EdgeInsets.only(right: 15.0, top: 20),
-                      child: InkWell(
-                        onTap: () {
-                          for (int i = 0;
-                              i < visualizerModel.filtersModel.length;
-                              i++) {
-                            print(
-                                " ${visualizerModel.filtersModel[i].name}  --->  ${visualizerModel.filtersModel[i].textEditingController.text}");
-                          }
-                        },
-                        child: Container(
-                          height: 30,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              image: DecorationImage(
-                                  image: AssetImage('Images/Logo.png'))),
-                        ),
-                      ),
-                    ),
+                padding: const EdgeInsets.only(right: 15.0, top: 20),
+                child: InkWell(
+                  onTap: () {
+                    for (int i = 0;
+                    i < visualizerModel.filtersModel.length;
+                    i++) {
+                      print(
+                          " ${visualizerModel.filtersModel[i].name}  --->  ${visualizerModel.filtersModel[i].textEditingController.text}");
+                    }
+                  },
+                  child: Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('Images/Logo.png'))),
+                  ),
+                ),
+              ),
             ],
             centerTitle: true,
             backgroundColor: ColorClass.scaffoldBackgroundColor,
@@ -163,7 +170,8 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
           ),
         ),
         backgroundColor: ColorClass.scaffoldBackgroundColor,
-        body: SingleChildScrollView(
+        body:
+        /*SingleChildScrollView(
           child: Column(
             children: <Widget>[
               Column(
@@ -195,7 +203,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                       measures[indexGrid]
                                           .dataSource
                                           .columnsList[measures[indexGrid]
-                                              .filteredColumn]
+                                          .filteredColumn]
                                           .name,
                                       style: TextStyle(
                                           color: Colors.grey,
@@ -232,28 +240,28 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                 children: <Widget>[
                                   measures[indexGrid].type == "LessThan"
                                       ? Text(
-                                          "<",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontFamily: FontClass.appFont,
-                                              fontSize: 17),
-                                        )
+                                    "<",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: FontClass.appFont,
+                                        fontSize: 17),
+                                  )
                                       : measures[indexGrid].type ==
-                                              "GreaterThan"
-                                          ? Text(
-                                              ">",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily: FontClass.appFont,
-                                                  fontSize: 17),
-                                            )
-                                          : Text(
-                                              "=",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontFamily: FontClass.appFont,
-                                                  fontSize: 17),
-                                            ),
+                                      "GreaterThan"
+                                      ? Text(
+                                    ">",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: FontClass.appFont,
+                                        fontSize: 17),
+                                  )
+                                      : Text(
+                                    "=",
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontFamily: FontClass.appFont,
+                                        fontSize: 17),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(left: 12.0),
                                     child: Container(
@@ -268,15 +276,15 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                                   left: 15.0, top: 8.0),
                                               child: new TextField(
                                                 keyboardType:
-                                                    TextInputType.number,
+                                                TextInputType.number,
                                                 onChanged: (value) {
                                                   setState(() {
                                                     isChangedAnyThing = true;
                                                   });
                                                   if (measures[indexGrid]
-                                                          .textEditingController
-                                                          .text
-                                                          .length >=
+                                                      .textEditingController
+                                                      .text
+                                                      .length >=
                                                       9) {
                                                     measures[indexGrid]
                                                         .textEditingController
@@ -287,7 +295,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                                 style: TextStyle(
                                                     color: ColorClass.fontColor,
                                                     fontFamily:
-                                                        FontClass.appFont,
+                                                    FontClass.appFont,
                                                     fontSize: 15),
                                                 textAlign: TextAlign.left,
                                                 controller: measures[indexGrid]
@@ -297,7 +305,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                                   hintStyle: TextStyle(
                                                       color: Colors.black,
                                                       fontFamily:
-                                                          FontClass.appFont,
+                                                      FontClass.appFont,
                                                       fontSize: 12),
                                                   hintText: 'Value',
                                                 ),
@@ -346,7 +354,7 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                         dimensions[indexGrid]
                                             .dataSource
                                             .columnsList[dimensions[indexGrid]
-                                                .filteredColumn]
+                                            .filteredColumn]
                                             .name,
                                         style: TextStyle(
                                             color: Colors.grey,
@@ -383,47 +391,47 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                     dimensions[indexGrid]
                                         .dataSource
                                         .columnsList[dimensions[indexGrid]
-                                            .filteredColumn]
+                                        .filteredColumn]
                                         .cells
                                         .length, (index) {
                                   return index == 0
                                       ? Container(
-                                          width: 0.0,
-                                          height: 0.0,
-                                        )
+                                    width: 0.0,
+                                    height: 0.0,
+                                  )
                                       : Padding(
-                                          padding: const EdgeInsets.all(0.0),
-                                          child: SingleChildScrollView(
-                                            scrollDirection: Axis.horizontal,
-                                            child: Row(
-                                              children: <Widget>[
-                                                Checkbox(
-                                                  onChanged: (val) {
-                                                    setState(() {
-                                                      isChangedAnyThing = true;
-                                                    });
-                                                  },
-                                                  value: true,
-                                                ),
-                                                Text(
-                                                  dimensions[indexGrid]
-                                                      .dataSource
-                                                      .columnsList[
-                                                          dimensions[indexGrid]
-                                                              .filteredColumn]
-                                                      .cells[index]
-                                                      .value
-                                                      .toString(),
-                                                  style: TextStyle(
-                                                      color: Colors.grey,
-                                                      fontFamily:
-                                                          FontClass.appFont,
-                                                      fontSize: 17),
-                                                )
-                                              ],
-                                            ),
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: SingleChildScrollView(
+                                      scrollDirection: Axis.horizontal,
+                                      child: Row(
+                                        children: <Widget>[
+                                          Checkbox(
+                                            onChanged: (val) {
+                                              setState(() {
+                                                isChangedAnyThing = true;
+                                              });
+                                            },
+                                            value: true,
                                           ),
-                                        );
+                                          Text(
+                                            dimensions[indexGrid]
+                                                .dataSource
+                                                .columnsList[
+                                            dimensions[indexGrid]
+                                                .filteredColumn]
+                                                .cells[index]
+                                                .value
+                                                .toString(),
+                                            style: TextStyle(
+                                                color: Colors.grey,
+                                                fontFamily:
+                                                FontClass.appFont,
+                                                fontSize: 17),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
                                 }),
                               ),
                             )
@@ -436,298 +444,332 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
               ),
             ],
           ),
-        )
-        /*ListView.builder(
+        )*/
+        ListView.builder(
             itemCount: visualizerModel.filtersModel.length,
             itemBuilder: (BuildContext context, int indexGrid) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: visualizerModel
-                            .filtersModel[indexGrid]
-                            .dataSource
-                            .columnsList[visualizerModel
-                                .filtersModel[indexGrid].filteredColumn]
-                            .columnType !=
-                        "Measures"
+                    .filtersModel[indexGrid]
+                    .dataSource
+                    .columnsList[visualizerModel
+                    .filtersModel[indexGrid].filteredColumn]
+                    .columnType !=
+                    "Measures"
                     ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 250,
-                        color: Colors.white,
-                        child: SingleChildScrollView(
+                  width: MediaQuery.of(context).size.width,
+                  height: 250,
+                  color: Colors.white,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: ListTile(
+                            leading: Column(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "${visualizerModel.filtersModel[indexGrid].name} ",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 20),
+                                ),
+                                Padding(
+                                  padding:
+                                  const EdgeInsets.only(top: 4.0),
+                                  child: Text(
+                                    visualizerModel
+                                        .filtersModel[indexGrid]
+                                        .dataSource
+                                        .columnsList[visualizerModel
+                                        .filtersModel[indexGrid]
+                                        .filteredColumn]
+                                        .name,
+                                    style: TextStyle(
+                                        color: Colors.grey,
+                                        fontFamily: FontClass.appFont,
+                                        fontSize: 17),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: Checkbox(
+                              onChanged: (val) {
+                                setState(() {
+                                  isChangedAnyThing = true;
+                                });
+                                setState(() {
+                                  visualizerModel
+                                      .filtersModel[indexGrid]
+                                      .isActive = val;
+                                });
+                              },
+                              value: visualizerModel
+                                  .filtersModel[indexGrid].isActive,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(
+                              left: 15.0, right: 15.0, top: 8),
+                          child: Divider(
+                            color: Colors.grey,
+                            height: 5,
+                          ),
+                        ),
+                        SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
                           child: Column(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(top: 8.0),
-                                child: ListTile(
-                                  leading: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: List.generate(
+                                visualizerModel
+                                    .filtersModel[indexGrid]
+                                    .dataSource
+                                    .columnsList[visualizerModel
+                                    .filtersModel[indexGrid]
+                                    .filteredColumn]
+                                    .cells
+                                    .length, (index) {
+                              return index == 0
+                                  ? Container(
+                                width: 0.0,
+                                height: 0.0,
+                              )
+                                  : Padding(
+                                padding:
+                                const EdgeInsets.all(0.0),
+                                child: SingleChildScrollView(
+                                  scrollDirection:
+                                  Axis.horizontal,
+                                  child: Row(
                                     children: <Widget>[
+                                      Checkbox(
+                                        onChanged: (val) {
+                                          setState(() {
+                                            isChangedAnyThing = true;
+                                            visualizerModel.filtersModel[index].isActivatedCells[index] = val;
+                                          });
+                                        },
+                                        value: visualizerModel.filtersModel[index].isActivatedCells[index],
+                                      ),
                                       Text(
-                                        "${visualizerModel.filtersModel[indexGrid].name} ",
+                                        visualizerModel
+                                            .filtersModel[
+                                        indexGrid]
+                                            .dataSource
+                                            .columnsList[visualizerModel
+                                            .filtersModel[
+                                        indexGrid]
+                                            .filteredColumn]
+                                            .cells[index]
+                                            .value
+                                            .toString(),
                                         style: TextStyle(
-                                            color: Colors.black,
-                                            fontFamily: FontClass.appFont,
-                                            fontSize: 20),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(top: 4.0),
-                                        child: Text(
-                                          visualizerModel
-                                              .filtersModel[indexGrid]
-                                              .dataSource
-                                              .columnsList[visualizerModel
-                                                  .filtersModel[indexGrid]
-                                                  .filteredColumn]
-                                              .name,
-                                          style: TextStyle(
-                                              color: Colors.grey,
-                                              fontFamily: FontClass.appFont,
-                                              fontSize: 17),
-                                        ),
-                                      ),
+                                            color: Colors.grey,
+                                            fontFamily:
+                                            FontClass
+                                                .appFont,
+                                            fontSize: 17),
+                                      )
                                     ],
                                   ),
-                                  trailing: Checkbox(
-                                    onChanged: (val) {
-                                      setState(() {
-                                        visualizerModel.filtersModel[indexGrid]
-                                            .isActive = val;
-                                      });
-                                    },
-                                    value: visualizerModel
-                                        .filtersModel[indexGrid].isActive,
-                                  ),
                                 ),
+                              );
+                            }),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+                    : Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 150,
+                  color: Colors.white,
+                  child: Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: ListTile(
+                          leading: Column(
+                            crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                visualizerModel
+                                    .filtersModel[indexGrid].name,
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily: FontClass.appFont,
+                                    fontSize: 20),
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(
-                                    left: 15.0, right: 15.0, top: 8),
-                                child: Divider(
-                                  color: Colors.grey,
-                                  height: 5,
+                                padding:
+                                const EdgeInsets.only(top: 4.0),
+                                child: Text(
+                                  visualizerModel
+                                      .filtersModel[indexGrid]
+                                      .dataSource
+                                      .columnsList[visualizerModel
+                                      .filtersModel[indexGrid]
+                                      .filteredColumn]
+                                      .name,
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 17),
                                 ),
                               ),
-                              SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: List.generate(
-                                      visualizerModel
-                                          .filtersModel[indexGrid]
-                                          .dataSource
-                                          .columnsList[visualizerModel
-                                              .filtersModel[indexGrid]
-                                              .filteredColumn]
-                                          .cells
-                                          .length, (index) {
-                                    return index == 0
-                                        ? Container(
-                                            width: 0.0,
-                                            height: 0.0,
-                                          )
-                                        : Padding(
-                                            padding: const EdgeInsets.all(0.0),
-                                            child: SingleChildScrollView(
-                                              scrollDirection: Axis.horizontal,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Checkbox(
-                                                    onChanged: (val) {},
-                                                    value: true,
-                                                  ),
-                                                  Text(
-                                                    visualizerModel
-                                                        .filtersModel[indexGrid]
-                                                        .dataSource
-                                                        .columnsList[
-                                                            visualizerModel
-                                                                .filtersModel[
-                                                                    indexGrid]
-                                                                .filteredColumn]
-                                                        .cells[index]
-                                                        .value
-                                                        .toString(),
-                                                    style: TextStyle(
-                                                        color: Colors.grey,
-                                                        fontFamily:
-                                                            FontClass.appFont,
-                                                        fontSize: 17),
-                                                  )
-                                                ],
-                                              ),
+                            ],
+                          ),
+                          trailing: Checkbox(
+                            onChanged: (val) {
+                              setState(() {
+                                isChangedAnyThing = true;
+                                visualizerModel
+                                    .filtersModel[indexGrid]
+                                    .isActive = val;
+                              });
+                            },
+                            value: visualizerModel
+                                .filtersModel[indexGrid].isActive,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(
+                            left: 15.0, right: 15.0, top: 8),
+                        child: Divider(
+                          color: Colors.grey,
+                          height: 5,
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 16.0),
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Row(
+                            children: <Widget>[
+                              visualizerModel.filtersModel[indexGrid]
+                                  .type ==
+                                  "LessThan"
+                                  ? Text(
+                                "<",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily:
+                                    FontClass.appFont,
+                                    fontSize: 17),
+                              )
+                                  : visualizerModel
+                                  .filtersModel[indexGrid]
+                                  .type ==
+                                  "GreaterThan"
+                                  ? Text(
+                                ">",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily:
+                                    FontClass.appFont,
+                                    fontSize: 17),
+                              )
+                                  : Text(
+                                "=",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontFamily:
+                                    FontClass.appFont,
+                                    fontSize: 17),
+                              ),
+                              Padding(
+                                padding:
+                                const EdgeInsets.only(left: 12.0),
+                                child: Container(
+                                    height: 35.00,
+                                    width: 110.00,
+                                    color: ColorClass
+                                        .filterContainerColor,
+                                    child: Center(
+                                      child: Directionality(
+                                        textDirection:
+                                        TextDirection.ltr,
+                                        child: Padding(
+                                          padding:
+                                          const EdgeInsets.only(
+                                              left: 15.0,
+                                              top: 8.0),
+                                          child: new TextField(
+                                            keyboardType:
+                                            TextInputType.number,
+                                            onChanged: (value) {
+                                              setState(() {
+                                                isChangedAnyThing =
+                                                true;
+                                              });
+                                              if (visualizerModel
+                                                  .filtersModel[
+                                              indexGrid]
+                                                  .textEditingController
+                                                  .text
+                                                  .length >=
+                                                  9) {
+                                                visualizerModel
+                                                    .filtersModel[
+                                                indexGrid]
+                                                    .textEditingController
+                                                    .clear();
+                                              }
+                                            },
+                                            onSubmitted: (val) {},
+                                            style: TextStyle(
+                                                color: ColorClass
+                                                    .fontColor,
+                                                fontFamily:
+                                                FontClass.appFont,
+                                                fontSize: 15),
+                                            textAlign: TextAlign.left,
+                                            controller: visualizerModel
+                                                .filtersModel[
+                                            indexGrid]
+                                                .textEditingController,
+                                            decoration:
+                                            new InputDecoration(
+                                              border:
+                                              InputBorder.none,
+                                              hintStyle: TextStyle(
+                                                  color: Colors.black,
+                                                  fontFamily:
+                                                  FontClass
+                                                      .appFont,
+                                                  fontSize: 12),
+                                              hintText: 'Value',
                                             ),
-                                          );
-                                  }),
-                                ),
+                                          ),
+                                        ),
+                                      ),
+                                    )),
                               )
                             ],
                           ),
                         ),
                       )
-                    : Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                        color: Colors.white,
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.only(top: 8.0),
-                              child: ListTile(
-                                leading: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      visualizerModel
-                                          .filtersModel[indexGrid].name,
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: FontClass.appFont,
-                                          fontSize: 20),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top: 4.0),
-                                      child: Text(
-                                        visualizerModel
-                                            .filtersModel[indexGrid]
-                                            .dataSource
-                                            .columnsList[visualizerModel
-                                                .filtersModel[indexGrid]
-                                                .filteredColumn]
-                                            .name,
-                                        style: TextStyle(
-                                            color: Colors.grey,
-                                            fontFamily: FontClass.appFont,
-                                            fontSize: 17),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                trailing: Checkbox(
-                                  onChanged: (val) {
-                                    setState(() {
-                                      visualizerModel.filtersModel[indexGrid]
-                                          .isActive = val;
-                                    });
-                                  },
-                                  value: visualizerModel
-                                      .filtersModel[indexGrid].isActive,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 15.0, right: 15.0, top: 8),
-                              child: Divider(
-                                color: Colors.grey,
-                                height: 5,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 16.0),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  children: <Widget>[
-                                    visualizerModel
-                                                .filtersModel[indexGrid].type ==
-                                            "LessThan"
-                                        ? Text(
-                                            "<",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontFamily: FontClass.appFont,
-                                                fontSize: 17),
-                                          )
-                                        : visualizerModel
-                                                    .filtersModel[indexGrid]
-                                                    .type ==
-                                                "GreaterThan"
-                                            ? Text(
-                                                ">",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        FontClass.appFont,
-                                                    fontSize: 17),
-                                              )
-                                            : Text(
-                                                "=",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontFamily:
-                                                        FontClass.appFont,
-                                                    fontSize: 17),
-                                              ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.only(left: 12.0),
-                                      child: Container(
-                                          height: 40.00,
-                                          width: 100.00,
-                                          color:
-                                              ColorClass.filterContainerColor,
-                                          child: Center(
-                                            child: Directionality(
-                                              textDirection: TextDirection.ltr,
-                                              child: Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 15.0, top: 8.0),
-                                                child: new TextField(
-                                                  keyboardType:
-                                                      TextInputType.number,
-                                                  onChanged: (value) {
-                                                    if (txtControllers[
-                                                                indexGrid]
-                                                            .text
-                                                            .length >=
-                                                        9) {
-                                                      txtControllers[indexGrid]
-                                                          .clear();
-                                                    }
-                                                  },
-                                                  onSubmitted: (val) {},
-                                                  style: TextStyle(
-                                                      color:
-                                                          ColorClass.fontColor,
-                                                      fontFamily:
-                                                          FontClass.appFont,
-                                                      fontSize: 15),
-                                                  textAlign: TextAlign.left,
-                                                  controller:
-                                                      txtControllers[0],
-                                                  decoration:
-                                                      new InputDecoration(
-                                                    border: InputBorder.none,
-                                                    hintStyle: TextStyle(
-                                                        color: Colors.black,
-                                                        fontFamily:
-                                                            FontClass.appFont,
-                                                        fontSize: 12),
-                                                    hintText: 'Value',
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
+                    ],
+                  ),
+                ),
               );
-            })*/
-        );
+            }));
   }
 
   void doSubmitted() {
     List<FilterModel> activeFilters = new List();
     List<ColumnModel> tempColumnModels = new List();
     TableModel filteredTableModel;
+    List<CellModel> trueData = new List();
 
     for (int i = 0; i < visualizerModel.filtersModel.length; i++) {
       if (visualizerModel.filtersModel[i].isActive) {
@@ -737,63 +779,124 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
 
     for (int i = 0; i < activeFilters.length; i++) {
       if (activeFilters[i]
-              .dataSource
-              .columnsList[activeFilters[i].filteredColumn]
-              .columnType ==
+          .dataSource
+          .columnsList[activeFilters[i].filteredColumn]
+          .columnType ==
           "Measures") {
         if (activeFilters[i].type == "Equality") {
-          for (int inner = 0;
-              inner < activeFilters[inner].dataSource.columnsList.length;
-              inner++) {
-            if (double.parse(activeFilters[inner]
-                    .dataSource
-                    .columnsList[inner]
-                    .cells[inner]
-                    .value) ==
+          for (int inner = 1;
+          inner <
+              activeFilters[i]
+                  .dataSource
+                  .columnsList[activeFilters[i].filteredColumn]
+                  .cells
+                  .length;
+          inner++) {
+            if (double.parse(activeFilters[activeFilters[i].id] //inner
+                .dataSource
+                .columnsList[activeFilters[i].filteredColumn]
+                .cells[inner]
+                .value
+                .toString()) ==
                 double.parse(activeFilters[activeFilters[i].id]
                     .textEditingController
                     .text
-                    .toString())) {}
+                    .toString())) {
+              trueData = [];
+              trueData.add(new CellModel(
+                  value: activeFilters[i]
+                      .dataSource
+                      .columnsList[activeFilters[i].filteredColumn]
+                      .cells[inner]
+                      .value,
+                  type: activeFilters[i]
+                      .dataSource
+                      .columnsList[activeFilters[i].filteredColumn]
+                      .cells[inner]
+                      .type));
+            }
           }
-        } else if (activeFilters[i].type == "LessThan") {
-          for (int inner = 0;
-              inner < activeFilters[inner].dataSource.columnsList.length;
-              inner++) {
-            if (double.parse(activeFilters[inner]
-                    .dataSource
-                    .columnsList[inner]
-                    .cells[inner]
-                    .value) >
-                double.parse(activeFilters[activeFilters[i].id]
-                    .textEditingController
-                    .text
-                    .toString())) {}
-          }
-        } else if (activeFilters[i].type == "GreaterThan") {
-          for (int inner = 0;
-              inner < activeFilters[inner].dataSource.columnsList.length;
-              inner++) {
-            if (double.parse(activeFilters[inner]
-                    .dataSource
-                    .columnsList[inner]
-                    .cells[inner]
-                    .value) <
-                double.parse(activeFilters[activeFilters[i].id]
-                    .textEditingController
-                    .text
-                    .toString())) {}
-          }
-        }
-      } else if (activeFilters[i]
+          print(trueData);
+          activeFilters[i]
               .dataSource
               .columnsList[activeFilters[i].filteredColumn]
-              .columnType ==
-          "Dimensions") {
+              .cells = trueData;
+          trueData = [];
+          //print(activeFilters[0].dataSource.columnsList[activeFilters[0].filteredColumn].cells);
+          /*          for(int j = 0 ; j < activeFilters.length ; i ++){
+            print("_-----------------------_");
+            print(activeFilters[j].dataSource.columnsList[activeFilters[j].filteredColumn].cells);
+          }*/
 
-
-      }
+        } else if (activeFilters[i].type == "LessThan") {
+          for (int inner = 0;
+          inner < activeFilters[inner].dataSource.columnsList.length;
+          inner++) {
+            if (double.parse(activeFilters[inner]
+                .dataSource
+                .columnsList[inner]
+                .cells[inner]
+                .value) <
+                double.parse(activeFilters[activeFilters[i].id]
+                    .textEditingController
+                    .text
+                    .toString())) {
+              trueData = [];
+              trueData.add(new CellModel(
+                  value: activeFilters[i]
+                      .dataSource
+                      .columnsList[activeFilters[i].filteredColumn]
+                      .cells[inner]
+                      .value,
+                  type: activeFilters[i]
+                      .dataSource
+                      .columnsList[activeFilters[i].filteredColumn]
+                      .cells[inner]
+                      .type));
+            }
+          }
+          activeFilters[i]
+              .dataSource
+              .columnsList[activeFilters[i].filteredColumn]
+              .cells = trueData;
+        } else if (activeFilters[i].type == "GreaterThan") {
+          for (int inner = 0;
+          inner < activeFilters[inner].dataSource.columnsList.length;
+          inner++) {
+            if (double.parse(activeFilters[inner]
+                .dataSource
+                .columnsList[inner]
+                .cells[inner]
+                .value) >
+                double.parse(activeFilters[activeFilters[i].id]
+                    .textEditingController
+                    .text
+                    .toString())) {
+              trueData = [];
+              trueData.add(new CellModel(
+                  value: activeFilters[i]
+                      .dataSource
+                      .columnsList[activeFilters[i].filteredColumn]
+                      .cells[inner]
+                      .value,
+                  type: activeFilters[i]
+                      .dataSource
+                      .columnsList[activeFilters[i].filteredColumn]
+                      .cells[inner]
+                      .type));
+            }
+          }
+          activeFilters[i]
+              .dataSource
+              .columnsList[activeFilters[i].filteredColumn]
+              .cells = trueData;
+        }
+      } else if (activeFilters[i]
+          .dataSource
+          .columnsList[activeFilters[i].filteredColumn]
+          .columnType ==
+          "Dimensions") {}
     }
-
     /*for (int i = 0; i < columnModel.cells.length; i++) {
       if (visualizerModel.filtersModel[indexGrid].type == "Equality") {
         if (columnModel.cells[i].value == value) {}
