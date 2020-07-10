@@ -27,6 +27,8 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
   List<FilterModel> measures = new List();
   List<FilterModel> dimensions = new List();
   bool isChangedAnyThing = false;
+  List<List<bool>> bools = new List();
+  List<bool> bool1 = new List();
 
   _FiltersOnVisualizerState(this.visualizerModel);
 
@@ -88,7 +90,19 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
 */
 
     for (int i = 0; i < visualizerModel.filtersModel.length; i++) {
-      print(visualizerModel.filtersModel[i].dataSource.columnsList);
+      for (int j = 0;
+      j <
+          visualizerModel
+              .filtersModel[i]
+              .dataSource
+              .columnsList[visualizerModel.filtersModel[i].filteredColumn]
+              .cells
+              .length;
+      j++) {
+        bool1.add(false);
+      }
+      bools.add(bool1);
+      bool1 = [];
     }
 
     super.initState();
@@ -549,13 +563,18 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                   child: Row(
                                     children: <Widget>[
                                       Checkbox(
-                                        onChanged: (val) {
-                                          setState(() {
-                                            isChangedAnyThing = true;
-                                            visualizerModel.filtersModel[index].isActivatedCells[index] = val;
-                                          });
-                                        },
-                                        value: visualizerModel.filtersModel[index].isActivatedCells[index],
+                                          onChanged: (val) {
+                                            setState(() {
+                                              isChangedAnyThing =
+                                              true;
+                                              bools[indexGrid]
+                                              [index] = val;
+                                              //visualizerModel.filtersModel[index].isActivatedCells[index] = val;
+                                            });
+                                          },
+                                          value: bools[
+                                          indexGrid][
+                                          index] //visualizerModel.filtersModel[index].isActivatedCells[index],
                                       ),
                                       Text(
                                         visualizerModel
@@ -792,13 +811,13 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                   .cells
                   .length;
           inner++) {
-            if (double.parse(activeFilters[activeFilters[i].id] //inner
+            if (double.parse(activeFilters[i] //activeFilters[i].id //inner
                 .dataSource
                 .columnsList[activeFilters[i].filteredColumn]
                 .cells[inner]
                 .value
                 .toString()) ==
-                double.parse(activeFilters[activeFilters[i].id]
+                double.parse(activeFilters[i] //activeFilters[i].id
                     .textEditingController
                     .text
                     .toString())) {
@@ -822,22 +841,21 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
               .columnsList[activeFilters[i].filteredColumn]
               .cells = trueData;
           trueData = [];
-          //print(activeFilters[0].dataSource.columnsList[activeFilters[0].filteredColumn].cells);
-          /*          for(int j = 0 ; j < activeFilters.length ; i ++){
-            print("_-----------------------_");
-            print(activeFilters[j].dataSource.columnsList[activeFilters[j].filteredColumn].cells);
-          }*/
-
         } else if (activeFilters[i].type == "LessThan") {
-          for (int inner = 0;
-          inner < activeFilters[inner].dataSource.columnsList.length;
+          for (int inner = 1;
+          inner <
+              activeFilters[i]
+                  .dataSource
+                  .columnsList[activeFilters[i].filteredColumn]
+                  .cells
+                  .length;
           inner++) {
-            if (double.parse(activeFilters[inner]
+            if (double.parse(activeFilters[i] //activeFilters[i].id
                 .dataSource
-                .columnsList[inner]
+                .columnsList[activeFilters[i].filteredColumn]
                 .cells[inner]
                 .value) <
-                double.parse(activeFilters[activeFilters[i].id]
+                double.parse(activeFilters[i] //activeFilters[i].id
                     .textEditingController
                     .text
                     .toString())) {
@@ -860,15 +878,20 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
               .columnsList[activeFilters[i].filteredColumn]
               .cells = trueData;
         } else if (activeFilters[i].type == "GreaterThan") {
-          for (int inner = 0;
-          inner < activeFilters[inner].dataSource.columnsList.length;
+          for (int inner = 1;
+          inner <
+              activeFilters[i]
+                  .dataSource
+                  .columnsList[activeFilters[i].filteredColumn]
+                  .cells
+                  .length;
           inner++) {
-            if (double.parse(activeFilters[inner]
+            if (double.parse(activeFilters[i] //activeFilters[i].id
                 .dataSource
-                .columnsList[inner]
+                .columnsList[activeFilters[i].filteredColumn]
                 .cells[inner]
                 .value) >
-                double.parse(activeFilters[activeFilters[i].id]
+                double.parse(activeFilters[i] //activeFilters[i].id
                     .textEditingController
                     .text
                     .toString())) {
@@ -895,16 +918,23 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
           .dataSource
           .columnsList[activeFilters[i].filteredColumn]
           .columnType ==
-          "Dimensions") {}
+          "Dimensions") {
+        for (int inner = 1;
+        inner <
+            activeFilters[i]
+                .dataSource
+                .columnsList[activeFilters[i].filteredColumn]
+                .cells
+                .length;
+        inner++) {
+          if (activeFilters[i].isActivatedCells[inner]) {
+          } else {}
+        }
+      }
     }
-    /*for (int i = 0; i < columnModel.cells.length; i++) {
-      if (visualizerModel.filtersModel[indexGrid].type == "Equality") {
-        if (columnModel.cells[i].value == value) {}
-      } else {}
-    }*/
+    goAndMakeNewTableModel(activeFilters);
   }
+
+  void goAndMakeNewTableModel(List<FilterModel> activeFilters) {}
 }
 //visualizerModel.filtersModel[index].dataSource.listColumns[visualizerModel.filtersModel[index].filteredColumn].columnType
-//ColumnModel columnModel = new ColumnModel();
-//
-//tempColumnModels.add(columnModel);

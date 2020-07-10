@@ -64,14 +64,12 @@ class FilterModel {
 
   static List<bool> countNumberCellsAndCheckingFalse(json, id, filteredColumn) {
     List<bool> zeroActivation = new List();
-    TableModel trueTableModel = checkFilter(json, id);
+    TableModel trueDataSource = checkFilter(json, id);
     for (int i = 0;
-    i < trueTableModel.columnsList[filteredColumn].cells.length;
+    i < trueDataSource.columnsList[filteredColumn].cells.length;
     i++) {
       zeroActivation.add(false);
-      print("$i : false");
     }
-    print("Length : ${zeroActivation.length}");
     return zeroActivation;
   }
 }
