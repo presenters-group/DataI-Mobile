@@ -7,18 +7,19 @@ class ColumnModel {
   int id;
   List<CellModel> cells = new List();
   List<ValueCategory> valueCategories = new List();
-  ColumnStyleMode columnStyleMode;
+
+  //ColumnStyleMode columnStyleMode;
   var columnType;
   bool isDeleted;
 
-  ColumnModel(
-      {this.name,
-        this.id,
-        this.cells,
-        this.valueCategories,
-        this.columnType,
-        this.isDeleted,
-        this.columnStyleMode});
+  ColumnModel({
+    this.name,
+    this.id,
+    this.cells,
+    this.valueCategories,
+    this.columnType,
+    this.isDeleted,
+  });
 
   factory ColumnModel.fromJSON(Map<String, dynamic> json) {
     return ColumnModel(
@@ -26,7 +27,7 @@ class ColumnModel {
         id: json["id"],
         cells: convertToCellsList(json),
         valueCategories: convertToValueCategories(json),
-        columnStyleMode: ColumnStyleMode.fromJSON(json["style"]),
+        // columnStyleMode: ColumnStyleMode.fromJSON(json["style"]),
         columnType: json["columnType"],
         isDeleted: json["isDeleted"]);
   }
@@ -51,8 +52,6 @@ class ColumnModel {
 
   @override
   String toString() {
-    return 'ColumnModel{name: $name, id: $id, cells: $cells, valueCategories: $valueCategories, columnStyleMode: $columnStyleMode, columnType: $columnType, isDeleted: $isDeleted}';
+    return 'ColumnModel{name: $name, id: $id, cells: $cells, valueCategories: $valueCategories, columnType: $columnType, isDeleted: $isDeleted}';
   }
-
-
 }

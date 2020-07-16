@@ -250,10 +250,10 @@ class _DashboardOpenedState extends State<DashboardOpened> {
                                             BoxShape.rectangle,
                                             color: dashboard
                                                 .visualizersList[
-                                            indexList]
-                                                .columnsModel[index]
-                                                .columnStyleMode
-                                                .color),
+                                            indexList].dataSource.columnsColors[index]),
+//                                              .columnsModel[index]
+//                                          .columnStyleMode
+//                                          .color
                                       ),
                                     ),
                                     Padding(

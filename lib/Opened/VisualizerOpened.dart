@@ -139,8 +139,10 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                             height: 15,
                             decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: visualizer.columnsModel[index]
-                                    .columnStyleMode.color),
+                                color: visualizer.dataSource.columnsColors[index]),
+
+                            //columnsModel[index]
+                            //                                    .columnStyleMode.color
                           ),
                         ),
                         Padding(

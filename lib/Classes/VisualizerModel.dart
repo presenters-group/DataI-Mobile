@@ -3,6 +3,7 @@ import 'package:eyedatai/Classes/DataSources/ColumnModel.dart';
 import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Classes/FilterModel.dart';
 import 'package:flutter/cupertino.dart';
+import 'DataSources/Filter.dart';
 
 class VisualizerModel {
   TableModel dataSource;
@@ -11,7 +12,6 @@ class VisualizerModel {
   var visualizerName;
   List<dynamic> usedColumns = new List();
   int xColumn;
-  List<dynamic> filters = new List();
   List<ColumnModel> columnsModel = new List();
   List<FilterModel> filtersModel = new List();
   ChartData chartData;
@@ -19,6 +19,7 @@ class VisualizerModel {
   bool isBar = true;
   bool isLine = false;
   bool isPie = false;
+  List<dynamic> filters = new List();
 
   VisualizerModel({
     @required this.visualizerID,
@@ -47,11 +48,11 @@ class VisualizerModel {
       usedColumns: subJSON["usedColumns"],
       xColumn: subJSON["xColumn"],
       filters: subJSON["filters"],
-      columnsModel: checkUsedColumns(
-          totalJSON, subJSON["usedColumns"], subJSON["data"], subJSON["xColumn"]),
+      columnsModel: checkUsedColumns(totalJSON, subJSON["usedColumns"],
+          subJSON["data"], subJSON["xColumn"]),
       filtersModel: checkUsedFilters(totalJSON, subJSON["filters"]),
-      chartData: convertToAggregateData(
-          totalJSON, subJSON["usedColumns"], subJSON["data"], subJSON["xColumn"]),
+      chartData: convertToAggregateData(totalJSON, subJSON["usedColumns"],
+          subJSON["data"], subJSON["xColumn"]),
       isDeleted: subJSON["isDeleted"],
       isBar: true,
       isLine: false,
@@ -77,27 +78,6 @@ class VisualizerModel {
   }
 
   static List<ColumnModel> checkUsedColumns(json, usedCol, dataID, xColumn) {
-    /* List<ColumnModel> trueColumnModel = new List();
-    List<dynamic> allDSJSON = json["dataSources"];
-    List<TableModel>tablesModels =new List();
-    TableModel truetableModel;
-    for(var newTable in allDSJSON){
-      tablesModels.add(new TableModel.fromJSON(newTable));
-    }
-    for(int i = 0 ; i < tablesModels.length ; i++){
-      if(tablesModels[i].id == dataID){
-        truetableModel = tablesModels[i];
-      }
-    }
-
-    //TableModel tableModel = checkDataSource(json, dataID);
-    for (int i = 0; i < truetableModel.listColumns.length; i++) {
-      if (usedCol.contains(truetableModel.listColumns[i].id)) {
-        print(truetableModel.listColumns[i].id);
-        trueColumnModel.add(truetableModel.listColumns[i]);
-      }
-    }
-    return trueColumnModel;*/
     TableModel trueTableModel;
     List<ColumnModel> trueColumns = new List();
     List<TableModel> allTablesModel = new List();
@@ -115,14 +95,6 @@ class VisualizerModel {
         trueColumns.add(trueTableModel.columnsList[i]);
       }
     }
-    /*    ColumnModel tempColumnModel;
-    for(int i = 0 ; i < trueColumns.length ; i++){
-      if(trueColumns[i].id == xColumn){
-        tempColumnModel = trueColumns[i];
-        trueColumns.remove(trueColumns[i]);
-      }
-    }
-    trueColumns.insert(0, tempColumnModel);*/
     return trueColumns;
   }
 
@@ -133,8 +105,17 @@ class VisualizerModel {
     for (var newFilter in allFiltersJSON) {
       allFilters.add(new FilterModel.fromJSON(newFilter, json));
     }
+    List<Filter> filtersList = new List();
+    List<dynamic> filtersJSON = usedFilter;
+    for (var newFilter in filtersJSON) {
+      filtersList.add(Filter.fromJSON(newFilter));
+    }
+    List<int> ids = new List();
+    for(int i = 0 ; i  < filtersList.length ; i++){
+      ids.add(filtersList[i].id);
+    }
     for (int i = 0; i < allFilters.length; i++) {
-      if (usedFilter.contains(allFilters[i].id)) {
+      if (ids.contains(allFilters[i].id)) {
         trueFilters.add(allFilters[i]);
       }
     }
@@ -144,14 +125,6 @@ class VisualizerModel {
   static convertToAggregateData(json, usedCol, dataID, xColumn) {
     List<ColumnModel> trueColumns =
         checkUsedColumns(json, usedCol, dataID, xColumn);
-    /*    ColumnModel tempColumnModel;
-    for(int i = 0 ; i < trueColumns.length ; i++){
-      if(trueColumns[i].id == xColumn){
-        tempColumnModel = trueColumns[i];
-        trueColumns.remove(trueColumns[i]);
-      }
-    }
-    trueColumns.insert(0, tempColumnModel);*/
-    return ChartData.fromVisualizer(trueColumns, xColumn);
+    return ChartData.fromVisualizer(json ,trueColumns, xColumn , dataID);
   }
 }

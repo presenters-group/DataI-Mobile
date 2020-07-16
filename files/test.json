@@ -45,12 +45,6 @@
               "type": "numeric"
             }
           ],
-          "style": {
-            "color": "#26C485",
-            "lineWeight": 1.0,
-            "pointWeight": 1.0,
-            "font": "Calibri"
-          },
           "columnType": "Measures",
           "valueCategories": [
             {
@@ -113,12 +107,6 @@
               "type": "numeric"
             }
           ],
-          "style": {
-            "color": "#3066BE",
-            "lineWeight": 1.0,
-            "pointWeight": 1.0,
-            "font": "Calibri"
-          },
           "columnType": "Measures",
           "valueCategories": [
             {
@@ -181,12 +169,6 @@
               "type": "string"
             }
           ],
-          "style": {
-            "color": "#DBD56E",
-            "lineWeight": 1.0,
-            "pointWeight": 1.0,
-            "font": "Calibri"
-          },
           "columnType": "Dimensions",
           "valueCategories": [
             {
@@ -249,12 +231,6 @@
               "type": "string"
             }
           ],
-          "style": {
-            "color": "#EBD4AE",
-            "lineWeight": 1.5,
-            "pointWeight": 0.0,
-            "font": "Calibri"
-          },
           "columnType": "Measures",
           "valueCategories": [
             {
@@ -293,6 +269,18 @@
           "isDeleted": false
         }
       ],
+      "filters": [
+        {
+          "id": 1,
+          "value": 50,
+          "isActive": true
+        },
+        {
+          "id": 1,
+          "value": 60,
+          "isActive": false
+        }
+      ],
       "columnsVisibility": [
         true,
         true,
@@ -303,18 +291,48 @@
         true,
         true
       ],
+      "columnsColors": [
+        "#4df41c",
+        "#fef5a6",
+        "#7c5924",
+        "#000000"
+      ],
+      "rowsColors": [
+        "#8ddd66",
+        "#6c41c7",
+        "#342bc8",
+        "#5b68e2",
+        "#140d6e",
+        "#2afc34",
+        "#cf69b6"
+      ],
       "properties": {
-        "sourceFileType": "DataI",
-        "zoomValue": 50,
-        "xColumn": 0
+        "sourceFileType": "Excel",
+        "zoomValue": 50
       },
       "rightToLeft": true,
-      "aggregator": null,
+      "aggregator": {
+        "aggregatedTable": [],
+        "aggregationColumn": 0,
+        "isActive": false
+      },
       "isDeleted": false
     },
     {
       "name": "Table2",
       "id": 1,
+      "filters": [
+        {
+          "id": 1,
+          "value": 50,
+          "isActive": true
+        },
+        {
+          "id": 1,
+          "value": 60,
+          "isActive": false
+        }
+      ],
       "columns": [
         {
           "name": "Quantity",
@@ -357,12 +375,6 @@
               "type": "numeric"
             }
           ],
-          "style": {
-            "color": "#3066BE",
-            "lineWeight": 1.0,
-            "pointWeight": 1.0,
-            "font": "Calibri"
-          },
           "columnType": "Measures",
           "valueCategories": [
             {
@@ -425,12 +437,6 @@
               "type": "string"
             }
           ],
-          "style": {
-            "color": "#DBD56E",
-            "lineWeight": 1.0,
-            "pointWeight": 1.0,
-            "font": "Calibri"
-          },
           "columnType": "Dimensions",
           "valueCategories": [
             {
@@ -493,12 +499,6 @@
               "type": "string"
             }
           ],
-          "style": {
-            "color": "#EBD4AE",
-            "lineWeight": 1.5,
-            "pointWeight": 0.0,
-            "font": "Calibri"
-          },
           "columnType": "Measures",
           "valueCategories": [
             {
@@ -547,13 +547,30 @@
         true,
         true
       ],
+      "columnsColors": [
+        "#4df41c",
+        "#fef5a6",
+        "#7c5924"
+      ],
+      "rowsColors": [
+        "#e868e1",
+        "#b38e74",
+        "#943c9f",
+        "#7df7d6",
+        "#16b8f9",
+        "#483242",
+        "#37c44c"
+      ],
       "properties": {
-        "sourceFileType": "DataI",
-        "zoomValue": 50,
-        "xColumn": 0
+        "sourceFileType": "CSV",
+        "zoomValue": 50
       },
       "rightToLeft": true,
-      "aggregator": null,
+      "aggregator": {
+        "aggregatedTable": [],
+        "aggregationColumn": 0,
+        "isActive": false
+      },
       "isDeleted": false
     }
   ],
@@ -563,6 +580,23 @@
       "id": 0,
       "data": 0,
       "xColumn": 2,
+      "filters": [
+        {
+          "id": 0,
+          "value": 50,
+          "isActive": true
+        },
+        {
+          "id": 1,
+          "value": 50,
+          "isActive": true
+        },
+        {
+          "id": 2,
+          "value": 50,
+          "isActive": true
+        }
+      ],
       "usedColumns": [
         0,
         1,
@@ -570,11 +604,6 @@
         4
       ],
       "chart": "BoundaryLineChart",
-      "filters": [
-        0,
-        1,
-        2
-      ],
       "isDeleted": false
     },
     {
@@ -588,8 +617,16 @@
       ],
       "chart": "BoundaryLineChart",
       "filters": [
-        0,
-        1
+        {
+          "id": 1,
+          "value": 50,
+          "isActive": true
+        },
+        {
+          "id": 0,
+          "value": 50,
+          "isActive": true
+        }
       ],
       "isDeleted": false
     },
@@ -605,9 +642,11 @@
       ],
       "chart": "BarChart",
       "filters": [
-        2,
-        1,
-        4
+        {
+          "id": 1,
+          "value": 50,
+          "isActive": true
+        }
       ],
       "isDeleted": false
     }
@@ -616,6 +655,20 @@
     {
       "name": "dashboard1",
       "id": 0,
+      "filters": [
+        {
+          "id": 1,
+          "visioId": 0,
+          "value": 60,
+          "isActive": true,
+          "measurements": {
+            "width": 20.0,
+            "height": 60.0,
+            "x": 10.0,
+            "y": 20.0
+          }
+        }
+      ],
       "visualizers": [
         {
           "visualizationIndex": 0,
@@ -624,27 +677,7 @@
             "height": 1.0,
             "x": 1.0,
             "y": 1.0
-          },
-          "displayedFilters": [
-            {
-              "filterIndex": 0,
-              "measurements": {
-                "width": 0.0,
-                "height": 0.0,
-                "x": 0.0,
-                "y": 0.0
-              }
-            },
-            {
-              "filterIndex": 1,
-              "measurements": {
-                "width": 1.0,
-                "height": 1.0,
-                "x": 1.0,
-                "y": 1.0
-              }
-            }
-          ]
+          }
         },
         {
           "visualizationIndex": 1,
@@ -653,32 +686,10 @@
             "height": 1.0,
             "x": 1.0,
             "y": 1.0
-          },
-          "displayedFilters": [
-            {
-              "filterIndex": 0,
-              "measurements": {
-                "width": 0.0,
-                "height": 0.0,
-                "x": 0.0,
-                "y": 0.0
-              }
-            },
-            {
-              "filterIndex": 1,
-              "measurements": {
-                "width": 1.0,
-                "height": 1.0,
-                "x": 1.0,
-                "y": 1.0
-              }
-            }
-          ]
+          }
         }
       ]
     }
-
-
   ],
   "filters": [
     {
@@ -687,7 +698,7 @@
       "dataSource": 0,
       "filteredColumn": 1,
       "initValue": 10,
-      "type": "Equality",
+      "type": "MultipleEquality",
       "isDeleted": false
     },
     {
@@ -696,7 +707,7 @@
       "dataSource": 0,
       "filteredColumn": 2,
       "initValue": 15,
-      "type": "LessThan",
+      "type": "<",
       "isDeleted": false
     },
     {
@@ -704,8 +715,17 @@
       "id": 2,
       "dataSource": 0,
       "filteredColumn": 3,
+      "initValue": 40.0,
+      "type": ">",
+      "isDeleted": false
+    },
+    {
+      "name": "filter4",
+      "id": 3,
+      "dataSource": 0,
+      "filteredColumn": 3,
       "initValue": "Laptop",
-      "type": "GreaterThan",
+      "type": "<",
       "isDeleted": false
     }
   ]

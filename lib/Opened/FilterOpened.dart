@@ -30,7 +30,7 @@ class _FilterOpenedState extends State<FilterOpened> {
 
   //
   String currType;
-  List<String> types = ["Equality", "LessThan", "GreaterThan", "Categorized"];
+  List<String> types = ["MultipleEquality", "<", ">", "Categorized"];
 
   _FilterOpenedState(this.filterModel);
 
@@ -87,7 +87,7 @@ class _FilterOpenedState extends State<FilterOpened> {
                 width: 30,
                 decoration: BoxDecoration(
                     image:
-                    DecorationImage(image: AssetImage('Images/Logo.png'))),
+                        DecorationImage(image: AssetImage('Images/Logo.png'))),
               ),
             ),
           ],
@@ -157,28 +157,28 @@ class _FilterOpenedState extends State<FilterOpened> {
                 color: ColorClass.filterContainerColor,
                 child: Center(
                     child: Theme(
-                      data: Theme.of(context).copyWith(
-                          canvasColor: ColorClass.scaffoldBackgroundColor),
-                      child: DropdownButton(
-                          hint: Text(
-                            filterModel.dataSource.name,
-                            style: TextStyle(
-                                color: ColorClass.fontColor,
-                                fontFamily: FontClass.appFont),
-                          ),
-                          onChanged: (val) {
-                            setState(() {
-                              dataSourceValue = val;
-                            });
-                          },
-                          //value: dataSourceValue,
-                          underline: Container(
-                            color: ColorClass.filterContainerColor,
-                          ),
-                          icon: Icon(Icons.keyboard_arrow_down,
-                              color: ColorClass.fontColor, size: 20),
-                          items: []
-                        /*List.generate(
+                  data: Theme.of(context).copyWith(
+                      canvasColor: ColorClass.scaffoldBackgroundColor),
+                  child: DropdownButton(
+                      hint: Text(
+                        filterModel.dataSource.name,
+                        style: TextStyle(
+                            color: ColorClass.fontColor,
+                            fontFamily: FontClass.appFont),
+                      ),
+                      onChanged: (val) {
+                        setState(() {
+                          dataSourceValue = val;
+                        });
+                      },
+                      //value: dataSourceValue,
+                      underline: Container(
+                        color: ColorClass.filterContainerColor,
+                      ),
+                      icon: Icon(Icons.keyboard_arrow_down,
+                          color: ColorClass.fontColor, size: 20),
+                      items: []
+                      /*List.generate(
                               filterModel.dataSource.listColumns.length, (index) {
                             return DropdownMenuItem(
                               child: Text(
@@ -193,7 +193,7 @@ class _FilterOpenedState extends State<FilterOpened> {
                             );
                           })*/
                       ),
-                    )),
+                )),
               ),
             ),
           ),
@@ -213,43 +213,43 @@ class _FilterOpenedState extends State<FilterOpened> {
                 color: ColorClass.filterContainerColor,
                 child: Center(
                     child: Theme(
-                      data: Theme.of(context).copyWith(
-                          canvasColor: ColorClass.scaffoldBackgroundColor),
-                      child: DropdownButton(
-                          hint: Text(
-                            currColumnType,
+                  data: Theme.of(context).copyWith(
+                      canvasColor: ColorClass.scaffoldBackgroundColor),
+                  child: DropdownButton(
+                      hint: Text(
+                        currColumnType,
+                        style: TextStyle(
+                            color: ColorClass.fontColor,
+                            fontFamily: FontClass.appFont),
+                      ),
+                      value: currColumnType,
+                      underline: Container(
+                        color: ColorClass.filterContainerColor,
+                      ),
+                      icon: Icon(Icons.keyboard_arrow_down,
+                          color: ColorClass.fontColor, size: 20),
+                      iconSize: 24,
+                      elevation: 16,
+                      onChanged: (val) {
+                        setState(() {
+                          currColumnType = val;
+                        });
+                      },
+                      items: List.generate(columnType.length, (index) {
+                        return DropdownMenuItem(
+                          child: Text(
+                            columnType[index],
                             style: TextStyle(
-                                color: ColorClass.fontColor,
-                                fontFamily: FontClass.appFont),
+                                color: currColumnType == columnType[index]
+                                    ? ColorClass.fontColor
+                                    : Colors.grey,
+                                fontFamily: FontClass.appFont,
+                                fontSize: 15),
                           ),
-                          value: currColumnType,
-                          underline: Container(
-                            color: ColorClass.filterContainerColor,
-                          ),
-                          icon: Icon(Icons.keyboard_arrow_down,
-                              color: ColorClass.fontColor, size: 20),
-                          iconSize: 24,
-                          elevation: 16,
-                          onChanged: (val) {
-                            setState(() {
-                              currColumnType = val;
-                            });
-                          },
-                          items: List.generate(columnType.length, (index) {
-                            return DropdownMenuItem(
-                              child: Text(
-                                columnType[index],
-                                style: TextStyle(
-                                    color: currColumnType == columnType[index]
-                                        ? ColorClass.fontColor
-                                        : Colors.grey,
-                                    fontFamily: FontClass.appFont,
-                                    fontSize: 15),
-                              ),
-                              value: columnType[index],
-                            );
-                          })),
-                    )),
+                          value: columnType[index],
+                        );
+                      })),
+                )),
               ),
             ),
           ),
@@ -269,42 +269,42 @@ class _FilterOpenedState extends State<FilterOpened> {
                 color: ColorClass.filterContainerColor,
                 child: Center(
                     child: Theme(
-                      data: Theme.of(context).copyWith(
-                          canvasColor: ColorClass.scaffoldBackgroundColor),
-                      child: DropdownButton(
-                        hint: Text(
-                          currColumn,
+                  data: Theme.of(context).copyWith(
+                      canvasColor: ColorClass.scaffoldBackgroundColor),
+                  child: DropdownButton(
+                    hint: Text(
+                      currColumn,
+                      style: TextStyle(
+                          color: ColorClass.fontColor,
+                          fontFamily: FontClass.appFont),
+                    ),
+                    value: currColumn,
+                    icon: Icon(Icons.keyboard_arrow_down,
+                        color: ColorClass.fontColor, size: 20),
+                    underline: Container(
+                      color: ColorClass.filterContainerColor,
+                    ),
+                    onChanged: (val) {
+                      setState(() {
+                        currColumn = val;
+                      });
+                    },
+                    items: List.generate(columns.length, (index) {
+                      return DropdownMenuItem(
+                        child: Text(
+                          columns[index],
                           style: TextStyle(
-                              color: ColorClass.fontColor,
-                              fontFamily: FontClass.appFont),
+                              color: currColumn == columns[index]
+                                  ? ColorClass.fontColor
+                                  : Colors.grey,
+                              fontFamily: FontClass.appFont,
+                              fontSize: 15),
                         ),
-                        value: currColumn,
-                        icon: Icon(Icons.keyboard_arrow_down,
-                            color: ColorClass.fontColor, size: 20),
-                        underline: Container(
-                          color: ColorClass.filterContainerColor,
-                        ),
-                        onChanged: (val) {
-                          setState(() {
-                            currColumn = val;
-                          });
-                        },
-                        items: List.generate(columns.length, (index) {
-                          return DropdownMenuItem(
-                            child: Text(
-                              columns[index],
-                              style: TextStyle(
-                                  color: currColumn == columns[index]
-                                      ? ColorClass.fontColor
-                                      : Colors.grey,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15),
-                            ),
-                            value: columns[index],
-                          );
-                        }),
-                      ),
-                    )),
+                        value: columns[index],
+                      );
+                    }),
+                  ),
+                )),
               ),
             ),
           ),
@@ -324,45 +324,49 @@ class _FilterOpenedState extends State<FilterOpened> {
                 color: ColorClass.filterContainerColor,
                 child: Center(
                     child: Theme(
-                      data: Theme.of(context).copyWith(
-                          canvasColor: ColorClass.scaffoldBackgroundColor),
-                      child: DropdownButton(
-                        hint: Text(
-                          currType,
-                          style: TextStyle(
-                              color: ColorClass.fontColor,
-                              fontFamily: FontClass.appFont),
-                        ),
-                        value: currType,
-                        icon: Icon(
-                          Icons.keyboard_arrow_down,
+                  data: Theme.of(context).copyWith(
+                      canvasColor: ColorClass.scaffoldBackgroundColor),
+                  child: DropdownButton(
+                    hint: Text(
+                      currType,
+                      style: TextStyle(
                           color: ColorClass.fontColor,
-                          size: 20,
+                          fontFamily: FontClass.appFont),
+                    ),
+                    value: currType,
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      color: ColorClass.fontColor,
+                      size: 20,
+                    ),
+                    underline: Container(
+                      color: ColorClass.filterContainerColor,
+                    ),
+                    onChanged: (val) {
+                      setState(() {
+                        currType = val;
+                      });
+                    },
+                    items: List.generate(types.length, (index) {
+                      return DropdownMenuItem(
+                        child: Text(
+                          types[index] == "<"
+                              ? "LessThan"
+                              : types[index] == ">"
+                                  ? "GreaterThan"
+                                  : types[index],
+                          style: TextStyle(
+                              color: currType == types[index]
+                                  ? ColorClass.fontColor
+                                  : Colors.grey,
+                              fontFamily: FontClass.appFont,
+                              fontSize: 15),
                         ),
-                        underline: Container(
-                          color: ColorClass.filterContainerColor,
-                        ),
-                        onChanged: (val) {
-                          setState(() {
-                            currType = val;
-                          });
-                        },
-                        items: List.generate(types.length, (index) {
-                          return DropdownMenuItem(
-                            child: Text(
-                              types[index],
-                              style: TextStyle(
-                                  color: currType == types[index]
-                                      ? ColorClass.fontColor
-                                      : Colors.grey,
-                                  fontFamily: FontClass.appFont,
-                                  fontSize: 15),
-                            ),
-                            value: types[index],
-                          );
-                        }),
-                      ),
-                    )),
+                        value: types[index],
+                      );
+                    }),
+                  ),
+                )),
               ),
             ),
           ),

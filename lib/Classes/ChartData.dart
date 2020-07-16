@@ -12,20 +12,21 @@ class ChartData {
 
   ChartData(
       {this.seriesDataBar,
-        this.seriesDataPie,
-        this.seriesDataLine,
-        this.xColumn});
+      this.seriesDataPie,
+      this.seriesDataLine,
+      this.xColumn});
 
-  factory ChartData.fromVisualizer(List<ColumnModel> colM, int xColumn) {
+  factory ChartData.fromVisualizer(
+      json, List<ColumnModel> colM, int xColumn, int dataID) {
     return ChartData(
-        seriesDataBar: convertToSeriesDataBar(colM, xColumn),
+        seriesDataBar: convertToSeriesDataBar(json, colM, xColumn, dataID),
         seriesDataLine: convertToSeriesDataLine(colM, xColumn),
-        seriesDataPie: convertToSeriesDataPie(colM, xColumn),
+        seriesDataPie: convertToSeriesDataPie(json, colM, xColumn, dataID),
         xColumn: xColumn);
   }
 
   static List<List<SeriesData>> convertToSeriesDataBar(
-      List<ColumnModel> colM, int xColumn) {
+      json, List<ColumnModel> colM, int xColumn, int dataID) {
     List<List<SeriesData>> seriesData = new List();
     List<SeriesData> dataSingle = new List();
     List<List<dynamic>> dataUsed = new List();
@@ -51,12 +52,22 @@ class ChartData {
     }
     print(dataUsed[0][0]);
 
+    List<dynamic> dynamicColors = new List();
+    dynamicColors = json["dataSources"][dataID]["columnsColors"];
+    List<Color> columnsColors = new List();
+    for (int i = 0; i < dynamicColors.length; i++) {
+      columnsColors.add(HexColor(dynamicColors[i]
+          .toString()
+          .substring(1, dynamicColors[i].toString().length)));
+    }
+
     for (int j = 1; j <= colM.length - 1; j++) {
       for (int i = 1; i < dataUsed.length; i++) {
         dataSingle.add(new SeriesData(
             task: dataUsed[i][0].toString(),
             taskValue: dataUsed[i][j],
-            taskColor: colM[j].columnStyleMode.color)); //colors[j]
+            taskColor: columnsColors[j])); //colors[j]
+        //colM[j].columnStyleMode.color
       }
       seriesData.add(dataSingle);
       dataSingle = [];
@@ -113,7 +124,7 @@ class ChartData {
   }
 
   static List<SeriesData> convertToSeriesDataPie(
-      List<ColumnModel> colM, int xColumn) {
+      json, List<ColumnModel> colM, int xColumn, int dataID) {
     List<SeriesData> dataPieChart = new List();
     List<List<dynamic>> dataUsed = new List();
     List<dynamic> row = new List();
@@ -154,10 +165,19 @@ class ChartData {
     }
     print(sumRows);
 
+    List<dynamic> dynamicColors = new List();
+    dynamicColors = json["dataSources"][dataID]["columnsColors"];
+    List<Color> columnsColors = new List();
+    for (int i = 0; i < dynamicColors.length; i++) {
+      columnsColors.add(HexColor(dynamicColors[i]
+          .toString()
+          .substring(1, dynamicColors[i].toString().length)));
+    }
+
     ColorClass colorClass = new ColorClass();
     List<Color> colors = colorClass.generateColors();
     for (int i = 0; i < colM.length; i++) {
-      colors.insert(i, colM[i].columnStyleMode.color);
+      colors.insert(i, columnsColors[i]); //colM[i].columnStyleMode.color
     }
     for (int i = 1; i < dataUsed.length; i++) {
       dataPieChart.add(new SeriesData(
@@ -168,4 +188,16 @@ class ChartData {
     }
     return dataPieChart;
   }
+}
+
+class HexColor extends Color {
+  static int _getColorFromHex(String hexColor) {
+    hexColor = hexColor.toUpperCase().replaceAll("#", "");
+    if (hexColor.length == 6) {
+      hexColor = "FF" + hexColor;
+    }
+    return int.parse(hexColor, radix: 16);
+  }
+
+  HexColor(final String hexColor) : super(_getColorFromHex(hexColor));
 }

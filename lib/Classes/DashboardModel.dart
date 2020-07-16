@@ -1,28 +1,61 @@
 import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'DataSources/Filter.dart';
+import 'FilterModel.dart';
+
 class DashboardModel {
   var name;
   int dashboardID;
-  int numberOfVisualizer;
   List<int> visualizerIndex = new List();
   List<VisualizerModel> visualizersList = new List();
+  bool isDelete;
+  List<FilterModel> filtersModel = new List();
+  List<dynamic> filters = new List();
 
   DashboardModel(
       {@required this.name,
-      this.numberOfVisualizer,
       @required this.visualizersList,
       @required this.dashboardID,
-      @required this.visualizerIndex});
+      @required this.visualizerIndex,
+      @required this.filtersModel,
+      this.filters,
+      this.isDelete});
 
   factory DashboardModel.fromJson(
-      Map<String, dynamic> json, Map<String, dynamic> totalJSON) {
+      Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
     return DashboardModel(
-      name: json["name"],
-      visualizerIndex: fetchVisualizersIndex(json),
-      visualizersList: convertToVisualizersList(json, totalJSON),
-      dashboardID: json["id"],
-    );
+        name: subJSON["name"],
+        visualizerIndex: fetchVisualizersIndex(subJSON),
+        visualizersList: convertToVisualizersList(subJSON, totalJSON),
+        dashboardID: subJSON["id"],
+        filters: subJSON["filters"],
+        filtersModel: convertToFiltersList(subJSON, totalJSON),
+        isDelete: subJSON["isDelete"]);
+  }
+
+  static List<FilterModel> convertToFiltersList(subJSON, totalJSON) {
+    List<FilterModel> trueFilters = new List();
+    List<FilterModel> allFilters = new List();
+    List<dynamic> allFiltersJSON = totalJSON["filters"];
+    for (var newFilter in allFiltersJSON) {
+      allFilters.add(new FilterModel.fromJSON(newFilter, totalJSON));
+    }
+    List<Filter> filtersList = new List();
+    List<dynamic> filtersJSON = subJSON["filters"];
+    for (var newFilter in filtersJSON) {
+      filtersList.add(Filter.fromJSON(newFilter));
+    }
+    List<int> ids = new List();
+    for(int i = 0 ; i  < filtersList.length ; i++){
+      ids.add(filtersList[i].id);
+    }
+    for (int i = 0; i < allFilters.length; i++) {
+      if (ids.contains(allFilters[i].id)) {
+        trueFilters.add(allFilters[i]);
+      }
+    }
+    return trueFilters;
   }
 
   static List<int> fetchVisualizersIndex(json) {
@@ -35,34 +68,6 @@ class DashboardModel {
   }
 
   static List<VisualizerModel> convertToVisualizersList(json, totalJSON) {
-    /*List<Visualizer> allVisualizers = new List();
-    List<dynamic> allVisualizersJSON = json["visualizations"];
-    for (var newVisualizer in allVisualizersJSON) {
-      allVisualizers.add(new Visualizer.fromJson(newVisualizer));
-    }
-    List<dynamic> visualizersOfDashboardJSON = json["visualizers"];
-    List<Visualizer> visualizersOfDashboard = ;
-    for(var newDashVisualizer in visualizersOfDashboardJSON){
-      visualizersOfDashboard.add(new Visualizer.fromJson(newDashVisualizer));
-    }
-    List<Visualizer> visualizersList = new List();
-
-    for (int i = 0; i < allVisualizers.length; i++) {
-      if (allVisualizers[i].visualizerID ==
-          visualizersOfDashboardJSON[i].visualizationIndex) {
-        visualizersList.add(new Visualizer(
-            visualizerID: allVisualizers[i].visualizerID,
-            visualizerName: allVisualizers[i].visualizerName,
-            usedColumns: allVisualizers[i].usedColumns,
-            filters: allVisualizers[i].filters,
-            isDeleted: allVisualizers[i].isDeleted,
-            isBar: true,
-            isLine: false,
-            isPie: false));
-      }
-    }
-
-    return allVisualizers;*/
     List<VisualizerModel> visualizersList = new List();
     List<dynamic> visualizersJSON = totalJSON["visualizations"];
     for (var newVisualizer in visualizersJSON) {
