@@ -565,17 +565,24 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                                                       Checkbox(
                                                           onChanged: (val) {
                                                             setState(() {
+                                                              visualizerModel
+                                                                  .filtersModel[
+                                                                      indexGrid]
+                                                                  .isActive = true;
                                                               isChangedAnyThing =
                                                                   true;
-                                                              bools[indexGrid]
-                                                                  [index] = val;
-                                                              //visualizerModel.filtersModel[index].isActivatedCells[index] = val;
+                                                              visualizerModel
+                                                                      .filtersModel[
+                                                                          indexGrid]
+                                                                      .isActivatedCells[
+                                                                  index] = val;
                                                             });
                                                           },
-                                                          value: bools[
-                                                                  indexGrid][
-                                                              index] //visualizerModel.filtersModel[index].isActivatedCells[index],
-                                                          ),
+                                                          value: visualizerModel
+                                                                  .filtersModel[
+                                                                      indexGrid]
+                                                                  .isActivatedCells[
+                                                              index]),
                                                       Text(
                                                         visualizerModel
                                                             .filtersModel[
@@ -790,20 +797,26 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
 
   void doSubmitted() {
     List<FilterModel> activeFilters = new List();
+    List<FilterModel> tempActiveFilters = new List();
     List<ColumnModel> tempColumnModels = new List();
     TableModel filteredTableModel;
     List<CellModel> tempNumbers = new List();
     List<List<CellModel>> allTempsNumbers = new List();
     List<CellModel> trueData = new List();
+    Map<String, dynamic> columnsWithIDs = new Map();
+    Map<String, dynamic> filtersWithIDs = new Map();
 
     for (int i = 0; i < visualizerModel.filtersModel.length; i++) {
       if (visualizerModel.filtersModel[i].isActive) {
         activeFilters.add(visualizerModel.filtersModel[i]);
       }
     }
-
+    for (int a = 0; a < activeFilters.length; a++) {
+      tempActiveFilters.add(activeFilters[a]);
+    }
     print("*****");
     print(activeFilters.length);
+    print(tempActiveFilters.length);
 
     for (int i = 0; i < activeFilters.length; i++) {
       if (activeFilters[i]
@@ -849,65 +862,88 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
           }
           print("Equality");
           print(trueData);
-          for (int j = 0;
-              j <
-                  activeFilters[i]
+          if (trueData.isNotEmpty) {
+            //trueData[0] because same data in all list ..
+            for (int j = 0;
+                j <
+                    activeFilters[i]
+                        .dataSource
+                        .columnsList[activeFilters[i].filteredColumn]
+                        .cells
+                        .length;
+                j++) {
+              if (activeFilters[i]
                       .dataSource
                       .columnsList[activeFilters[i].filteredColumn]
-                      .cells
-                      .length;
-              j++) {
-            if (activeFilters[i]
-                    .dataSource
-                    .columnsList[activeFilters[i].filteredColumn]
-                    .cells[j]
-                    .value ==
-                trueData[0].value) {
-              for (int u = 0;
-                  u < activeFilters[i].dataSource.columnsList.length;
-                  u++) {
-                tempNumbers
-                    .add(activeFilters[i].dataSource.columnsList[u].cells[j]);
+                      .cells[j]
+                      .value ==
+                  trueData[0].value) {
+                for (int u = 0;
+                    u < activeFilters[i].dataSource.columnsList.length;
+                    u++) {
+                  tempNumbers
+                      .add(activeFilters[i].dataSource.columnsList[u].cells[j]);
+                }
+                allTempsNumbers.add(tempNumbers);
+                tempNumbers = [];
               }
-              allTempsNumbers.add(tempNumbers);
-              tempNumbers = [];
             }
-          }
 
-          print(allTempsNumbers);
-          print(allTempsNumbers.length);
-          List<CellModel> tempCells = new List();
-          List<List<CellModel>> allTempsCells = new List();
-          for (int t = 0; t < allTempsNumbers[0].length; t++) {
-            for (int a = 0; a < allTempsNumbers.length; a++) {
-              tempCells.add(CellModel(
-                  value: allTempsNumbers[a][t].value,
-                  type: allTempsNumbers[a][t].type));
+            print(allTempsNumbers);
+            print(allTempsNumbers.length);
+            List<CellModel> tempCells = new List();
+            List<List<CellModel>> allTempsCells = new List();
+            for (int t = 0; t < allTempsNumbers[0].length; t++) {
+              for (int a = 0; a < allTempsNumbers.length; a++) {
+                tempCells.add(CellModel(
+                    value: allTempsNumbers[a][t].value,
+                    type: allTempsNumbers[a][t].type));
+              }
+              allTempsCells.add(tempCells);
+              tempCells = [];
             }
-            allTempsCells.add(tempCells);
-            tempCells = [];
-          }
-          for (int y = 0; y < allTempsCells.length; y++) {
-            tempColumnModels.add(ColumnModel(
-                id: activeFilters[i].dataSource.columnsList[i].id,
-                name: activeFilters[i].dataSource.columnsList[i].name,
-                isDeleted: activeFilters[i].dataSource.columnsList[i].isDeleted,
-                columnType:
-                    activeFilters[i].dataSource.columnsList[i].columnType,
-                valueCategories:
-                    activeFilters[i].dataSource.columnsList[i].valueCategories,
-                cells: allTempsCells[y]));
-          }
-          activeFilters[i].dataSource.columnsList = tempColumnModels;
+            for (int y = 0; y < allTempsCells.length; y++) {
+              tempColumnModels.add(ColumnModel(
+                  id: activeFilters[i].dataSource.columnsList[y].id,
+                  name: activeFilters[i].dataSource.columnsList[y].name,
+                  isDeleted:
+                      activeFilters[i].dataSource.columnsList[y].isDeleted,
+                  columnType:
+                      activeFilters[i].dataSource.columnsList[y].columnType,
+                  valueCategories: activeFilters[i]
+                      .dataSource
+                      .columnsList[y]
+                      .valueCategories,
+                  cells: allTempsCells[y]));
+            }
+            /*new FilterModel(
+                id: activeFilters[i].id,
+                name: activeFilters[i].name,
+                type: activeFilters[i].type,
+                isActivatedCells: activeFilters[i].isActivatedCells,
+                textEditingController: activeFilters[i].textEditingController,
+                dataSource: activeFilters[i].dataSource,
+                initValue: activeFilters[i].initValue,
+                isActive: activeFilters[i].isActive,
+                filteredColumn: activeFilters[i].filteredColumn,
+                dataSourceID: activeFilters[i].dataSourceID,
+                isDeleted: activeFilters[i].isDeleted);*/
 
-          for (int q = 0;
-              q < activeFilters[i].dataSource.columnsList[0].cells.length;
-              q++) {
-            print(activeFilters[i].dataSource.columnsList[0].cells[q]);
-          }
+            //tempActiveFilters[i].dataSource.columnsList = tempColumnModels;
+            filtersWithIDs.addAll({
+              i.toString(): activeFilters[i],
+            });
+            columnsWithIDs.addAll({i.toString(): tempColumnModels});
+            for (int q = 0;
+                q < tempActiveFilters[i].dataSource.columnsList[0].cells.length;
+                q++) {
+              print(tempActiveFilters[i].dataSource.columnsList[0].cells[q]);
+            }
 
-          allTempsNumbers = [];
-          trueData = [];
+            allTempsNumbers = [];
+            trueData = [];
+            tempColumnModels = [];
+          }
         } else if (activeFilters[i].type == "<") {
           allTempsNumbers = [];
           trueData = [];
@@ -946,65 +982,77 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
           }
           print("LessThan  '<' ");
           print(trueData);
-          for (int j = 0;
-              j <
-                  activeFilters[i]
-                      .dataSource
-                      .columnsList[activeFilters[i].filteredColumn]
-                      .cells
-                      .length;
-              j++) {
-            if (activeFilters[i]
-                    .dataSource
-                    .columnsList[activeFilters[i].filteredColumn]
-                    .cells[j]
-                    .value ==
-                trueData[0].value) {
-              for (int u = 0;
-                  u < activeFilters[i].dataSource.columnsList.length;
-                  u++) {
-                tempNumbers
-                    .add(activeFilters[i].dataSource.columnsList[u].cells[j]);
+          List<dynamic> trueDataList = new List();
+          for (int g = 0; g < trueData.length; g++) {
+            trueDataList.add(trueData[g].value);
+          }
+          if (trueData.isNotEmpty) {
+            for (int j = 0;
+                j <
+                    activeFilters[i]
+                        .dataSource
+                        .columnsList[activeFilters[i].filteredColumn]
+                        .cells
+                        .length;
+                j++) {
+              if (trueDataList.contains(activeFilters[i]
+                  .dataSource
+                  .columnsList[activeFilters[i].filteredColumn]
+                  .cells[j]
+                  .value)) {
+                for (int u = 0;
+                    u < activeFilters[i].dataSource.columnsList.length;
+                    u++) {
+                  tempNumbers
+                      .add(activeFilters[i].dataSource.columnsList[u].cells[j]);
+                }
+                allTempsNumbers.add(tempNumbers);
+                tempNumbers = [];
               }
-              allTempsNumbers.add(tempNumbers);
-              tempNumbers = [];
             }
-          }
 
-          print(allTempsNumbers);
-          print(allTempsNumbers.length);
-          List<CellModel> tempCells = new List();
-          List<List<CellModel>> allTempsCells = new List();
-          for (int t = 0; t < allTempsNumbers[0].length; t++) {
-            for (int a = 0; a < allTempsNumbers.length; a++) {
-              tempCells.add(CellModel(
-                  value: allTempsNumbers[a][t].value,
-                  type: allTempsNumbers[a][t].type));
+            print(allTempsNumbers);
+            print(allTempsNumbers.length);
+            List<CellModel> tempCells = new List();
+            List<List<CellModel>> allTempsCells = new List();
+            for (int t = 0; t < allTempsNumbers[0].length; t++) {
+              for (int a = 0; a < allTempsNumbers.length; a++) {
+                tempCells.add(CellModel(
+                    value: allTempsNumbers[a][t].value,
+                    type: allTempsNumbers[a][t].type));
+              }
+              allTempsCells.add(tempCells);
+              tempCells = [];
             }
-            allTempsCells.add(tempCells);
-            tempCells = [];
-          }
-          for (int y = 0; y < allTempsCells.length; y++) {
-            tempColumnModels.add(ColumnModel(
-                id: activeFilters[i].dataSource.columnsList[i].id,
-                name: activeFilters[i].dataSource.columnsList[i].name,
-                isDeleted: activeFilters[i].dataSource.columnsList[i].isDeleted,
-                columnType:
-                    activeFilters[i].dataSource.columnsList[i].columnType,
-                valueCategories:
-                    activeFilters[i].dataSource.columnsList[i].valueCategories,
-                cells: allTempsCells[y]));
-          }
-          activeFilters[i].dataSource.columnsList = tempColumnModels;
+            for (int y = 0; y < allTempsCells.length; y++) {
+              tempColumnModels.add(ColumnModel(
+                  id: activeFilters[i].dataSource.columnsList[y].id,
+                  name: activeFilters[i].dataSource.columnsList[y].name,
+                  isDeleted:
+                      activeFilters[i].dataSource.columnsList[y].isDeleted,
+                  columnType:
+                      activeFilters[i].dataSource.columnsList[y].columnType,
+                  valueCategories: activeFilters[i]
+                      .dataSource
+                      .columnsList[y]
+                      .valueCategories,
+                  cells: allTempsCells[y]));
+            }
+            //tempActiveFilters[i].dataSource.columnsList = tempColumnModels;
+            filtersWithIDs.addAll({
+              i.toString(): activeFilters[i],
+            });
+            columnsWithIDs.addAll({i.toString(): tempColumnModels});
+            for (int q = 0;
+                q < tempActiveFilters[i].dataSource.columnsList[0].cells.length;
+                q++) {
+              print(tempActiveFilters[i].dataSource.columnsList[0].cells[q]);
+            }
 
-          for (int q = 0;
-              q < activeFilters[i].dataSource.columnsList[0].cells.length;
-              q++) {
-            print(activeFilters[i].dataSource.columnsList[0].cells[q]);
+            allTempsNumbers = [];
+            trueData = [];
+            tempColumnModels = [];
           }
-
-          allTempsNumbers = [];
-          trueData = [];
         } else if (activeFilters[i].type == ">") {
           allTempsNumbers = [];
           trueData = [];
@@ -1043,6 +1091,113 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
           }
           print("GreaterThan  '>' ");
           print(trueData);
+          List<dynamic> trueDataList = new List();
+          for (int g = 0; g < trueData.length; g++) {
+            trueDataList.add(trueData[g].value);
+          }
+          if (trueData.isNotEmpty) {
+            for (int j = 0;
+                j <
+                    activeFilters[i]
+                        .dataSource
+                        .columnsList[activeFilters[i].filteredColumn]
+                        .cells
+                        .length;
+                j++) {
+              if (trueDataList.contains(activeFilters[i]
+                  .dataSource
+                  .columnsList[activeFilters[i].filteredColumn]
+                  .cells[j]
+                  .value)) {
+                for (int u = 0;
+                    u < activeFilters[i].dataSource.columnsList.length;
+                    u++) {
+                  tempNumbers
+                      .add(activeFilters[i].dataSource.columnsList[u].cells[j]);
+                }
+                allTempsNumbers.add(tempNumbers);
+                tempNumbers = [];
+              }
+            }
+
+            print("======+++++++++++============");
+            print(allTempsNumbers);
+            print(allTempsNumbers.length);
+            List<CellModel> tempCells = new List();
+            List<List<CellModel>> allTempsCells = new List();
+            for (int t = 0; t < allTempsNumbers[0].length; t++) {
+              for (int a = 0; a < allTempsNumbers.length; a++) {
+                tempCells.add(CellModel(
+                    value: allTempsNumbers[a][t].value,
+                    type: allTempsNumbers[a][t].type));
+              }
+              allTempsCells.add(tempCells);
+              tempCells = [];
+            }
+            for (int y = 0; y < allTempsCells.length; y++) {
+              tempColumnModels.add(ColumnModel(
+                  id: activeFilters[i].dataSource.columnsList[y].id,
+                  name: activeFilters[i].dataSource.columnsList[y].name,
+                  isDeleted:
+                      activeFilters[i].dataSource.columnsList[y].isDeleted,
+                  columnType:
+                      activeFilters[i].dataSource.columnsList[y].columnType,
+                  valueCategories: activeFilters[i]
+                      .dataSource
+                      .columnsList[y]
+                      .valueCategories,
+                  cells: allTempsCells[y]));
+            }
+            //tempActiveFilters[i].dataSource.columnsList = tempColumnModels;
+            filtersWithIDs.addAll({
+              i.toString(): activeFilters[i],
+            });
+            columnsWithIDs.addAll({i.toString(): tempColumnModels});
+            for (int q = 0;
+                q < tempActiveFilters[i].dataSource.columnsList[0].cells.length;
+                q++) {
+              print(tempActiveFilters[i].dataSource.columnsList[0].cells[q]);
+            }
+
+            allTempsNumbers = [];
+            trueData = [];
+            tempColumnModels = [];
+          }
+        }
+      } else if (activeFilters[i]
+              .dataSource
+              .columnsList[activeFilters[i].filteredColumn]
+              .columnType ==
+          "Dimensions") {
+        for (int inner = 1;
+            inner <
+                activeFilters[i]
+                    .dataSource
+                    .columnsList[activeFilters[i].filteredColumn]
+                    .cells
+                    .length;
+            inner++) {
+          if (activeFilters[i].isActivatedCells[inner]) {
+            trueData.add(new CellModel(
+                value: activeFilters[i]
+                    .dataSource
+                    .columnsList[activeFilters[i].filteredColumn]
+                    .cells[inner]
+                    .value,
+                type: activeFilters[i]
+                    .dataSource
+                    .columnsList[activeFilters[i].filteredColumn]
+                    .cells[inner]
+                    .type));
+          }
+        }
+        print("Dimensions");
+        print(trueData);
+        List<dynamic> trueDataList = new List();
+        for (int g = 0; g < trueData.length; g++) {
+          trueDataList.add(trueData[g].value);
+        }
+        if (trueData.isNotEmpty) {
           for (int j = 0;
               j <
                   activeFilters[i]
@@ -1051,12 +1206,11 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
                       .cells
                       .length;
               j++) {
-            if (activeFilters[i]
-                    .dataSource
-                    .columnsList[activeFilters[i].filteredColumn]
-                    .cells[j]
-                    .value ==
-                trueData[0].value) {
+            if (trueDataList.contains(activeFilters[i]
+                .dataSource
+                .columnsList[activeFilters[i].filteredColumn]
+                .cells[j]
+                .value)) {
               for (int u = 0;
                   u < activeFilters[i].dataSource.columnsList.length;
                   u++) {
@@ -1083,47 +1237,77 @@ class _FiltersOnVisualizerState extends State<FiltersOnVisualizer> {
           }
           for (int y = 0; y < allTempsCells.length; y++) {
             tempColumnModels.add(ColumnModel(
-                id: activeFilters[i].dataSource.columnsList[i].id,
-                name: activeFilters[i].dataSource.columnsList[i].name,
-                isDeleted: activeFilters[i].dataSource.columnsList[i].isDeleted,
+                id: activeFilters[i].dataSource.columnsList[y].id,
+                name: activeFilters[i].dataSource.columnsList[y].name,
+                isDeleted: activeFilters[i].dataSource.columnsList[y].isDeleted,
                 columnType:
-                    activeFilters[i].dataSource.columnsList[i].columnType,
+                    activeFilters[i].dataSource.columnsList[y].columnType,
                 valueCategories:
-                    activeFilters[i].dataSource.columnsList[i].valueCategories,
+                    activeFilters[i].dataSource.columnsList[y].valueCategories,
                 cells: allTempsCells[y]));
           }
-          activeFilters[i].dataSource.columnsList = tempColumnModels;
-
+          print(tempColumnModels);
+          //tempActiveFilters[i].dataSource.columnsList = tempColumnModels;
+          filtersWithIDs.addAll({
+            i.toString(): new FilterModel(
+                id: activeFilters[i].id,
+                name: activeFilters[i].name,
+                type: activeFilters[i].type,
+                isActivatedCells: activeFilters[i].isActivatedCells,
+                textEditingController: activeFilters[i].textEditingController,
+                dataSource: activeFilters[i].dataSource,
+                initValue: activeFilters[i].initValue,
+                isActive: activeFilters[i].isActive,
+                filteredColumn: activeFilters[i].filteredColumn,
+                dataSourceID: activeFilters[i].dataSourceID,
+                isDeleted: activeFilters[i].isDeleted),
+          });
+          columnsWithIDs.addAll({i.toString(): tempColumnModels});
           for (int q = 0;
-              q < activeFilters[i].dataSource.columnsList[0].cells.length;
+              q < tempActiveFilters[i].dataSource.columnsList[0].cells.length;
               q++) {
-            print(activeFilters[i].dataSource.columnsList[0].cells[q]);
+            print(tempActiveFilters[i].dataSource.columnsList[0].cells[q]);
           }
-
           allTempsNumbers = [];
           trueData = [];
-        }
-      } else if (activeFilters[i]
-              .dataSource
-              .columnsList[activeFilters[i].filteredColumn]
-              .columnType ==
-          "Dimensions") {
-        for (int inner = 1;
-            inner <
-                activeFilters[i]
-                    .dataSource
-                    .columnsList[activeFilters[i].filteredColumn]
-                    .cells
-                    .length;
-            inner++) {
-          if (activeFilters[i].isActivatedCells[inner]) {
-          } else {}
+          tempColumnModels = [];
+          setState(() {});
         }
       }
     }
-    goAndMakeNewTableModel(activeFilters);
+    List<FilterModel> doneFilters = new List();
+    List<List<ColumnModel>> doneColumns = new List();
+    List<int> filtersIDs = new List();
+    List<int> columnsIDs = new List();
+
+    filtersWithIDs.forEach((data, value) {
+      doneFilters.insert(int.parse(data), value);
+//      doneFilters.add(value);
+      filtersIDs.add(int.parse(data));
+    });
+    columnsWithIDs.forEach((data, value) {
+      doneColumns.insert(int.parse(data), value);
+//      doneColumns.add(value);
+      columnsIDs.add(int.parse(data));
+    });
+
+    for(int i = 0 ; i < visualizerModel.filtersModel.length; i++){
+      if(!filtersIDs.contains(doneFilters.indexOf(visualizerModel.filtersModel[i]))){
+        print(i);
+        doneFilters.insert(i, visualizerModel.filtersModel[i]);
+        doneColumns.insert(i, visualizerModel.filtersModel[i].dataSource.columnsList);
+      }
+    }
+    for(int i = 0 ; i < doneFilters.length ; i++){
+      doneFilters[i].dataSource.columnsList = doneColumns[i];
+    }
+    filteredTableModel = goAndMakeNewTableModel(tempActiveFilters);
   }
 
-  void goAndMakeNewTableModel(List<FilterModel> activeFilters) {}
+  TableModel goAndMakeNewTableModel(List<FilterModel> activeFilters) {
+    TableModel tableModel;
+
+    return tableModel;
+  }
 }
 //visualizerModel.filtersModel[index].dataSource.listColumns[visualizerModel.filtersModel[index].filteredColumn].columnType

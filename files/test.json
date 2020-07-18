@@ -595,6 +595,11 @@
           "id": 2,
           "value": 50,
           "isActive": true
+        },
+        {
+          "id": 3,
+          "value": 50,
+          "isActive": true
         }
       ],
       "usedColumns": [
@@ -723,7 +728,7 @@
       "name": "filter4",
       "id": 3,
       "dataSource": 0,
-      "filteredColumn": 3,
+      "filteredColumn": 0,
       "initValue": "Laptop",
       "type": "<",
       "isDeleted": false

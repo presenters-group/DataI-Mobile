@@ -34,8 +34,7 @@ class _DataSourceOpenedState extends State<DataSourceOpened> {
 
   @override
   Widget build(BuildContext context) {
-    int i = 0;
-    return Scaffold(
+   return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(75.0),
         child: AppBar(
