@@ -48,6 +48,7 @@ flutter:
     - Images/Filter.png
     - Images/Visualizers.png
     - Images/Logo.png
+    - Images/table.png
     - files/test.json
 
   # The following line ensures that the Material Icons font is

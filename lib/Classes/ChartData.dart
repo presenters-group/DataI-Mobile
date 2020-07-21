@@ -50,7 +50,8 @@ class ChartData {
       print(row);
       row = [];
     }
-    print(dataUsed[0][0]);
+    print("//++++++++++++++++++++++++++++++++++++++++++++++//");
+    print(dataUsed);
 
     List<dynamic> dynamicColors = new List();
     dynamicColors = json["dataSources"][dataID]["columnsColors"];
