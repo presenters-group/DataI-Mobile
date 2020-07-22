@@ -74,14 +74,7 @@ class _FilteredDataSourceState extends State<FilteredDataSource> {
           border: TableBorder.all(width: 0.5),
           children: data.map((item) {
             print(item.indexOf(item[0]));
-            //print('i : ${item.indexOf(item[(tableModel.listColumns.length - 1) - item.indexOf(item)])}');
             return TableRow(
-
-//                decoration: BoxDecoration(
-//                    color: int.parse(item.indexOf(item[i]).toString()) == 0
-//                        ? tableModel.listColumns[0].columnStyleMode.color
-//                        : tableModel.listColumns[1].columnStyleMode.color),
-
                 decoration: BoxDecoration(color: Colors.white),
                 children: item.map((row) {
                   return Container(

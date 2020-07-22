@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'CellModel.dart';
 import 'ColumnStyleMode.dart';
 import 'ValueCategory.dart';
@@ -11,25 +13,31 @@ class ColumnModel {
   //ColumnStyleMode columnStyleMode;
   var columnType;
   bool isDeleted;
+  Color colorColumn;
 
-  ColumnModel({
-    this.name,
-    this.id,
-    this.cells,
-    this.valueCategories,
-    this.columnType,
-    this.isDeleted,
-  });
+  ColumnModel(
+      {this.name,
+      this.id,
+      this.cells,
+      this.valueCategories,
+      this.columnType,
+      this.isDeleted,
+      this.colorColumn});
 
-  factory ColumnModel.fromJSON(Map<String, dynamic> json) {
+  factory ColumnModel.fromJSON(
+      Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
     return ColumnModel(
-        name: json["name"],
-        id: json["id"],
-        cells: convertToCellsList(json),
-        valueCategories: convertToValueCategories(json),
+        name: subJSON["name"],
+        id: subJSON["id"],
+        cells: convertToCellsList(subJSON),
+        valueCategories: convertToValueCategories(subJSON),
         // columnStyleMode: ColumnStyleMode.fromJSON(json["style"]),
-        columnType: json["columnType"],
-        isDeleted: json["isDeleted"]);
+        colorColumn: HexColor(totalJSON["columnsColors"][subJSON["id"]]
+            .toString()
+            .substring(1,
+                totalJSON["columnsColors"][subJSON["id"]].toString().length)),
+        columnType: subJSON["columnType"],
+        isDeleted: subJSON["isDeleted"]);
   }
 
   static List<CellModel> convertToCellsList(json) {

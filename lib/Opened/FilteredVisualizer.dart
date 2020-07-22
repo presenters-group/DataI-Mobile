@@ -1,6 +1,7 @@
 import 'package:eyedatai/Classes/SeriesData.dart';
 import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:eyedatai/Opened/Charts/BarChart.dart';
+import 'package:eyedatai/Opened/Charts/PieChart.dart';
 import 'package:eyedatai/Opened/FilteredDataSource.dart';
 import 'package:flutter/material.dart';
 
@@ -35,6 +36,7 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
   List<SeriesData> dataLineChartSingle = new List();
   List<dynamic> titlesBarChart = new List();
   List<dynamic> colorsBarChart = new List();
+  List<List<dynamic>> fixedData = new List();
 
   int getWidth(data) {
     int width = 0;
@@ -54,6 +56,7 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     dataLineChartSingle = [];
     titlesBarChart = [];
     colorsBarChart = [];
+    fixedData = [];
 
     List<dynamic> tempDataCol = new List();
     List<dynamic> allTempDataCol = new List();
@@ -86,30 +89,29 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
 
     print(titlesBarChart);
     List<dynamic> tempData = new List();
-    List<List<dynamic>> allData = new List();
     for (int i = 0; i < allTempDataCol[0].length; i++) {
       for (int j = 0; j < allTempDataCol.length; j++) {
         tempData.add(allTempDataCol[j][i]);
       }
-      allData.add(tempData);
+      fixedData.add(tempData);
       tempData = [];
     }
-    print(allData);
+    print(fixedData);
     print("width : $width");
     for (int j = 1; j <= allTempDataCol.length - 1; j++) {
-      for (int i = 1; i < allData.length; i++) {
+      for (int i = 1; i < fixedData.length; i++) {
         if (width == 2) {
           dataBarChartSingle.add(
             new SeriesData(
-                task: allData[i][0],
-                taskValue: int.parse(allData[i][j].trim()),
+                task: fixedData[i][0],
+                taskValue: int.parse(fixedData[i][j].toString().trim()),
                 taskColor: visualizerModel.dataSource.columnsColors[i]),
           );
         } else {
           dataBarChartSingle.add(
             new SeriesData(
-                task: allData[i][0],
-                taskValue: int.parse(allData[i][j].toString().trim()),
+                task: fixedData[i][0],
+                taskValue: int.parse(fixedData[i][j].toString().trim()),
                 taskColor: visualizerModel.dataSource.columnsColors[j]),
           );
         }
@@ -118,15 +120,53 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
       dataBarChart.add(dataBarChartSingle);
       dataBarChartSingle = [];
     }
-  }
 
-  void getDataPieChart() {}
+
+    List<dynamic> sumRows = new List();
+    List<List<dynamic>> listRows = new List();
+    List<dynamic> sumRow = new List();
+
+    for(int i = 0 ; i < fixedData.length ; i++){
+      for(int j = 0 ; j < fixedData[i].length ; j++){
+        if(fixedData[i][0] == fixedData[i][j]){
+
+        }
+      }
+    }
+
+    for (int i = 1; i < fixedData.length; i++) {
+      for (int j = 1; j <= allTempDataCol.length - 1; j++) {
+        sumRow.add(fixedData[i][j]);
+      }
+      listRows.add(sumRow);
+      print(sumRow);
+      sumRow = new List();
+    }
+    print(listRows);
+    for (int i = 0; i < listRows.length; i++) {
+      sumRows.add(listRows[i].reduce((a, b) => a + b));
+    }
+    print(sumRows);
+    ColorClass colorClass = new ColorClass();
+    List<Color> colors = colorClass.generateColors();
+    for (int i = 0; i < visualizerModel.dataSource.columnsColors.length; i++) {
+      colors.insert(
+          i,
+          visualizerModel
+              .dataSource.columnsColors[i]); //colM[i].columnStyleMode.color
+    }
+    for (int i = 1; i < fixedData.length; i++) {
+      dataPieChart.add(new SeriesData(
+          task: fixedData[i][0],
+          taskValue: sumRows[i - 1],
+          taskColor: colors[i]));
+    }
+  }
 
   @override
   void initState() {
     tabController = new TabController(length: 3, vsync: this);
     getDataBarChart();
-    getDataPieChart();
     super.initState();
   }
 
@@ -167,7 +207,8 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) => new FilteredDataSource(data)));
+                          builder: (context) =>
+                              new FilteredDataSource(fixedData)));
                 },
                 child: Container(
                   height: 25,
@@ -253,7 +294,10 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
             )),
           ],
         ),
-        Container(),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: PieChart(dataPieChart),
+        ),
         Container()
       ]),
     );

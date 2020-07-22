@@ -192,7 +192,7 @@
         },
         {
           "name": "Weight",
-          "id": 4,
+          "id": 3,
           "cells": [
             {
               "value": "Weight",
@@ -336,7 +336,7 @@
       "columns": [
         {
           "name": "Quantity",
-          "id": 1,
+          "id": 0,
           "cells": [
             {
               "value": "Quantity",
@@ -398,7 +398,7 @@
         },
         {
           "name": "Kind",
-          "id": 2,
+          "id": 1,
           "cells": [
             {
               "value": "Kind",
@@ -460,7 +460,7 @@
         },
         {
           "name": "Weight",
-          "id": 4,
+          "id": 2,
           "cells": [
             {
               "value": "Weight",
@@ -606,7 +606,7 @@
         0,
         1,
         2,
-        4
+        3
       ],
       "chart": "BoundaryLineChart",
       "isDeleted": false
@@ -636,19 +636,19 @@
       "isDeleted": false
     },
     {
-      "name": "visualization2",
+      "name": "visualization3",
       "id": 1,
       "data": 1,
-      "xColumn": 2,
+      "xColumn": 1,
       "usedColumns": [
-        2,
+        0,
         1,
-        4
+        2
       ],
       "chart": "BarChart",
       "filters": [
         {
-          "id": 1,
+          "id": 5,
           "value": 50,
           "isActive": true
         }
@@ -728,6 +728,15 @@
       "name": "filter4",
       "id": 3,
       "dataSource": 0,
+      "filteredColumn": 0,
+      "initValue": "Laptop",
+      "type": "<",
+      "isDeleted": false
+    },
+    {
+      "name": "filter5",
+      "id": 4,
+      "dataSource": 1,
       "filteredColumn": 0,
       "initValue": "Laptop",
       "type": "<",

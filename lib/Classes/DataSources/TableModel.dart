@@ -31,18 +31,18 @@ class TableModel {
         this.columnsColors
       });
 
-  factory TableModel.fromJSON(Map<String, dynamic> json) {
+  factory TableModel.fromJSON(Map<String, dynamic> subJSON) {
     return TableModel(
-        name: json["name"],
-        id: json["id"],
-        columnsList: convertToColumnsList(json),
-        columnsVisibility: json["columnsVisibility"],
-        rowsVisibility: json["rowsVisibility"],
-        property: PropertiesModel.fromJSON(json["properties"]),
-        rightToLeft: json["rightToLeft"],
-        isDeleted: json["isDeleted"],
-        filters: convertToFiltersList(json),
-        columnsColors : convertToColumnsColors(json["columnsColors"]));
+        name: subJSON["name"],
+        id: subJSON["id"],
+        columnsList: convertToColumnsList(subJSON),
+        columnsVisibility: subJSON["columnsVisibility"],
+        rowsVisibility: subJSON["rowsVisibility"],
+        property: PropertiesModel.fromJSON(subJSON["properties"]),
+        rightToLeft: subJSON["rightToLeft"],
+        isDeleted: subJSON["isDeleted"],
+        filters: convertToFiltersList(subJSON),
+        columnsColors : convertToColumnsColors(subJSON["columnsColors"]));
   }
 
   static List<Color> convertToColumnsColors(dynamicColors){
@@ -68,7 +68,7 @@ class TableModel {
     List<ColumnModel> columnsList = new List();
     List<dynamic> columnsJSON = json["columns"];
     for (var newColumn in columnsJSON) {
-      columnsList.add(new ColumnModel.fromJSON(newColumn));
+      columnsList.add(new ColumnModel.fromJSON(newColumn , json));
     }
     return columnsList;
   }

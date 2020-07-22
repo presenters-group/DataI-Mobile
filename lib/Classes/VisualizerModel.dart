@@ -20,23 +20,24 @@ class VisualizerModel {
   bool isLine = false;
   bool isPie = false;
   List<dynamic> filters = new List();
+  List<Color> columnsColors = new List();
 
-  VisualizerModel({
-    @required this.visualizerID,
-    @required this.dataID,
-    @required this.visualizerName,
-    @required this.usedColumns,
-    @required this.xColumn,
-    @required this.filters,
-    @required this.columnsModel,
-    @required this.filtersModel,
-    @required this.chartData,
-    @required this.isDeleted,
-    @required this.isBar,
-    @required this.isLine,
-    @required this.isPie,
-    @required this.dataSource,
-  });
+  VisualizerModel(
+      {@required this.visualizerID,
+      @required this.dataID,
+      @required this.visualizerName,
+      @required this.usedColumns,
+      @required this.xColumn,
+      @required this.filters,
+      @required this.columnsModel,
+      @required this.filtersModel,
+      @required this.chartData,
+      @required this.isDeleted,
+      @required this.isBar,
+      @required this.isLine,
+      @required this.isPie,
+      @required this.dataSource,
+      @required this.columnsColors});
 
   factory VisualizerModel.fromJSON(
       Map<String, dynamic> subJSON, Map<String, dynamic> totalJSON) {
@@ -53,11 +54,26 @@ class VisualizerModel {
       filtersModel: checkUsedFilters(totalJSON, subJSON["filters"]),
       chartData: convertToAggregateData(totalJSON, subJSON["usedColumns"],
           subJSON["data"], subJSON["xColumn"]),
+      columnsColors: convertToTrueColors(totalJSON, subJSON["usedColumns"],
+          subJSON["data"], subJSON["xColumn"]),
       isDeleted: subJSON["isDeleted"],
       isBar: true,
       isLine: false,
       isPie: false,
     );
+  }
+
+  static List<Color> convertToTrueColors(
+      totalJSON, usedColumns, dataID, xColumn) {
+    List<Color> trueColors = new List();
+    List<dynamic> colorsDynamic =
+        totalJSON["dataSources"][dataID]["columnsColors"];
+    for (int i = 0; i < usedColumns.length; i++) {
+      trueColors.add(HexColor(colorsDynamic[i]
+          .toString()
+          .substring(1, colorsDynamic[i].toString().length)));
+    }
+    return trueColors;
   }
 
   static TableModel checkDataSource(json, id) {
@@ -111,7 +127,7 @@ class VisualizerModel {
       filtersList.add(Filter.fromJSON(newFilter));
     }
     List<int> ids = new List();
-    for(int i = 0 ; i  < filtersList.length ; i++){
+    for (int i = 0; i < filtersList.length; i++) {
       ids.add(filtersList[i].id);
     }
     for (int i = 0; i < allFilters.length; i++) {
@@ -125,6 +141,6 @@ class VisualizerModel {
   static convertToAggregateData(json, usedCol, dataID, xColumn) {
     List<ColumnModel> trueColumns =
         checkUsedColumns(json, usedCol, dataID, xColumn);
-    return ChartData.fromVisualizer(json ,trueColumns, xColumn , dataID);
+    return ChartData.fromVisualizer(json, trueColumns, xColumn, dataID);
   }
 }

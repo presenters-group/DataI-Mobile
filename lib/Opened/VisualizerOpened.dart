@@ -26,6 +26,8 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
 
   _VisualizerOpenedState(this.visualizer);
 
+
+
   @override
   void initState() {
     tabController = new TabController(length: 3, vsync: this);
@@ -139,8 +141,7 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                                   height: 15,
                                   decoration: BoxDecoration(
                                       shape: BoxShape.rectangle,
-                                      color: visualizer
-                                          .dataSource.columnsColors[index]),
+                                      color: visualizer.dataSource.columnsList[index].colorColumn),
 
                                   //columnsModel[index]
                                   //                                    .columnStyleMode.color

@@ -2,6 +2,9 @@ import 'package:eyedatai/Classes/SeriesData.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 
+import '../../ColorClass.dart';
+import '../../FontClass.dart';
+
 class BarChart extends StatelessWidget {
   List<charts.Series<SeriesData, String>> series = [];
   final List<List<SeriesData>> data;
@@ -21,6 +24,37 @@ class BarChart extends StatelessWidget {
             charts.ColorUtil.fromDartColor(series.taskColor),
       ));
     }
+    /*SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Row(
+          children: List.generate(data.length, (index){
+            return Row(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Container(
+                    width: 20,
+                    height: 15,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: data[index][0].taskColor),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    data[1][0].task.toString(),
+                    style: TextStyle(
+                        fontSize: 12,
+                        color: ColorClass.fontColor,
+                        fontFamily: FontClass.appFont),
+                  ),
+                )
+              ],
+            );
+          })
+      ),
+    ),*/
     return Container(
       child: charts.BarChart(
         series,

@@ -53,21 +53,21 @@ class ChartData {
     print("//++++++++++++++++++++++++++++++++++++++++++++++//");
     print(dataUsed);
 
-    List<dynamic> dynamicColors = new List();
+    /*List<dynamic> dynamicColors = new List();
     dynamicColors = json["dataSources"][dataID]["columnsColors"];
     List<Color> columnsColors = new List();
     for (int i = 0; i < dynamicColors.length; i++) {
       columnsColors.add(HexColor(dynamicColors[i]
           .toString()
           .substring(1, dynamicColors[i].toString().length)));
-    }
+    }*/
 
     for (int j = 1; j <= colM.length - 1; j++) {
       for (int i = 1; i < dataUsed.length; i++) {
         dataSingle.add(new SeriesData(
             task: dataUsed[i][0].toString(),
             taskValue: dataUsed[i][j],
-            taskColor: columnsColors[j])); //colors[j]
+            taskColor: colM[j].colorColumn)); //colors[j]
         //colM[j].columnStyleMode.color
       }
       seriesData.add(dataSingle);
