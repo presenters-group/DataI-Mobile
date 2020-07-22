@@ -292,10 +292,10 @@
         true
       ],
       "columnsColors": [
-        "#4df41c",
-        "#fef5a6",
-        "#7c5924",
-        "#000000"
+        "#26C485",
+        "#3066BE",
+        "#6edbb7",
+        "#ff0066"
       ],
       "rowsColors": [
         "#8ddd66",
@@ -548,9 +548,9 @@
         true
       ],
       "columnsColors": [
-        "#4df41c",
-        "#fef5a6",
-        "#7c5924"
+        "#3066BE",
+        "#6edbb7",
+        "#ff0066"
       ],
       "rowsColors": [
         "#e868e1",
@@ -648,7 +648,7 @@
       "chart": "BarChart",
       "filters": [
         {
-          "id": 5,
+          "id": 4,
           "value": 50,
           "isActive": true
         }
@@ -729,7 +729,7 @@
       "id": 3,
       "dataSource": 0,
       "filteredColumn": 0,
-      "initValue": "Laptop",
+      "initValue": 60,
       "type": "<",
       "isDeleted": false
     },
@@ -738,7 +738,7 @@
       "id": 4,
       "dataSource": 1,
       "filteredColumn": 0,
-      "initValue": "Laptop",
+      "initValue": 50,
       "type": "<",
       "isDeleted": false
     }

@@ -48,7 +48,7 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     return width;
   }
 
-  void getDataBarChart() {
+  void getDataChart() {
     dataBarChart = [];
     dataBarChartSingle = [];
     dataPieChart = [];
@@ -121,22 +121,57 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
       dataBarChartSingle = [];
     }
 
-
     List<dynamic> sumRows = new List();
     List<List<dynamic>> listRows = new List();
     List<dynamic> sumRow = new List();
 
-    for(int i = 0 ; i < fixedData.length ; i++){
-      for(int j = 0 ; j < fixedData[i].length ; j++){
-        if(fixedData[i][0] == fixedData[i][j]){
+    List<dynamic> titles = new List();
+    titles = fixedData[0];
+    print("titiles :   $titles");
+    List<List<dynamic>> middleDataPie = new List();
+    List<List<List<dynamic>>> hardDataPie = new List();
 
+    for (int j = 1; j < fixedData.length; j++) {
+      for (int k = 1; k < fixedData.length; k++) {
+        if (fixedData[j][0] == fixedData[k][0]) {
+          middleDataPie.add(fixedData[k]);
         }
       }
+      hardDataPie.add(middleDataPie);
+      middleDataPie = [];
+      fixedData.removeAt(j);
     }
+    print(hardDataPie);
 
-    for (int i = 1; i < fixedData.length; i++) {
+    int sum = 0;
+    List<dynamic> lowerData = new List();
+    List<List<dynamic>> fixedDataPie = new List();
+    for (int i = 0; i < hardDataPie.length; i++) {
+      for (int j = 1; j < hardDataPie[i][0].length; j++) {
+        for (int k = 0; k < hardDataPie[i].length; k++) {
+          if (lowerData.isEmpty) {
+            lowerData.add(hardDataPie[i][k][0]);
+          }
+          sum += hardDataPie[i][k][j];
+        }
+        lowerData.add(sum);
+        sum = 0;
+      }
+      if (fixedDataPie.isEmpty) {
+        fixedDataPie.add(titles);
+        fixedDataPie.add(lowerData);
+        lowerData = [];
+      } else {
+        fixedDataPie.add(lowerData);
+        lowerData = [];
+      }
+    }
+    print("fixedDataPie");
+    print(fixedDataPie);
+
+    for (int i = 1; i < fixedDataPie.length; i++) {
       for (int j = 1; j <= allTempDataCol.length - 1; j++) {
-        sumRow.add(fixedData[i][j]);
+        sumRow.add(fixedDataPie[i][j]);
       }
       listRows.add(sumRow);
       print(sumRow);
@@ -155,9 +190,9 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
           visualizerModel
               .dataSource.columnsColors[i]); //colM[i].columnStyleMode.color
     }
-    for (int i = 1; i < fixedData.length; i++) {
+    for (int i = 1; i < fixedDataPie.length; i++) {
       dataPieChart.add(new SeriesData(
-          task: fixedData[i][0],
+          task: fixedDataPie[i][0],
           taskValue: sumRows[i - 1],
           taskColor: colors[i]));
     }
@@ -165,8 +200,8 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
 
   @override
   void initState() {
-    tabController = new TabController(length: 3, vsync: this);
-    getDataBarChart();
+    tabController = new TabController(length: 2, vsync: this);
+    getDataChart();
     super.initState();
   }
 
@@ -244,10 +279,6 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
                   Icons.pie_chart,
                   size: 27,
                 ),
-                Icon(
-                  Icons.show_chart,
-                  size: 27,
-                ),
               ]),
         ),
       ),
@@ -298,7 +329,6 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
           padding: const EdgeInsets.all(8.0),
           child: PieChart(dataPieChart),
         ),
-        Container()
       ]),
     );
   }
