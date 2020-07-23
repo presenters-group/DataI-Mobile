@@ -198,7 +198,6 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     }
   }
 
-
   @override
   void initState() {
     tabController = new TabController(length: 2, vsync: this);
@@ -244,7 +243,7 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
                       context,
                       new MaterialPageRoute(
                           builder: (context) =>
-                              new FilteredDataSource(fixedData)));
+                              new FilteredDataSource(data , fixedData , visualizerModel.xColumn)));
                 },
                 child: Container(
                   height: 25,
