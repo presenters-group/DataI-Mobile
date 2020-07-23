@@ -37,6 +37,7 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
   List<dynamic> titlesBarChart = new List();
   List<dynamic> colorsBarChart = new List();
   List<List<dynamic>> fixedData = new List();
+  List<List<dynamic>> fixedDataPie = new List();
 
   int getWidth(data) {
     int width = 0;
@@ -134,18 +135,22 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     for (int j = 1; j < fixedData.length; j++) {
       for (int k = 1; k < fixedData.length; k++) {
         if (fixedData[j][0] == fixedData[k][0]) {
-          middleDataPie.add(fixedData[k]);
+          middleDataPie.add(fixedData[j]);
+          fixedData.removeAt(j);
+        }
+        else if(fixedData[j][0] != fixedData[k][0] && k == fixedData.length-1){
+          middleDataPie.add(fixedData[j]);
+          fixedData.removeAt(j);
         }
       }
       hardDataPie.add(middleDataPie);
       middleDataPie = [];
-      fixedData.removeAt(j);
+      //fixedData.removeAt(j);
     }
     print(hardDataPie);
 
     int sum = 0;
     List<dynamic> lowerData = new List();
-    List<List<dynamic>> fixedDataPie = new List();
     for (int i = 0; i < hardDataPie.length; i++) {
       for (int j = 1; j < hardDataPie[i][0].length; j++) {
         for (int k = 0; k < hardDataPie[i].length; k++) {
@@ -243,7 +248,7 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
                       context,
                       new MaterialPageRoute(
                           builder: (context) =>
-                              new FilteredDataSource(data , fixedData , visualizerModel.xColumn)));
+                              new FilteredDataSource(data , fixedDataPie , visualizerModel.xColumn)));
                 },
                 child: Container(
                   height: 25,

@@ -9,7 +9,22 @@ class ColorClass {
   static Color dividerColor = Colors.black12;
   static Color drawerIcons = Colors.black54;
   static Color containerColor = Colors.white;
+//Light theme
+  Color lightScaffoldBackgroundColor  = HexColor('E0E0E0');
+  Color lightContainerBackground = HexColor('fafafa');
+  Color lightDrawerColor = HexColor('F2F2F2');
+  Color lightFontColor = HexColor('333333');
+  Color lightRecycleColor = HexColor('1F6C42');
+  Color lightCasesColor = HexColor('36A2EB');
 
+
+  //dark theme
+  Color darkScaffoldBackgroundColor  = HexColor('E0E0E0');
+  Color darkContainerBackground = HexColor('fafafa');
+  Color darkDrawerColor = HexColor('F2F2F2');
+  Color darkFontColor = HexColor('333333');
+  Color darkRecycleColor = HexColor('1F6C42');
+  Color darkCasesColor = HexColor('36A2EB');
   List<Color> colors = [
     Colors.deepPurple,
     Colors.pink,

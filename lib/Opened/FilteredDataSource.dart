@@ -56,7 +56,6 @@ class _FilteredDataSourceState extends State<FilteredDataSource> {
       data.add(tempData);
       tempData = [];
     }
-
     super.initState();
   }
 

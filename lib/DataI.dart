@@ -10,6 +10,9 @@ import 'ColorClass.dart';
 import 'FontClass.dart';
 import 'package:eyedatai/Classes/DataModel.dart';
 
+import 'Online/CoronaVirus.dart';
+import 'Online/Currency.dart';
+
 String filePath;
 DataModel table;
 
@@ -30,139 +33,58 @@ class _DataIState extends State<DataI> {
   bool isActiveBottomSheet = false;
 
   Widget oldThingsDrawer() {
-    return Container(
-      color: ColorClass.scaffoldBackgroundColor,
-      child: SizedBox(
-        width: 220,
-        child: Drawer(
-          child: ListView(
-            children: <Widget>[
-              DrawerHeader(
-                decoration:
-                    BoxDecoration(color: ColorClass.scaffoldBackgroundColor),
-                child: Center(
-                  child: Text(
-                    "Project 1",
+    return SizedBox(
+      width: 225,
+      child: Drawer(
+        child: Container(
+          color: ColorClass.containerColor,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 12.0),
+            child: ListView(
+              //shrinkWrap: true, // For Center Widget
+              children: <Widget>[
+                ListTile(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        new MaterialPageRoute(
+                            builder: (context) => new Currency()));
+                  },
+                  title: Text(
+                    "Currencies",
                     style: TextStyle(
-                        color: ColorClass.fontColor,
                         fontFamily: FontClass.appFont,
-                        fontSize: 17),
+                        fontSize: 15.0,
+                        color: ColorClass.fontColor),
+                  ),
+                  trailing: Icon(
+                    Icons.monetization_on,
+                    color: ColorClass.fontColor
                   ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      onTap: () {},
-                      leading: Text(
-                        "Chat App",
-                        style: TextStyle(
-                            color: ColorClass.fontColor,
-                            fontFamily: FontClass.appFont,
-                            fontSize: 17),
-                      ),
-                      trailing: Icon(
-                        Icons.chat,
-                        color: ColorClass.drawerIcons,
-                      ),
+                ListTile(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          new MaterialPageRoute(
+                              builder: (context) => new CoronaVirus()));
+                    },
+                    title: Text(
+                      "Corona Virus",
+                      style: TextStyle(
+                          fontFamily: FontClass.appFont,
+                          fontSize: 15.0,
+                          color:ColorClass.fontColor),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: Divider(
-                        color: ColorClass.dividerColor,
-                        height: 5,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      onTap: () {},
-                      leading: Text(
-                        "PM App",
-                        style: TextStyle(
-                            color: ColorClass.fontColor,
-                            fontFamily: FontClass.appFont,
-                            fontSize: 17),
-                      ),
-                      trailing: Icon(
-                        Icons.view_array,
-                        color: ColorClass.drawerIcons,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: Divider(
-                        color: ColorClass.dividerColor,
-                        height: 5,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      onTap: () {},
-                      leading: Text(
-                        "DV App (Older)",
-                        style: TextStyle(
-                            color: ColorClass.fontColor,
-                            fontFamily: FontClass.appFont,
-                            fontSize: 17),
-                      ),
-                      trailing: Icon(
-                        Icons.pie_chart,
-                        color: ColorClass.drawerIcons,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: Divider(
-                        color: ColorClass.dividerColor,
-                        height: 5,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                child: Column(
-                  children: <Widget>[
-                    ListTile(
-                      onTap: () {},
-                      leading: Text(
-                        "DV App (Old)",
-                        style: TextStyle(
-                            color: ColorClass.fontColor,
-                            fontFamily: FontClass.appFont,
-                            fontSize: 17),
-                      ),
-                      trailing: Icon(
-                        Icons.pie_chart,
-                        color: ColorClass.drawerIcons,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-                      child: Divider(
-                        color: ColorClass.dividerColor,
-                        height: 5,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ],
+                    trailing: Container(
+                      width: 25,
+                      height: 25,
+                      decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: AssetImage('Images/Virus.png'))),
+                    )),
+              ],
+            ),
           ),
         ),
       ),
