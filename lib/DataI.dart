@@ -5,20 +5,28 @@ import 'package:eyedatai/Opens/DataSources.dart';
 import 'package:eyedatai/Opens/Filters.dart';
 import 'package:eyedatai/Opens/OpenFile.dart';
 import 'package:eyedatai/Opens/Visualizers.dart';
+import 'package:flag/flag.dart';
 import 'package:flutter/material.dart';
+import 'Classes/DataModel.dart';
+import 'Classes/VisualizerModel.dart';
 import 'ColorClass.dart';
 import 'FontClass.dart';
-import 'package:eyedatai/Classes/DataModel.dart';
-
 import 'Online/CoronaVirus.dart';
 import 'Online/Currency.dart';
 
+
 String filePath;
 DataModel table;
-
+List<VisualizerModel> visualizers = new List();
+bool isNew = false;
 class DataI extends StatefulWidget {
   static void setFilePath(String filePathP) {
     filePath = filePathP;
+  }
+
+  static void setNewVisualizers(List<VisualizerModel> visualizersP , bool isNewP){
+    visualizers = visualizersP;
+    isNew = isNewP;
   }
 
   @override
@@ -33,61 +41,213 @@ class _DataIState extends State<DataI> {
   bool isActiveBottomSheet = false;
 
   Widget oldThingsDrawer() {
-    return SizedBox(
-      width: 225,
-      child: Drawer(
-        child: Container(
-          color: ColorClass.containerColor,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 12.0),
-            child: ListView(
-              //shrinkWrap: true, // For Center Widget
-              children: <Widget>[
-                ListTile(
-                  onTap: () {
-                    Navigator.push(
-                        context,
-                        new MaterialPageRoute(
-                            builder: (context) => new Currency()));
-                  },
-                  title: Text(
-                    "Currencies",
-                    style: TextStyle(
-                        fontFamily: FontClass.appFont,
-                        fontSize: 15.0,
-                        color: ColorClass.fontColor),
-                  ),
-                  trailing: Icon(
-                    Icons.monetization_on,
-                    color: ColorClass.fontColor
-                  ),
-                ),
-                ListTile(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          new MaterialPageRoute(
-                              builder: (context) => new CoronaVirus()));
-                    },
-                    title: Text(
-                      "Corona Virus",
-                      style: TextStyle(
-                          fontFamily: FontClass.appFont,
-                          fontSize: 15.0,
-                          color:ColorClass.fontColor),
+    return Container(
+        color: ColorClass.scaffoldBackgroundColor,
+        child: SizedBox(
+          width: 225,
+          child: Drawer(
+            child: Container(
+              color: ColorClass.containerColor,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 12.0),
+                child: ListView(
+                  //shrinkWrap: true, // For Center Widget
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new Currency()));
+                      },
+                      title: Text(
+                        "Currencies",
+                        style: TextStyle(
+                            fontFamily: FontClass.appFont,
+                            fontSize: 15.0,
+                            color: ColorClass.fontColor),
+                      ),
+                      trailing: Icon(
+                          Icons.monetization_on,
+                          color: ColorClass.fontColor
+                      ),
                     ),
-                    trailing: Container(
-                      width: 25,
-                      height: 25,
-                      decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage('Images/Virus.png'))),
-                    )),
-              ],
+                    ListTile(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              new MaterialPageRoute(
+                                  builder: (context) => new CoronaVirus()));
+                        },
+                        title: Text(
+                          "Corona Virus",
+                          style: TextStyle(
+                              fontFamily: FontClass.appFont,
+                              fontSize: 15.0,
+                              color:ColorClass.fontColor),
+                        ),
+                        trailing: Container(
+                          width: 25,
+                          height: 25,
+                          decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage('Images/Icons/Virus.png'))),
+                        )),
+                  ],
+                ),
+              ),
             ),
           ),
+        )
+      /*SizedBox(
+        width: 220,
+        child: Drawer(
+          child: ListView(
+            children: <Widget>[
+              DrawerHeader(
+                decoration:
+                    BoxDecoration(color: ColorClass.scaffoldBackgroundColor),
+                child: Center(
+                  child: Text(
+                    "Project 1",
+                    style: TextStyle(
+                        color: ColorClass.fontColor,
+                        fontFamily: FontClass.appFont,
+                        fontSize: 17),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new Login()));
+                      },
+                      leading: Text(
+                        "Chat App",
+                        style: TextStyle(
+                            color: ColorClass.fontColor,
+                            fontFamily: FontClass.appFont,
+                            fontSize: 17),
+                      ),
+                      trailing: Icon(
+                        Icons.chat,
+                        color: ColorClass.drawerIcons,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Divider(
+                        color: ColorClass.dividerColor,
+                        height: 5,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new PMUI()));
+                      },
+                      leading: Text(
+                        "PM App",
+                        style: TextStyle(
+                            color: ColorClass.fontColor,
+                            fontFamily: FontClass.appFont,
+                            fontSize: 17),
+                      ),
+                      trailing: Icon(
+                        Icons.view_array,
+                        color: ColorClass.drawerIcons,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Divider(
+                        color: ColorClass.dividerColor,
+                        height: 5,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {},
+                      leading: Text(
+                        "DV App (Older)",
+                        style: TextStyle(
+                            color: ColorClass.fontColor,
+                            fontFamily: FontClass.appFont,
+                            fontSize: 17),
+                      ),
+                      trailing: Icon(
+                        Icons.pie_chart,
+                        color: ColorClass.drawerIcons,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Divider(
+                        color: ColorClass.dividerColor,
+                        height: 5,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                child: Column(
+                  children: <Widget>[
+                    ListTile(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            new MaterialPageRoute(
+                                builder: (context) => new DVUI()));
+                      },
+                      leading: Text(
+                        "DV App (Old)",
+                        style: TextStyle(
+                            color: ColorClass.fontColor,
+                            fontFamily: FontClass.appFont,
+                            fontSize: 17),
+                      ),
+                      trailing: Icon(
+                        Icons.pie_chart,
+                        color: ColorClass.drawerIcons,
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Divider(
+                        color: ColorClass.dividerColor,
+                        height: 5,
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
-      ),
+      ),*/
     );
   }
 
@@ -98,70 +258,70 @@ class _DataIState extends State<DataI> {
     _scaffoldKey.currentState
         .showBottomSheet(
           (context) => Scaffold(
-            appBar: AppBar(
-              leading: IconButton(
-                onPressed: () {
-                  setState(() {
-                    isActiveBottomSheet = false;
-                  });
-                  Navigator.pop(context);
-                },
-                icon: Icon(
-                  Icons.keyboard_arrow_down,
-                  color: ColorClass.fontColor,
-                ),
-              ),
-              backgroundColor: ColorClass.scaffoldBackgroundColor,
-              elevation: 0.0,
-            ),
-            backgroundColor: ColorClass.scaffoldBackgroundColor,
-            body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0, bottom: 12.0),
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: <Widget>[
-                          Text(
-                            "Press On  ' ",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: FontClass.appFont,
-                                fontSize: 15),
-                          ),
-                          Container(
-                            height: 25,
-                            width: 25,
-                            decoration: BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('Images/Logo.png'))),
-                          ),
-                          Text(
-                            " '  To Show Data Again :)",
-                            style: TextStyle(
-                                color: Colors.grey,
-                                fontFamily: FontClass.appFont,
-                                fontSize: 15),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Text(
-                    data,
-                    style: TextStyle(
-                        color: ColorClass.fontColor,
-                        fontFamily: FontClass.appFont,
-                        fontSize: 17),
-                  )
-                ],
-              ),
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              setState(() {
+                isActiveBottomSheet = false;
+              });
+              Navigator.pop(context);
+            },
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: ColorClass.fontColor,
             ),
           ),
           backgroundColor: ColorClass.scaffoldBackgroundColor,
-        )
+          elevation: 0.0,
+        ),
+        backgroundColor: ColorClass.scaffoldBackgroundColor,
+        body: SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0, bottom: 12.0),
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: <Widget>[
+                      Text(
+                        "Press On  ' ",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: FontClass.appFont,
+                            fontSize: 15),
+                      ),
+                      Container(
+                        height: 25,
+                        width: 25,
+                        decoration: BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage('Images/Logo.png'))),
+                      ),
+                      Text(
+                        " '  To Show Data Again :)",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontFamily: FontClass.appFont,
+                            fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Text(
+                data,
+                style: TextStyle(
+                    color: ColorClass.fontColor,
+                    fontFamily: FontClass.appFont,
+                    fontSize: 17),
+              )
+            ],
+          ),
+        ),
+      ),
+      backgroundColor: ColorClass.scaffoldBackgroundColor,
+    )
         .closed
         .then((val) {
       setState(() {
@@ -353,8 +513,8 @@ class _DataIState extends State<DataI> {
                                   context,
                                   new MaterialPageRoute(
                                       builder: (context) => new DataSources(
-                                            dataSources: table.dataSources,
-                                          )));
+                                        dataSources: table.dataSources,
+                                      )));
                             } else {
                               _scaffoldKey.currentState.showSnackBar(snackBar);
                             }
@@ -370,7 +530,7 @@ class _DataIState extends State<DataI> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image:
-                                            AssetImage('Images/DataBase.png'))),
+                                        AssetImage('Images/DataBase.png'))),
                               ),
                             ),
                           ),
@@ -389,8 +549,8 @@ class _DataIState extends State<DataI> {
                                   context,
                                   new MaterialPageRoute(
                                       builder: (context) => new Visualizers(
-                                            visualizers: table.visualizers,
-                                          )));
+                                        visualizers: isNew ? visualizers :table.visualizers,
+                                      )));
                             } else {
                               _scaffoldKey.currentState.showSnackBar(snackBar);
                             }
@@ -436,8 +596,9 @@ class _DataIState extends State<DataI> {
                                   context,
                                   new MaterialPageRoute(
                                       builder: (context) => new Filters(
-                                            filters: table.filters,
-                                          )));
+                                        visualizers: table.visualizers,
+                                        filters: table.filters,
+                                      )));
                             } else {
                               _scaffoldKey.currentState.showSnackBar(snackBar);
                             }
@@ -453,7 +614,7 @@ class _DataIState extends State<DataI> {
                                 decoration: BoxDecoration(
                                     image: DecorationImage(
                                         image:
-                                            AssetImage('Images/Filter.png'))),
+                                        AssetImage('Images/Filter.png'))),
                               ),
                             ),
                           ),

@@ -1,4 +1,5 @@
 import 'package:eyedatai/Classes/FilterModel.dart';
+import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:eyedatai/Opened/FilterOpened.dart';
 import 'package:flutter/material.dart';
 
@@ -7,17 +8,19 @@ import '../FontClass.dart';
 
 class Filters extends StatefulWidget {
   List<FilterModel> filters = new List();
+  List<VisualizerModel> visualizers = new List();
 
-  Filters({@required this.filters});
+  Filters({@required this.filters, @required this.visualizers});
 
   @override
-  _FiltersState createState() => _FiltersState(filters);
+  _FiltersState createState() => _FiltersState(filters, visualizers);
 }
 
 class _FiltersState extends State<Filters> {
   List<FilterModel> filters = new List();
+  List<VisualizerModel> visualizers = new List();
 
-  _FiltersState(this.filters);
+  _FiltersState(this.filters, this.visualizers);
 
   @override
   Widget build(BuildContext context) {
@@ -71,8 +74,8 @@ class _FiltersState extends State<Filters> {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) =>
-                              new FilterOpened(filters[index])));
+                              builder: (context) => new FilterOpened(
+                                  filters[index], visualizers)));
                     },
                     child: SingleChildScrollView(
                       scrollDirection: Axis.vertical,
@@ -102,7 +105,7 @@ class _FiltersState extends State<Filters> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
                               child: Text(
-                                  "Filtering Type : ${filters[index].type}",
+                                  "Filtering Type : ${filters[index].type == ">" ? "GreaterThan" : filters[index].type == "<" ? "LessThan" : "MultipleEquality"}",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,

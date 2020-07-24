@@ -62,10 +62,7 @@ class _VisualizersState extends State<Visualizers> {
                   top: 12.0, bottom: 8.0, left: 25.0, right: 25.0),
               child: new Container(
                 height: 140.00, //165
-                width: MediaQuery
-                    .of(context)
-                    .size
-                    .width,
+                width: MediaQuery.of(context).size.width,
                 color: ColorClass.containerColor,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 30.0),
@@ -74,8 +71,7 @@ class _VisualizersState extends State<Visualizers> {
                       Navigator.push(
                           context,
                           new MaterialPageRoute(
-                              builder: (context) =>
-                              new VisualizerOpened(
+                              builder: (context) => new VisualizerOpened(
                                   visualizers[indexList])));
                     },
                     child: SingleChildScrollView(
@@ -89,8 +85,7 @@ class _VisualizersState extends State<Visualizers> {
                             Padding(
                               padding: const EdgeInsets.only(bottom: 12.0),
                               child: Text(
-                                  "Name : ${visualizers[indexList]
-                                      .visualizerName}",
+                                  "Name : ${visualizers[indexList].visualizerName}",
                                   style: TextStyle(
                                       color: ColorClass.fontColor,
                                       fontFamily: FontClass.appFont,
@@ -115,14 +110,11 @@ class _VisualizersState extends State<Visualizers> {
                                           return Row(
                                             children: <Widget>[
                                               Text(
-                                                  "${visualizers[indexList]
-                                                      .columnsModel[index]
-                                                      .name}",
+                                                  "${visualizers[indexList].columnsModel[index].name}",
                                                   style: TextStyle(
                                                       color:
                                                       ColorClass.subTitleColor,
-                                                      fontFamily: FontClass
-                                                          .appFont,
+                                                      fontFamily: FontClass.appFont,
                                                       fontSize: 12)),
                                               index ==
                                                   visualizers[indexList]
@@ -166,39 +158,50 @@ class _VisualizersState extends State<Visualizers> {
                                             color: ColorClass.subTitleColor,
                                             fontFamily: FontClass.appFont,
                                             fontSize: 12)),
-                                    Row(
+                                    visualizers[indexList]
+                                        .filtersModel
+                                        .length ==
+                                        0
+                                        ? Text(" NoN ",
+                                        style: TextStyle(
+                                            color: ColorClass.subTitleColor,
+                                            fontFamily: FontClass.appFont,
+                                            fontSize: 12))
+                                        : Row(
                                         children: List.generate(
-                                            visualizers[indexList].filtersModel
+                                            visualizers[indexList]
+                                                .filtersModel
                                                 .length, (index) {
-                                          return Row(children: <Widget>[
-                                            Text("${visualizers[indexList]
-                                                .filtersModel[index]
-                                                .name}",
-                                                style: TextStyle(
-                                                    color: ColorClass
-                                                        .subTitleColor,
-                                                    fontFamily: FontClass
-                                                        .appFont,
-                                                    fontSize: 12)),
-                                            index ==
-                                                visualizers[indexList]
-                                                    .filtersModel
-                                                    .length -
-                                                    1
-                                                ? Container(
-                                              width: 0.0,
-                                              height: 0.0,
-                                            )
-                                                : Text(" , ",
-                                                style: TextStyle(
-                                                    color: ColorClass
-                                                        .subTitleColor,
-                                                    fontFamily: FontClass
-                                                        .appFont,
-                                                    fontSize: 12))
-                                          ],);
-                                        })
-                                    ),
+                                          return Row(
+                                            children: <Widget>[
+                                              Text(
+                                                  "${visualizers[indexList].filtersModel[index].name}",
+                                                  style: TextStyle(
+                                                      color: ColorClass
+                                                          .subTitleColor,
+                                                      fontFamily:
+                                                      FontClass.appFont,
+                                                      fontSize: 12)),
+                                              index ==
+                                                  visualizers[indexList]
+                                                      .filtersModel
+                                                      .length -
+                                                      1
+                                                  ? Container(
+                                                width: 0.0,
+                                                height: 0.0,
+                                              )
+                                                  : Text(" , ",
+                                                  style: TextStyle(
+                                                      color: ColorClass
+                                                          .subTitleColor,
+                                                      fontFamily:
+                                                      FontClass
+                                                          .appFont,
+                                                      fontSize: 12))
+                                            ],
+                                          );
+                                        })),
                                   ],
                                 ),
                               ),

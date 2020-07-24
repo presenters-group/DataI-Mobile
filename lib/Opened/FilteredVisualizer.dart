@@ -131,21 +131,25 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     print("titiles :   $titles");
     List<List<dynamic>> middleDataPie = new List();
     List<List<List<dynamic>>> hardDataPie = new List();
-
+    List<dynamic> titlesDataPie = new List();
+    print(fixedData.length);
     for (int j = 1; j < fixedData.length; j++) {
       for (int k = 1; k < fixedData.length; k++) {
-        if (fixedData[j][0] == fixedData[k][0]) {
-          middleDataPie.add(fixedData[j]);
-          fixedData.removeAt(j);
-        }
-        else if(fixedData[j][0] != fixedData[k][0] && k == fixedData.length-1){
-          middleDataPie.add(fixedData[j]);
-          fixedData.removeAt(j);
+        if (fixedData[j][0] == fixedData[k][0] &&
+            !titlesDataPie.contains(fixedData[k][0])) {
+          middleDataPie.add(fixedData[k]);
         }
       }
-      hardDataPie.add(middleDataPie);
-      middleDataPie = [];
-      //fixedData.removeAt(j);
+      print("middle data : $middleDataPie");
+
+      if (middleDataPie.isNotEmpty) {
+        hardDataPie.add(middleDataPie);
+        titlesDataPie.add(middleDataPie[0][0]);
+        middleDataPie = [];
+      } else {
+        middleDataPie = [];
+      }
+      fixedData.removeAt(j);
     }
     print(hardDataPie);
 
@@ -247,8 +251,8 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
                   Navigator.push(
                       context,
                       new MaterialPageRoute(
-                          builder: (context) =>
-                              new FilteredDataSource(data , fixedDataPie , visualizerModel.xColumn)));
+                          builder: (context) => new FilteredDataSource(
+                              data, fixedDataPie, visualizerModel.xColumn)));
                 },
                 child: Container(
                   height: 25,
@@ -295,39 +299,39 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
                 scrollDirection: Axis.horizontal,
                 child: Row(
                     children: List.generate(titlesBarChart.length, (index) {
-                  return Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Container(
-                          width: 20,
-                          height: 15,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              color: colorsBarChart[index]),
+                      return Row(
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Container(
+                              width: 20,
+                              height: 15,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.rectangle,
+                                  color: colorsBarChart[index]),
 
-                          //columnsModel[index]
-                          //                                    .columnStyleMode.color
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 8.0),
-                        child: Text(
-                          titlesBarChart[index].toString(),
-                          style: TextStyle(
-                              fontSize: 12,
-                              color: ColorClass.fontColor,
-                              fontFamily: FontClass.appFont),
-                        ),
-                      )
-                    ],
-                  );
-                }))),
+                              //columnsModel[index]
+                              //                                    .columnStyleMode.color
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8.0),
+                            child: Text(
+                              titlesBarChart[index].toString(),
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: ColorClass.fontColor,
+                                  fontFamily: FontClass.appFont),
+                            ),
+                          )
+                        ],
+                      );
+                    }))),
             Expanded(
                 child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: BarChart(dataBarChart),
-            )),
+                  padding: const EdgeInsets.all(8.0),
+                  child: BarChart(dataBarChart),
+                )),
           ],
         ),
         Padding(
