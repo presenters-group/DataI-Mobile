@@ -99,28 +99,6 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     }
     print(fixedData);
     print("width : $width");
-    for (int j = 1; j <= allTempDataCol.length - 1; j++) {
-      for (int i = 1; i < fixedData.length; i++) {
-        if (width == 2) {
-          dataBarChartSingle.add(
-            new SeriesData(
-                task: fixedData[i][0],
-                taskValue: int.parse(fixedData[i][j].toString().trim()),
-                taskColor: visualizerModel.dataSource.columnsColors[i]),
-          );
-        } else {
-          dataBarChartSingle.add(
-            new SeriesData(
-                task: fixedData[i][0],
-                taskValue: int.parse(fixedData[i][j].toString().trim()),
-                taskColor: visualizerModel.dataSource.columnsColors[j]),
-          );
-        }
-      }
-      colorsBarChart.add(visualizerModel.dataSource.columnsColors[j]);
-      dataBarChart.add(dataBarChartSingle);
-      dataBarChartSingle = [];
-    }
 
     List<dynamic> sumRows = new List();
     List<List<dynamic>> listRows = new List();
@@ -177,6 +155,20 @@ class _FilteredVisualizerState extends State<FilteredVisualizer>
     }
     print("fixedDataPie");
     print(fixedDataPie);
+
+    for (int j = 1; j <= allTempDataCol.length - 1; j++) {
+      for (int i = 1; i < fixedDataPie.length; i++) {
+        dataBarChartSingle.add(
+          new SeriesData(
+              task: fixedDataPie[i][0],
+              taskValue: int.parse(fixedDataPie[i][j].toString().trim()),
+              taskColor: visualizerModel.dataSource.columnsColors[j]),
+        );
+      }
+      colorsBarChart.add(visualizerModel.dataSource.columnsColors[j]);
+      dataBarChart.add(dataBarChartSingle);
+      dataBarChartSingle = [];
+    }
 
     for (int i = 1; i < fixedDataPie.length; i++) {
       for (int j = 1; j <= allTempDataCol.length - 1; j++) {

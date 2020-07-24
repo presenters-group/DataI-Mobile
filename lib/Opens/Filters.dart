@@ -104,8 +104,19 @@ class _FiltersState extends State<Filters> {
                             ),
                             Padding(
                               padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
+                              child: filters[index]
+                                  .dataSource
+                                  .columnsList[
+                              filters[index].filteredColumn]
+                                  .columnType ==
+                                  "Measures"
+                                  ? Text(
                                   "Filtering Type : ${filters[index].type == ">" ? "GreaterThan" : filters[index].type == "<" ? "LessThan" : "MultipleEquality"}",
+                                  style: TextStyle(
+                                      color: ColorClass.subTitleColor,
+                                      fontFamily: FontClass.appFont,
+                                      fontSize: 15))
+                                  : Text("Filtering Type : Non",
                                   style: TextStyle(
                                       color: ColorClass.subTitleColor,
                                       fontFamily: FontClass.appFont,

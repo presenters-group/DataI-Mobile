@@ -239,7 +239,6 @@ class _FilterOpenedState extends State<FilterOpened> {
                                 : yesEqual = false;
                             setState(() {
                               currColumnType = val;
-
                             });
 
                             List<String> tempColumns = new List();
@@ -304,7 +303,9 @@ class _FilterOpenedState extends State<FilterOpened> {
                                 }
                               }
                             }
-                            //filterModel.dataSource.columnsList[filterModel.filteredColumn].columnType = currColumnType;
+                            filterModel.dataSource.columnsList[filteredColumn].columnType = currColumnType;
+                            filterModel.filteredColumn = filteredColumn;
+                            DataI.setNewVisualizers(visualizers, true);
                           },
                           items: List.generate(columnType.length, (index) {
                             return DropdownMenuItem(
@@ -385,7 +386,9 @@ class _FilterOpenedState extends State<FilterOpened> {
                               }
                             }
                           }
-                          // filterModel.dataSource.columnsList[filterModel.filteredColumn].name = currColumn;
+                          filterModel.dataSource.columnsList[filteredColumn].name = currColumn;
+                          filterModel.filteredColumn = filteredColumn;
+                          DataI.setNewVisualizers(visualizers, true);
                         },
                         items: List.generate(columns.length, (index) {
                           return DropdownMenuItem(
@@ -450,6 +453,7 @@ class _FilterOpenedState extends State<FilterOpened> {
                         onChanged: (val) {
                           setState(() {
                             currType = val;
+                            filterModel.type = val;
                             for (int i = 0; i < visualizers.length; i++) {
                               for (int j = 0;
                               j < visualizers[i].filtersModel.length;

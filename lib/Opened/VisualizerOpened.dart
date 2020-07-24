@@ -1,4 +1,3 @@
-import 'package:eyedatai/Classes/DataSources/TableModel.dart';
 import 'package:eyedatai/Classes/SeriesData.dart';
 import 'package:eyedatai/Classes/VisualizerModel.dart';
 import 'package:eyedatai/Opened/Charts/BarChart.dart';
@@ -9,6 +8,7 @@ import 'package:flutter/material.dart';
 
 import '../ColorClass.dart';
 import '../FontClass.dart';
+import 'FixedData.dart';
 
 class VisualizerOpened extends StatefulWidget {
   VisualizerModel visualizer;
@@ -25,8 +25,6 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
   VisualizerModel visualizer;
 
   _VisualizerOpenedState(this.visualizer);
-
-
 
   @override
   void initState() {
@@ -64,6 +62,24 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
             ),
           ),
           actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.only(right: 15.0, top: 27),
+              child: InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) => new FixedData(visualizer)));
+                },
+                child: Container(
+                  height: 25,
+                  width: 25,
+                  decoration: BoxDecoration(
+                      image: DecorationImage(
+                          image: AssetImage('Images/table.png'))),
+                ),
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.only(right: 15.0, top: 27),
               child: InkWell(
@@ -125,77 +141,78 @@ class _VisualizerOpenedState extends State<VisualizerOpened>
                 scrollDirection: Axis.horizontal,
                 child: Row(
                   children:
-                      List.generate(visualizer.columnsModel.length, (index) {
+                  List.generate(visualizer.columnsModel.length, (index) {
                     return visualizer.columnsModel[index].id ==
-                            visualizer.xColumn
+                        visualizer.xColumn
                         ? Container(
-                            width: 0.0,
-                            height: 0.0,
-                          )
+                      width: 0.0,
+                      height: 0.0,
+                    )
                         : Row(
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Container(
-                                  width: 20,
-                                  height: 15,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.rectangle,
-                                      color: visualizer.dataSource.columnsList[index].colorColumn),
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Container(
+                            width: 20,
+                            height: 15,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: visualizer.dataSource
+                                    .columnsList[index].colorColumn),
 
-                                  //columnsModel[index]
-                                  //                                    .columnStyleMode.color
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: Text(
-                                  visualizer.columnsModel[index].name
-                                      .toString(),
-                                  style: TextStyle(
-                                      fontSize: 12,
-                                      color: ColorClass.fontColor,
-                                      fontFamily: FontClass.appFont),
-                                ),
-                              )
-                            ],
-                          );
+                            //columnsModel[index]
+                            //                                    .columnStyleMode.color
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            visualizer.columnsModel[index].name
+                                .toString(),
+                            style: TextStyle(
+                                fontSize: 12,
+                                color: ColorClass.fontColor,
+                                fontFamily: FontClass.appFont),
+                          ),
+                        )
+                      ],
+                    );
                   }),
                 ),
               ),
               Expanded(
                   child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: BarChart(visualizer.chartData.seriesDataBar),
-              )),
+                    padding: const EdgeInsets.all(8.0),
+                    child: BarChart(visualizer.chartData.seriesDataBar),
+                  )),
             ],
           ),
           PieChart(visualizer.chartData.seriesDataPie),
           visualizer.chartData.seriesDataLine.isEmpty
               ? Center(
-                  child: Container(
-                    decoration: BoxDecoration(boxShadow: [
-                      new BoxShadow(
-                        color: Colors.grey,
-                        blurRadius: 0.0,
-                      ),
-                    ], color: ColorClass.fontColor),
-                    width: MediaQuery.of(context).size.width / 1.2,
-                    height: 150,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Center(
-                        child: Text(
-                          "We Have A String Here :)",
-                          style: TextStyle(
-                              fontFamily: FontClass.appFont,
-                              fontSize: 15,
-                              color: Colors.white),
-                        ),
-                      ),
-                    ),
+            child: Container(
+              decoration: BoxDecoration(boxShadow: [
+                new BoxShadow(
+                  color: Colors.grey,
+                  blurRadius: 0.0,
+                ),
+              ], color: ColorClass.fontColor),
+              width: MediaQuery.of(context).size.width / 1.2,
+              height: 150,
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(
+                  child: Text(
+                    "We Have A String Here :)",
+                    style: TextStyle(
+                        fontFamily: FontClass.appFont,
+                        fontSize: 15,
+                        color: Colors.white),
                   ),
-                )
+                ),
+              ),
+            ),
+          )
               : LineChart(visualizer.chartData.seriesDataLine),
 //          LineChart(aggregateDataLine.seriesData),
         ],
